@@ -1,0 +1,55 @@
+/* Bagian Filtering */
+
+.filter-container {
+    display: flex;
+    align-items: center;
+}
+
+.form-control {
+    border: 1px solid var(--secondary);
+    width: auto;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 6px var(--lightBlue);
+}
+
+/* Table */
+
+.table {
+   border-color: var(--primary);
+}
+
+.table-container {
+    height: 40rem;
+    border: 1px solid var(--primary);
+}
+
+.table thead tr th {
+    background-color: var(--primary) !important;
+    color: var(--white);
+}
+
+.table tbody tr td {
+    background-color: var(--white);
+    color: var(--primary);
+    height: 60px;
+}
+
+button.btn img {
+    width: 20px;
+    height: 20px;
+}
+
+#endDate::before {
+    content: attr(data-placeholder);
+    color: #6c757d;
+    /* Warna abu-abu placeholder */
+    position: absolute;
+    margin-left: 0.5em;
+}
+
+#endDate:focus::before,
+#endDate:not(:placeholder-shown)::before {
+    content: '';
+}

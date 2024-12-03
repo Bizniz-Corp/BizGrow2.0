@@ -1,0 +1,117 @@
+:root {
+    --primary: #151436; 
+    --secondary: #223777; 
+    --lightBlue: #4E69BA; 
+    --white: #FFFFFF; 
+    --success: #24A618; 
+    --button-hover: #1e8f17; 
+    --gray: #686868;
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--primary);
+    background-color: var(--secondary);
+}
+
+.hero-section {
+    background-image: url('../img/hero-background.jpg'); 
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--white);
+    background-color: var(--white);
+    padding: 20px;
+    position: relative;
+}
+
+.hero-section .logo {
+    width: 200px; 
+}
+
+h1 {
+    font-size: 3rem; 
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--primary); 
+}
+
+.hero-section p {
+    font-size: 1.25rem; 
+    margin-bottom: 20px;
+    color: var(--primary); 
+}
+
+.btn-custom {
+    padding: 12px 30px;
+    font-size: 1rem;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
+    color: var(--white);
+    text-align: center;
+}
+
+.btn-signup {
+    background-color: rgb(161, 2, 2);
+    color: var(--text-white);
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.btn-signup:hover {
+    background-color: red;
+}
+
+.btn-signin {
+    background-color: var(--secondary);
+    color: var(--white);
+    width: 200px;
+    height: 50px;
+    text-align: center;
+}
+
+.btn-signin:hover {
+    background-color: var(--lightBlue);
+}
+
+.features-section {
+    padding: 10px;
+    background-color: var(--white);
+}
+
+.section-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--primary); 
+}
+
+.section-subtitle {
+    font-size: 1rem;
+    color: var(--primary); 
+}
+
+.feature-item {
+    padding: 20px;
+    background: var(--secondary);
+    border-color: var(--white);
+    border-radius: 80px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: var(--white); 
+}
+
+.feature-item:hover {
+    transform: translateY(-25px);
+}
+
+.feature-icon {
+    width: 100px;
+    height: 70px;
+}

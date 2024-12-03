@@ -1,0 +1,30 @@
+.search_select_box{
+    max-width: 400px;
+    margin: 80px auto;
+}
+
+
+
+.search_select_box select{
+    width: 100%;
+}
+
+.search_select_box button{
+    background-color: cyan;
+    color: cyan;
+
+    background: cyan;
+    padding: 15px 25px;
+    font-size: 20px;
+}
+
+.btn dropdown-toggle btn-light{
+    background-color: cyan;
+    color: cyan;
+    background: cyan;
+}
+
+.btn.dropdown-toggle.btn-light{
+    background-color: cyan;
+    color: cyan;
+}

@@ -1,0 +1,59 @@
+body {
+    background-color: #f5f7fa;
+    color: #333;
+}
+.container {
+    max-width: 500px;
+    margin: auto;
+    padding-top: 50px;
+    text-align: center;
+}
+.header {
+    font-size: 24px;
+    margin-bottom: 10px;
+    padding: 15px;
+}
+.profit-box {
+    background-color: #1a1a40;
+    color: #fff;
+    font-size: 24px;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+.features-heading {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #333;
+    padding: 25px  ;
+}
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 130px); /* Three columns with fixed width */
+    gap: 70px;
+    justify-content: center; /* Center the grid items horizontally */
+}
+.feature {
+    width: 130px;
+    height: 130px;
+    background-color: #1a1a40;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 10px;
+    font-size: 14px;
+}
+/* Change link color to white in the feature box */
+.features .feature a {
+    color: #ffffff; /* Set color to white */
+    text-decoration: none; /* Remove underline */
+}
+
+.features .feature a:hover {
+    color: #bfbfbf; /* Optional: Set hover color for better user experience */
+}
+

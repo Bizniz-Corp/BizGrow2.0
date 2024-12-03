@@ -1,0 +1,36 @@
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+}
+
+.btn-custom {
+    width: 250px;
+    height: 150px;
+    background-color: var(--secondary);
+    color: white;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 10px;
+    text-decoration: none;
+    border: none;
+    margin-right: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-custom:last-child {
+    margin-right: 0;
+}
+
+.btn-custom img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.btn-custom:hover {
+    background-color: var(--lightBlue);
+}
