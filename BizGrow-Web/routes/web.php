@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,9 +18,8 @@ Route::get('/input_penjualan', function () {
 })->name('penjualan.input');
 
 
-Route::get('/riwayat_penjualan', function () {
-    return view('penjualan.penjualan_history');
-})->name('penjualan.riwayat');
+Route::get('/riwayat_penjualan', 
+[ProductController::class, 'history'])->name('penjualan.riwayat');
 
 Route::get('/demand', function () {
     return view('penjualan.penjualan_prediksi_demand');
