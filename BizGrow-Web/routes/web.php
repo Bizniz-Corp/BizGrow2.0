@@ -49,3 +49,10 @@ route::get('/signout', function () {
     return view('/autentikasi.signin');
 })->name('signout');
 
+route::get('/sign-in', function(){
+    return view('/autentikasi.signin');
+})->name('sign.in');
+
+route::get('/sign-up', function(){
+    return view('/autentikasi.signup');
+})->name('sign.in');
