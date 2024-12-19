@@ -7,8 +7,8 @@
   <title>Sign Up - BizGrow</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/css/style.css" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/signup.css">
+  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('css/signup.css') }}">
 </head>
 
 <body>
@@ -43,15 +43,15 @@
       </form>
     </div>
     <div class="image-container"> 
-      <img src="../img/Sign in.png" alt="bizgrowlogo">
+      <img src="{{ asset('images/Sign in.png') }}" alt="bizgrowlogo">
       <div class="overlay-logo">
-        <img src="../img/logo1.png" alt="BizGrow Logo">
+        <img src="{{ asset('images/logo1.png') }}" alt="BizGrow Logo">
       </div>
     </div>
   </div>
 
   <!-- Link to External JavaScript File -->
-  <script src="../assets/js/SignUp.js"></script>
+  <script src="{{ asset('js/Signup.js') }}"></script>
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

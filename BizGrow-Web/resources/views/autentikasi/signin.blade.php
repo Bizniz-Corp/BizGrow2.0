@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Pizgrow</title>
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/Sign in.css">
+  <link rel="stylesheet" href="{{ asset('css/Sign in.css') }}">
 </head>
 
 <body>
@@ -29,17 +29,17 @@
       </form>
     </div>
     <div class="image-container">
-      <img src="../img/Sign in.png" alt="bizgrowlogo">
+      <img src="{{ asset('images/Sign in.png') }}" alt="bizgrowlogo">
       <div class="overlay-logo">
-        <img src="../img/logo1.png" alt="Pizgrow Logo"> <!-- Replace with your logo -->
+        <img src="{{ asset('images/logo1.png') }}" alt="Pizgrow Logo"> <!-- Replace with your logo -->
       </div>
     </div>
   </div>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/script.js"></script>
-  <script src="../assets/js/Sign in.js"></script>
+  <script src="{{ asset('js/script.js') }}"></script>
+  <script src="{{ asset('js/Sign in.js') }}"></script>
 </body>
 
 </html>
