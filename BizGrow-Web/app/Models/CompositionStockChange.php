@@ -11,6 +11,6 @@ class CompositionStockChange extends Model
 
     protected $table = 'composition_stock_changes';
     protected $primaryKey = 'composition_stock_changes_id';
-    protected $fillable = ['composition_id', 'composition_changes_date', 'composition_changes_quantity'];
+    protected $fillable = ['composition_id', 'composition_changes_date', 'composition_changes_quantity', 'total_composition_stock'];
 
 }

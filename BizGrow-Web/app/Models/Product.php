@@ -11,6 +11,10 @@ class Product extends Model
 
     protected $table = 'products';
     protected $primaryKey = 'product_id';
-    protected $fillable = ['product_name','product_quantity', 'price', 'umkm_id'];
+    protected $fillable = ['product_name', 'product_quantity', 'price', 'umkm_id'];
 
+    public function salesTransactions()
+    {
+        return $this->hasMany(SalesTransaction::class, 'product_id', 'product_id');
+    }
 }

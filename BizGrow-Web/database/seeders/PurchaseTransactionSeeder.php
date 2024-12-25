@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
+use Illuminate\Support\Carbon;
+use Illuminate\Database\Seeder;
 use App\Models\PurchaseTransaction;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 
 class PurchaseTransactionSeeder extends Seeder
 {
@@ -13,44 +15,33 @@ class PurchaseTransactionSeeder extends Seeder
      */
     public function run(): void
     {
-        PurchaseTransaction::create([
-            'product_id' => 1,
-            'purchase_date' => now(),
-            'purchase_quantity' => 30,
-            'price_per_item' => 48000,
-            'total' => 1440000,
-        ]);
+        // Ambil semua produk yang tersedia
+        $products = Product::all();
 
-        PurchaseTransaction::create([
-            'product_id' => 2,
-            'purchase_date' => now(),
-            'purchase_quantity' => 20,
-            'price_per_item' => 27000,
-            'total' => 540000,
-        ]);
+        foreach ($products as $product) {
+            // Minimal 15 transaksi pembelian untuk setiap produk
+            $numTransactions = 15;
 
-        PurchaseTransaction::create([
-            'product_id' => 3,
-            'purchase_date' => now(),
-            'purchase_quantity' => 25,
-            'price_per_item' => 19000,
-            'total' => 475000,
-        ]);
+            for ($i = 0; $i < $numTransactions; $i++) {
+                // Tentukan tanggal acak dalam rentang 60 hari terakhir
+                $randomDate = Carbon::now()->subDays(rand(1, 450)); // Menghasilkan tanggal acak dalam 60 hari terakhir
 
-        PurchaseTransaction::create([
-            'product_id' => 4,
-            'purchase_date' => now(),
-            'purchase_quantity' => 40,
-            'price_per_item' => 66000,
-            'total' => 2640000,
-        ]);
+                // Tentukan jumlah yang dibeli dan harga pembeliannya
+                $purchaseQuantity = rand(1, 100); // Kuantitas transaksi acak untuk pembelian
+                $pricePerItem = $product->price - rand(1000, 5000); // Harga produk yang sedikit lebih murah sebagai harga beli
 
-        PurchaseTransaction::create([
-            'product_id' => 5,
-            'purchase_date' => now(),
-            'purchase_quantity' => 35,
-            'price_per_item' => 43000,
-            'total' => 1505000,
-        ]);
+                // Hitung total transaksi
+                $total = $purchaseQuantity * $pricePerItem;
+
+                // Buat transaksi pembelian baru
+                PurchaseTransaction::create([
+                    'product_id' => $product->product_id,
+                    'purchase_date' => $randomDate, // Menggunakan tanggal acak
+                    'purchase_quantity' => $purchaseQuantity,
+                    'price_per_item' => $pricePerItem,
+                    'total' => $total,
+                ]);
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use App\Models\StockChange;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -13,34 +14,30 @@ class StockChangeSeeder extends Seeder
      */
     public function run(): void
     {
-        StockChange::create([
-            'product_id' => 1,
-            'changes_date' => now(),
-            'changes_quantity' => 15,
-        ]);
+        // Ambil semua produk
+        $products = Product::all();
 
-        StockChange::create([
-            'product_id' => 2,
-            'changes_date' => now(),
-            'changes_quantity' => -5,
-        ]);
+        foreach ($products as $product) {
+            $currentStock = 0; // Awal total stok setiap produk
 
-        StockChange::create([
-            'product_id' => 3,
-            'changes_date' => now(),
-            'changes_quantity' => 10,
-        ]);
+            for ($i = 1; $i <= 15; $i++) {
+                // Random perubahan stok (bisa positif atau negatif)
+                $changeQuantity = rand(-200, 300);
 
-        StockChange::create([
-            'product_id' => 4,
-            'changes_date' => now(),
-            'changes_quantity' => -3,
-        ]);
+                // Hitung total stok baru (jangan sampai stok negatif)
+                $newStock = max(0, $currentStock + $changeQuantity);
 
-        StockChange::create([
-            'product_id' => 5,
-            'changes_date' => now(),
-            'changes_quantity' => 8,
-        ]);
+                // Tambahkan ke tabel stock_changes
+                StockChange::create([
+                    'product_id' => $product->product_id,
+                    'changes_date' => now()->subDays(rand(1, 365))->addMinutes(rand(1, 1440)),
+                    'changes_quantity' => $changeQuantity,
+                    'total_stock' => $newStock,
+                ]);
+
+                // Update stok saat ini
+                $currentStock = $newStock;
+            }
+        }
     }
 }

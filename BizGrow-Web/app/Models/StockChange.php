@@ -11,5 +11,5 @@ class StockChange extends Model
 
     protected $table = 'stock_changes';
     protected $primaryKey = 'stock_change_id';
-    protected $fillable = ['product_id', 'changes_date', 'changes_quantity'];
+    protected $fillable = ['product_id', 'changes_date', 'changes_quantity', 'total_stock'];
 }

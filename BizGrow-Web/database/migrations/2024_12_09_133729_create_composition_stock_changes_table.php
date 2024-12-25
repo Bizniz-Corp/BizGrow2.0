@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,9 +12,10 @@ return new class extends Migration
     {
         Schema::create('composition_stock_changes', function (Blueprint $table) {
             $table->id('composition_stock_changes_id');
-            $table->foreignId('composition_id')->constrained('compositions','composition_id')->onDelete('cascade');
+            $table->foreignId('composition_id')->constrained('compositions', 'composition_id')->onDelete('cascade');
             $table->dateTime('composition_changes_date');
             $table->integer('composition_changes_quantity');
+            $table->integer('total_composition_stock');
             $table->timestamps();
         });
     }

@@ -5,11 +5,11 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/home', function () {
+Route::get('/', function () {
     return view('home');
 })->name('home');
 
@@ -18,8 +18,10 @@ Route::get('/input_penjualan', function () {
 })->name('penjualan.input');
 
 
-Route::get('/riwayat_penjualan', 
-[ProductController::class, 'history'])->name('penjualan.riwayat');
+Route::get(
+    '/riwayat_penjualan',
+    [ProductController::class, 'history']
+)->name('penjualan.riwayat');
 
 Route::get('/demand', function () {
     return view('penjualan.penjualan_prediksi_demand');
@@ -49,10 +51,10 @@ route::get('/signout', function () {
     return view('/autentikasi.signin');
 })->name('signout');
 
-route::get('/sign-in', function(){
+route::get('/sign-in', function () {
     return view('/autentikasi.signin');
 })->name('sign.in');
 
-route::get('/sign-up', function(){
+route::get('/sign-up', function () {
     return view('/autentikasi.signup');
 })->name('sign.in');

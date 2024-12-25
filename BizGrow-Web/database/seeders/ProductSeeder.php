@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
+use App\Models\Umkaem;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,39 +14,57 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-         Product::create([
-            'product_name' => 'Product A',
-            'product_quantity' => 100,
-            'price' => 50000,
-            'umkm_id' => 1,
-        ]);
+        // List nama produk asli untuk digunakan secara acak
+        $productNames = [
+            'Keripik Pisang',
+            'Minuman Herbal',
+            'Bolu Kukus Pelangi',
+            'Sambal Goreng Kentang',
+            'Kerupuk Udang',
+            'Coklat Premium',
+            'Madu Murni',
+            'Kopi Arabika',
+            'Abon Sapi',
+            'Dodol Durian',
+            'Keripik Singkong',
+            'Kue Lapis',
+            'Sate Ayam Madura',
+            'Keripik Tempe',
+            'Keripik Jamur',
+            'Nasi Ayam Geprek',
+            'Ubi Jalar Goreng',
+            'Kue Putu',
+            'Kue Lumpur',
+            'Nasi Padang',
+            'Sirup Markisa',
+            'Rempeyek Kacang',
+            'Tape Singkong'
+        ];
 
-        Product::create([
-            'product_name' => 'Product B',
-            'product_quantity' => 50,
-            'price' => 30000,
-            'umkm_id' => 2,
-        ]);
+        // Ambil semua data UMKM
+        $umkmList = Umkaem::all();
 
-        Product::create([
-            'product_name' => 'Product C',
-            'product_quantity' => 30,
-            'price' => 20000,
-            'umkm_id' => 3,
-        ]);
+        foreach ($umkmList as $umkm) {
+            // Pilih nama produk secara acak tanpa duplikasi
+            $availableProducts = $productNames; // Salin semua nama produk
+            $numberOfProducts = rand(5, 8); // Setiap UMKM memiliki 5 hingga 8 produk
 
-        Product::create([
-            'product_name' => 'Product D',
-            'product_quantity' => 120,
-            'price' => 70000,
-            'umkm_id' => 4,
-        ]);
+            for ($i = 0; $i < $numberOfProducts; $i++) {
+                // Ambil produk acak dari list
+                $randomIndex = array_rand($availableProducts);
+                $productName = $availableProducts[$randomIndex];
 
-        Product::create([
-            'product_name' => 'Product E',
-            'product_quantity' => 80,
-            'price' => 45000,
-            'umkm_id' => 5,
-        ]);
+                // Buat produk baru
+                Product::create([
+                    'product_name' => $productName,
+                    'product_quantity' => rand(50, 500), // Kuantitas acak
+                    'price' => rand(5000, 50000), // Harga acak
+                    'umkm_id' => $umkm->umkm_id, // Assign ke UMKM terkait// Stok acak
+                ]);
+
+                // Hapus produk dari daftar untuk mencegah duplikasi
+                unset($availableProducts[$randomIndex]);
+            }
+        }
     }
 }

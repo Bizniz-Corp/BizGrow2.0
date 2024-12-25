@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
+use Illuminate\Support\Carbon;
+use Illuminate\Database\Seeder;
 use App\Models\SalesTransaction;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 
 class SalesTransactionSeeder extends Seeder
 {
@@ -13,44 +15,33 @@ class SalesTransactionSeeder extends Seeder
      */
     public function run(): void
     {
-        SalesTransaction::create([
-            'product_id' => 1,
-            'sales_date' => now(),
-            'sales_quantity' => 10,
-            'price_per_item' => 50000,
-            'total' => 500000,
-        ]);
+        // Ambil semua produk yang tersedia
+        $products = Product::all();
 
-        SalesTransaction::create([
-            'product_id' => 2,
-            'sales_date' => now(),
-            'sales_quantity' => 5,
-            'price_per_item' => 30000,
-            'total' => 150000,
-        ]);
+        foreach ($products as $product) {
+            // Minimal 15 transaksi untuk setiap produk
+            $numTransactions = 15;
 
-        SalesTransaction::create([
-            'product_id' => 3,
-            'sales_date' => now(),
-            'sales_quantity' => 3,
-            'price_per_item' => 20000,
-            'total' => 60000,
-        ]);
+            for ($i = 0; $i < $numTransactions; $i++) {
+                // Tentukan tanggal acak dalam rentang 60 hari terakhir
+                $randomDate = Carbon::now()->subDays(rand(1, 450)); // Menghasilkan tanggal acak dalam 60 hari terakhir
 
-        SalesTransaction::create([
-            'product_id' => 4,
-            'sales_date' => now(),
-            'sales_quantity' => 8,
-            'price_per_item' => 70000,
-            'total' => 560000,
-        ]);
+                // Tentukan jumlah yang dijual dan harga totalnya
+                $salesQuantity = rand(1, 40); // Kuantitas transaksi acak
+                $pricePerItem = $product->price; // Harga produk yang konsisten
 
-        SalesTransaction::create([
-            'product_id' => 5,
-            'sales_date' => now(),
-            'sales_quantity' => 7,
-            'price_per_item' => 45000,
-            'total' => 315000,
-        ]);
+                // Hitung total transaksi
+                $total = $salesQuantity * $pricePerItem;
+
+                // Buat transaksi penjualan baru
+                SalesTransaction::create([
+                    'product_id' => $product->product_id,
+                    'sales_date' => $randomDate, // Menggunakan tanggal acak
+                    'sales_quantity' => $salesQuantity,
+                    'price_per_item' => $pricePerItem,
+                    'total' => $total,
+                ]);
+            }
+        }
     }
 }

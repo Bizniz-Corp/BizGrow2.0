@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('products','product_id')->onDelete('cascade');
             $table->dateTime('changes_date');
             $table->integer('changes_quantity');
+            $table->integer('total_stock');
             $table->timestamps();
         });
     }

@@ -8,7 +8,7 @@ class Umkaem extends Model
 {
     protected $table = 'umkms'; // Nama tabel di database
     protected $primaryKey = 'umkm_id'; // Primary key tabel
-    protected $fillable = ['user_id','umkm_name'];
+    protected $fillable = ['user_id', 'npwp_no', 'izin_usaha_path', 'profile_picture'];
 
     public function user()
     {

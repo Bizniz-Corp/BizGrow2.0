@@ -13,6 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Admin User
         User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
@@ -20,20 +21,8 @@ class UserSeeder extends Seeder
             'role' => 'admin',
             'status' => 'active',
         ]);
-        User::factory()->create([
-            'name' => 'UMKM User 1',
-            'email' => 'umkm1@example.com',
-            'password' => bcrypt('password1'),
-            'role' => 'umkm',
-            'status' => 'active',
-        ]);
-        User::factory()->create([
-            'name' => 'UMKM User 2',
-            'email' => 'umkm2@example.com',
-            'password' => bcrypt('umkmpassword2024'),  // Custom password
-            'role' => 'umkm',
-            'status' => 'active',
-        ]);
+
+        // UMKM Inactive
         User::factory()->create([
             'name' => 'Inactive User',
             'email' => 'inactive@example.com',
@@ -41,19 +30,48 @@ class UserSeeder extends Seeder
             'role' => 'umkm',
             'status' => 'deleted',
         ]);
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => bcrypt('testpassword999'),  // Custom password
-            'role' => 'umkm',
-            'status' => 'active',
-        ]);
-        User::factory()->create([
-            'name' => 'umkm super',
-            'email' => 'aaa@example.com',
-            'password' => bcrypt('aaaa'),  // Custom password
-            'role' => 'umkm',
-            'status' => 'active',
-        ]);
+
+        // UMKM Users
+        $umkmUsers = [
+            [
+                'name' => 'Toko Jaya Abadi',
+                'email' => 'umkm1@example.com',
+                'password' => bcrypt('password1'),
+                'role' => 'umkm',
+                'status' => 'active',
+            ],
+            [
+                'name' => 'Toko Makmur Sentosa',
+                'email' => 'umkm2@example.com',
+                'password' => bcrypt('umkmpassword2024'),
+                'role' => 'umkm',
+                'status' => 'active',
+            ],
+            [
+                'name' => 'Toko Sahabat Bersama',
+                'email' => 'toko3@example.com',
+                'password' => bcrypt('testpassword999'),
+                'role' => 'umkm',
+                'status' => 'active',
+            ],
+            [
+                'name' => 'Toko Inspirasi Bangsa',
+                'email' => 'inspirasi@example.com',
+                'password' => bcrypt('toko4'),
+                'role' => 'umkm',
+                'status' => 'active',
+            ],
+            [
+                'name' => 'Toko Harmoni Nusantara',
+                'email' => 'harmoni@example.com',
+                'password' => bcrypt('harmoni123'),
+                'role' => 'umkm',
+                'status' => 'active',
+            ],
+        ];
+
+        foreach ($umkmUsers as $userData) {
+            User::factory()->create($userData);
+        }
     }
 }

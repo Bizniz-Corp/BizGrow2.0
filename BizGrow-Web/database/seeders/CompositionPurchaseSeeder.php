@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Composition;
+use Illuminate\Database\Seeder;
 use App\Models\CompositionPurchaseTransaction;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 
 class CompositionPurchaseSeeder extends Seeder
 {
@@ -13,44 +14,34 @@ class CompositionPurchaseSeeder extends Seeder
      */
     public function run(): void
     {
-        CompositionPurchaseTransaction::create([
-            'composition_id' => 1,
-            'composition_purchase_date' => now(),
-            'composition_purchase_quantity' => 10,
-            'composition_price_per_item' => 5000,
-            'total' => 50000,
-        ]);
+        // Ambil semua komposisi
+        $compositions = Composition::all();
 
-        CompositionPurchaseTransaction::create([
-            'composition_id' => 2,
-            'composition_purchase_date' => now(),
-            'composition_purchase_quantity' => 15,
-            'composition_price_per_item' => 8000,
-            'total' => 120000,
-        ]);
+        foreach ($compositions as $composition) {
+            // Buat minimal 3 transaksi pembelian untuk setiap komposisi
+            $transactionCount = rand(3, 5);
 
-        CompositionPurchaseTransaction::create([
-            'composition_id' => 3,
-            'composition_purchase_date' => now(),
-            'composition_purchase_quantity' => 12,
-            'composition_price_per_item' => 6000,
-            'total' => 72000,
-        ]);
+            for ($i = 0; $i < $transactionCount; $i++) {
+                $purchaseDate = now()->subDays(rand(1, 365)); // Tanggal acak dalam 1 tahun terakhir
 
-        CompositionPurchaseTransaction::create([
-            'composition_id' => 4,
-            'composition_purchase_date' => now(),
-            'composition_purchase_quantity' => 8,
-            'composition_price_per_item' => 4500,
-            'total' => 36000,
-        ]);
+                // Harga per item tetap untuk satu composition_id
+                $pricePerItem = rand(1000, 20000);
 
-        CompositionPurchaseTransaction::create([
-            'composition_id' => 5,
-            'composition_purchase_date' => now(),
-            'composition_purchase_quantity' => 25,
-            'composition_price_per_item' => 5500,
-            'total' => 137500,
-        ]);
+                // Kuantitas acak
+                $quantity = rand(10, 100);
+
+                // Total harga dihitung
+                $totalPrice = $pricePerItem * $quantity;
+
+                // Tambahkan data ke tabel
+                CompositionPurchaseTransaction::create([
+                    'composition_id' => $composition->composition_id,
+                    'composition_purchase_date' => $purchaseDate,
+                    'composition_purchase_quantity' => $quantity,
+                    'composition_price_per_item' => $pricePerItem,
+                    'total' => $totalPrice,
+                ]);
+            }
+        }
     }
 }
