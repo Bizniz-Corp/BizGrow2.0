@@ -12,15 +12,33 @@ body {
     font-size: 24px;
     margin-bottom: 10px;
     padding: 15px;
+    font-style: bold;
 }
+.profit-container {
+    display: flex;
+    gap: 30px; /* Jarak antar kotak */
+    justify-content: center; /* Pusatkan secara horizontal */
+    align-items: center; /* Pastikan konten di dalam sejajar */
+    margin-bottom: 20px; /* Tambahkan jarak bawah */
+}
+
 .profit-box {
     background-color: #1a1a40;
     color: #fff;
-    font-size: 24px;
-    padding: 15px;
+    font-size: 20px; /* Kurangi ukuran font agar lebih proporsional */
+    padding: 20px 30px; /* Tambahkan padding untuk ruang lebih */
     border-radius: 10px;
-    margin-bottom: 30px;
+    text-align: center;
+    line-height: 1.5; /* Berikan jarak antar baris teks */
+    width: 250px; /* Tetapkan lebar tetap agar konsisten */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tambahkan sedikit bayangan */
 }
+
+.profit-box span {
+    display: block; /* Buat setiap bagian teks pada baris baru */
+    font-size: 18px; /* Sesuaikan ukuran font */
+}
+
 .features-heading {
     font-size: 18px;
     font-weight: bold;
@@ -46,14 +64,21 @@ body {
     flex-direction: column;
     border-radius: 10px;
     font-size: 14px;
-}
-/* Change link color to white in the feature box */
-.features .feature a {
-    color: #ffffff; /* Set color to white */
-    text-decoration: none; /* Remove underline */
+    overflow: hidden;
 }
 
-.features .feature a:hover {
-    color: #bfbfbf; /* Optional: Set hover color for better user experience */
+.feature a {
+    display: flex;
+    flex-direction: column; /* Teks dan gambar tetap vertikal */
+    align-items: center; /* Pusatkan konten */
+    justify-content: center; /* Pusatkan konten */
+    text-decoration: none; /* Hilangkan garis bawah */
+    width: 100%; /* Pastikan elemen mencakup seluruh kotak */
+    height: 100%; /* Pastikan elemen mencakup seluruh kotak */
+    color: inherit; /* Warna teks mengikuti warna elemen induk */
 }
 
+.feature a:hover {
+    background-color: #223777; /* Tambahkan efek hover untuk seluruh kotak */
+    color: #fff; /* Ubah warna teks saat hover */
+}

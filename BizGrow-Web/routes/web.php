@@ -9,16 +9,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
+Route::get('/home', [ProductController::class, 'home'])->name('home');
+
+
+Route::get('/landing', function () {
+    return view('landing_page');
+})->name('landing.page');
 
 Route::get('/input_penjualan', function () {
     return view('penjualan.penjualan_input');
 })->name('penjualan.input');
 
 
-Route::get('/riwayat_penjualan', 
+Route::get('/riwayat_penjualan',
 [ProductController::class, 'history'])->name('penjualan.riwayat');
 
 Route::get('/demand', function () {
