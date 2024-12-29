@@ -23,7 +23,7 @@ class ProductController extends Controller
 
         return view('products.show', compact('product')); // Blade view
     }
-    
+
     public function history()
     {
         $products = Product::all();

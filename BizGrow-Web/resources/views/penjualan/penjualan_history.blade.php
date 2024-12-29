@@ -38,7 +38,7 @@
             <thead class="sticky-top">
                 <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Tanggal (mm/dd/yyyy)</th>
+                    <th scope="col">Tanggal</th>
                     <th scope="col">ID</th>
                     <th scope="col">Produk</th>
                     <th scope="col">Kuantitas</th>

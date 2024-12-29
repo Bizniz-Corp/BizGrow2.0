@@ -18,10 +18,9 @@ Route::get('/input_penjualan', function () {
 })->name('penjualan.input');
 
 
-Route::get(
-    '/riwayat_penjualan',
-    [ProductController::class, 'history']
-)->name('penjualan.riwayat');
+Route::get('/riwayat_penjualan', function () {
+    return view('penjualan.penjualan_history');
+})->name('penjualan.riwayat');
 
 Route::get('/demand', function () {
     return view('penjualan.penjualan_prediksi_demand');
@@ -47,6 +46,10 @@ Route::get('/profil', function () {
     return view('profil.profile');
 })->name('profil');
 
+Route::get('/profil/edit-password', function () {
+    return view('profil.edit_password');
+})->name('profil.edit.password');
+
 route::get('/signout', function () {
     return view('/autentikasi.signin');
 })->name('signout');
@@ -58,3 +61,4 @@ route::get('/sign-in', function () {
 route::get('/sign-up', function () {
     return view('/autentikasi.signup');
 })->name('sign.in');
+
