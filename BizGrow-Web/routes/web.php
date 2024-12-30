@@ -10,8 +10,15 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', function () {
-    return view('home');
-})->name('home');
+    return view('welcome');
+});
+
+Route::get('/home', [ProductController::class, 'home'])->name('home');
+
+
+Route::get('/landing', function () {
+    return view('landing_page');
+})->name('landing.page');
 
 Route::get('/input_penjualan', function () {
     return view('penjualan.penjualan_input');

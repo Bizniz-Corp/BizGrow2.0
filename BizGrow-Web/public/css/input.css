@@ -7,7 +7,7 @@
 .btn-custom {
     width: 250px;
     height: 150px;
-    background-color: var(--secondary);
+    background-color: #151436;
     color: white;
     font-size: 18px;
     display: flex;
@@ -32,5 +32,5 @@
 }
 
 .btn-custom:hover {
-    background-color: var(--lightBlue);
+    background-color: #223777;
 }
