@@ -72,7 +72,7 @@
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{ route('profil') }}" class="sidebar-link">
+                    <a href="{{ route('profil.profil') }}" class="sidebar-link">
                         <img src="{{ asset('images/profile.svg') }}" alt="profile-icon">
                         <span>Profil</span>
                     </a>
@@ -92,7 +92,7 @@
                 </h3>
                 <img src="{{ asset('images/logo.png') }}" alt="bizgrowlogo">
             </header>
-            <div class="content overflow-y-auto m-5">
+            <div class="content overflow-y-auto m-3">
                 @yield('content')
             </div>
         </div>

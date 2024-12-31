@@ -32,4 +32,29 @@ class StockController extends Controller
         ], 200);
 
     }
+
+    public function inputStokView()
+    {
+        return view('stok.stok_input'); // Blade view
+    }
+
+    public function inputStokFileView()
+    {
+        return view('penjualan.input_stok_file'); // Blade view
+    }
+
+    public function inputStokManualView()
+    {
+        return view('penjualan.input_stok_manual'); // Blade view
+    }
+
+    public function riwayatView()
+    {
+        return view('stok.stok_history'); // Blade view
+    }
+
+    public function bufferstokView()
+    {
+        return view('stok.stok_prediksi_buffer_stok'); // Blade view
+    }
 }

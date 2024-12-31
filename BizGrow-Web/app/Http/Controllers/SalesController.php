@@ -34,5 +34,33 @@ class SalesController extends Controller
 
     }
 
+    public function inputPenjualanView()
+    {
+        return view('penjualan.penjualan_input'); // Blade view
+    }
 
+    public function inputPenjualanFileView()
+    {
+        return view('penjualan.input_penjualan_file'); // Blade view
+    }
+
+    public function inputPenjualanManualView()
+    {
+        return view('penjualan.input_penjualan_manual'); // Blade view
+    }
+
+    public function riwayatView()
+    {
+        return view('penjualan.penjualan_history'); // Blade view
+    }
+
+    public function demandView()
+    {
+        return view('penjualan.penjualan_prediksi_demand'); // Blade view
+    }
+
+    public function profitView()
+    {
+        return view('penjualan.penjualan_prediksi_profit'); // Blade view
+    }
 }

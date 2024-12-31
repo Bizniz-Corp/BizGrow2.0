@@ -59,4 +59,19 @@ class ProfileController extends Controller
         }
 
     }
+
+    public function profilView()
+    {
+        return view('profil.profile'); // Blade view
+    }
+
+    public function profilEditView()
+    {
+        return view('profil.profile_edit'); // Blade view
+    }
+
+    public function profilEditPasswordView()
+    {
+        return view('profil.edit_password'); // Blade view
+    }
 }

@@ -1,7 +1,7 @@
 $(document).ready(function () {
     const filterModal = new bootstrap.Modal($("#filterModal")[0]);
 
-    const token = localStorage.getItem("auth_token");
+    const token = "8|L1YxyyKMy4crAEuzVhVgxJpgdHQNaRurpjgX02xvf5032718";
 
     // konversi tanggal dari format yyyy-mm-dd ke dd-mm-yyyy
     function formatDate(dateString) {
