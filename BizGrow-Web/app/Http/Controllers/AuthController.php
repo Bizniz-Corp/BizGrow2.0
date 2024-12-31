@@ -88,4 +88,19 @@ class AuthController extends Controller
             'message' => 'You have been logged out successfully',
         ]);
     }
+
+    public function signinView()
+    {
+        return view('autentikasi.signin'); // Blade view
+    }
+
+    public function signupView()
+    {
+        return view('autentikasi.signup'); // Blade view
+    }
+
+    public function signoutView()
+    {
+        return view('autentikasi.signin'); // Blade view
+    }
 }
