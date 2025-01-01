@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ApiController extends Controller
 {
@@ -41,5 +44,31 @@ class ApiController extends Controller
                 'error' => $e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException ? 'Product not found' : $e->getMessage(),
             ], 404);
         }
+    }
+
+    public function getMonthlyProfit()
+    {
+        $currentMonth = Carbon::now()->month; // Bulan saat ini
+        $currentYear = Carbon::now()->year;  // Tahun saat ini
+
+        // Hitung total pembelian pada bulan ini
+        $totalPembelian = DB::table('purchase_transactions')
+            ->whereMonth('created_at', $currentMonth)
+            ->whereYear('created_at', $currentYear)
+            ->sum('total');
+
+        // Hitung total penjualan pada bulan ini
+        $totalPenjualan = DB::table('sales_transactions')
+            ->whereMonth('created_at', $currentMonth)
+            ->whereYear('created_at', $currentYear)
+            ->sum('total');
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'total_pembelian' => $totalPembelian,
+                'total_penjualan' => $totalPenjualan,
+            ],
+        ]);
     }
 }

@@ -10,3 +10,5 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/products', [ApiController::class, 'getAllProducts']);
+
+Route::get('/profit', [ApiController::class, 'getMonthlyProfit']);
