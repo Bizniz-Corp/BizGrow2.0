@@ -8,6 +8,7 @@ use App\Models\StockChange;
 use Illuminate\Http\Request;
 use App\Models\SalesTransaction;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
@@ -48,4 +49,74 @@ class ApiController extends Controller
         }
     }
 
+
+    // ambil data user yang sedang login dan dibutuhkan profile hehe
+    public function getProfile()
+    {
+        $user = Auth::user();
+        $umkm = $user->umkm;
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'name' => $user->name,
+                'email' => $user->email,
+                'npwp' => $umkm->npwp_no,
+            ],
+        ], 200);
+    }
+
+    // update data user yang sedang login
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            // Update user data
+            $user->name = $validatedData['name'];
+            $user->email = $validatedData['email'];
+            $user->save();
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Profile updated successfully',
+                'data' => $user,
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Terjadi kesalahan saat memperbarui profil'], 500);
+        }
+    }
+
+    public function deleteProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        DB::beginTransaction();
+
+        try {
+            // Hapus user
+            $user->status = 'deleted';
+            $user->save();
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Profile deleted successfully',
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Terjadi kesalahan saat menghapus profil'], 500);
+        }
+    }
 }
