@@ -8,11 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class SalesController extends Controller
 {
-    public function getSalesHistory()
+    public function getSalesHistory(Request $request)
     {
         $userId = Auth::id();
+        $perPage = $request->query('per_page', 10);
+        $productName = $request->query('product_name');
 
-        $salesHistory = SalesTransaction::join('products', 'sales_transactions.product_id', '=', 'products.product_id')
+        // Query get data transaksi
+        $query = SalesTransaction::join('products', 'sales_transactions.product_id', '=', 'products.product_id')
             ->join('umkms', 'products.umkm_id', '=', 'umkms.umkm_id')
             ->where('umkms.user_id', $userId)
             ->select(
@@ -24,14 +27,34 @@ class SalesController extends Controller
                 'sales_transactions.total'
             )
             ->orderBy('sales_transactions.sales_date', 'desc')
-            ->orderBy('products.product_name', 'asc')
-            ->get();
+            ->orderBy('products.product_name', 'asc');
+
+        // Tambahkan filter berdasarkan nama produk jika ada
+        if ($productName) {
+            $query->where('products.product_name', 'like', '%' . $productName . '%');
+        }
+
+        // Tambahkan filter berdasarkan tanggal jika ada
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $startDate = $request->query('start_date');
+            $endDate = $request->query('end_date');
+
+            $query->whereBetween('sales_transactions.sales_date', [$startDate, $endDate]);
+        }
+
+        // Pagination
+        $salesHistory = $query->paginate($perPage);
 
         return response()->json([
             'success' => true,
-            'data' => $salesHistory,
+            'data' => $salesHistory->items(),
+            'pagination' => [
+                'current_page' => $salesHistory->currentPage(),
+                'last_page' => $salesHistory->lastPage(),
+                'per_page' => $salesHistory->perPage(),
+                'total' => $salesHistory->total(),
+            ],
         ], 200);
-
     }
 
     public function inputPenjualanView()

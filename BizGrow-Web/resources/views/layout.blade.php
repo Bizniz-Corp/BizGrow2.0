@@ -85,8 +85,8 @@
                 </a>
             </div>
         </aside>
-        <div class="main">
-            <header class="p-3 d-flex justify-content-between align-items-center sticky-top">
+        <div class="main" id="main">
+            <header class="p-3 d-flex justify-content-between align-items-center fixed-top">
                 <h3 class="h3 fw-bold">
                     @yield('header')
                 </h3>

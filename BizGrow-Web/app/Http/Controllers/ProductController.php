@@ -1,17 +1,26 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function getAllProduct()
     {
-        $products = Product::all();
-        return view('products.index', compact('products')); // Blade view
+        $userId = Auth::id();
+        $products = Product::join('umkms', 'products.umkm_id', '=', 'umkms.umkm_id')
+            ->where('umkms.user_id', $userId)
+            ->select('products.product_id', 'products.product_name', 'products.product_quantity', 'products.price')
+            ->orderBy('products.product_name', 'asc')
+            ->get();
+        return response()->json([
+            'success' => true,
+            'data' => $products
+        ], 200);
     }
 
     public function home()

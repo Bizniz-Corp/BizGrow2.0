@@ -32,22 +32,21 @@
         </div>
     </div>
 
-    <div class="table-container mx-5 mb-5 overflow-y-auto">
-        <table class="table table-primary text-center align-middle">
-            <thead class="sticky-top">
+    <div class="mx-5 mb-5">
+        <table class="table table-primary table-striped text-center align-middle table-borderless">
+            <thead>
                 <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Tanggal (mm/dd/yyyy)</th>
-                    <th scope="col">ID</th>
+                    <th scope="col">Tanggal</th>
                     <th scope="col">Produk</th>
                     <th scope="col">Perubahan</th>
                     <th scope="col">Total</th>
                 </tr>
             </thead>
             <tbody>
-
             </tbody>
         </table>
+        <div id="pagination" class="d-flex justify-content-center align-items-center mt-4"></div>
     </div>
 
     <!-- Filter Dialog Modal -->
