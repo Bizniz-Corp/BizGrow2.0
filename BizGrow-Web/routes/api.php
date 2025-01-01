@@ -21,6 +21,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/products', [ProductController::class, 'getAllProduct']);
     Route::get('/sales-history', [SalesController::class, 'getSalesHistory']);
     Route::get('/stocks-history', [StockController::class, 'getStockHistory']);
+    Route::get('/profile', [ProfileController::class, 'getProfile']);
+    Route::put('/profile/update', [ProfileController::class, 'updateProfile']);
+    Route::put('/profile/delete', [ProfileController::class, 'deleteProfile']);
     Route::post('/profile/edit-password', [ProfileController::class, 'checkPassword']);
     Route::put('/profile/edit-password', [ProfileController::class, 'editPassword']);
 });
