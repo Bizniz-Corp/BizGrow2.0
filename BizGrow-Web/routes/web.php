@@ -1,75 +1,88 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\SalesController;
-use App\Http\Controllers\StockController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\ProductsController;
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/', function () {
-    return view('landing_page');
-})->name('landing');
-
-
-Route::get('/sign-in', [AuthController::class, 'signinView'])->name('signin');
-Route::get('/sign-up', [AuthController::class, 'signupView'])->name('signup');
-Route::get('/sign-out', [AuthController::class, 'signoutView'])->name('signout');
-
-// Route::get('/input_penjualan', function () {
-//     return view('penjualan.penjualan_input');
-// })->name('penjualan.input');
+    return view('welcome');
+});
 
 Route::get('/home', [ProductController::class, 'home'])->name('home');
 
-Route::prefix('penjualan')->group(function () {
-    Route::get('/input', [SalesController::class, 'inputPenjualanView'])->name('penjualan.input');
-    Route::get('/input-file', [SalesController::class, 'inputPenjualanFileView'])->name('penjualan.inputFile');
-    Route::get('/input-manual', [SalesController::class, 'inputPenjualanManualView'])->name('penjualan.inputManual');
-    Route::get('/riwayat', [SalesController::class, 'riwayatView'])->name('penjualan.riwayat');
-    Route::get('/demand', [SalesController::class, 'demand'])->name('penjualan.demand');
-    Route::get('/profit', [SalesController::class, 'profit'])->name('penjualan.profit');
-});
 
-Route::prefix('stok')->group(function () {
-    Route::get('/input', [StockController::class, 'inputStokView'])->name('stok.input');
-    Route::get('/input-file', [StockController::class, 'inputStokFileView'])->name('stok.inputFile');
-    Route::get('/input-manual', [StockController::class, 'inputStokManualView'])->name('stok.inputManual');
-    Route::get('/riwayat', [StockController::class, 'riwayatView'])->name('stok.riwayat');
-    Route::get('/bufferstok', [StockController::class, 'bufferstokView'])->name('stok.bufferstok');
-});
+Route::get('/landing', function () {
+    return view('landing_page');
+})->name('landing.page');
 
-Route::prefix('profil')->group(function () {
-    Route::get('/', [ProfileController::class, 'profilView'])->name('profil.profil');
-    Route::get('/edit', [ProfileController::class, 'profilEditView'])->name('profil.edit');
-    Route::get('/edit-password', [ProfileController::class, 'profilEditPasswordView'])->name('profil.editPassword');
-});
+Route::get('/input_penjualan', function () {
+    return view('penjualan.penjualan_input');
+})->name('penjualan.input');
 
-//ROUTING DENGAN MIDDLEWARE HARUS AUTHENTICATION
-// Route::middleware('auth')->group(function () {
-//     Route::get('/home', [ProductController::class, 'home'])->name('home');
-//     Route::prefix('penjualan')->group(function () {
-//         Route::get('/input', [SalesController::class, 'inputPenjualanView'])->name('penjualan.input');
-//         Route::get('/input-file', [SalesController::class, 'inputPenjualanFileView'])->name('penjualan.inputFile');
-//         Route::get('/input-manual', [SalesController::class, 'inputPenjualanManualView'])->name('penjualan.inputManual');
-//         Route::get('/riwayat', [SalesController::class, 'riwayatView'])->name('penjualan.riwayat');
-//         Route::get('/demand', [SalesController::class, 'demand'])->name('penjualan.demand');
-//         Route::get('/profit', [SalesController::class, 'profit'])->name('penjualan.profit');
-//     });
+// INPUT PENJUALAN MANUAL
+Route::get('/input_penjualan/manual', [ProductsController::class, 'inputManual'])->name('products.inputManual');
 
-//     Route::prefix('stok')->group(function () {
-//         Route::get('/input', [StockController::class, 'inputStokView'])->name('stok.input');
-//         Route::get('/input-file', [StockController::class, 'inputStokFileView'])->name('stok.inputFile');
-//         Route::get('/input-manual', [StockController::class, 'inputStokManualView'])->name('stok.inputManual');
-//         Route::get('/riwayat', [StockController::class, 'riwayatView'])->name('stok.riwayat');
-//         Route::get('/bufferstok', [StockController::class, 'bufferstokView'])->name('stok.bufferstok');
-//     });
+// INPUT PENJUALAN FILE
+Route::get('/input_penjualan/file', function () {
+    return view('penjualan.input_penjualan_file');
+})->name('penjualan.input.file');
 
-//     Route::prefix('profil')->group(function () {
-//         Route::get('/', [ProfileController::class, 'profilView'])->name('profil.profil');
-//         Route::get('/edit', [ProfileController::class, 'profilEditView'])->name('profil.edit');
-//         Route::get('/edit-password', [ProfileController::class, 'profilEditPasswordView'])->name('profil.editPassword');
-//     });
-// });
+// INPUT STOK MANUAL
+Route::get('/input_stok/manual', function () {
+    return view('stok.input_stok_manual');
+})->name('stok.input.manual');
 
+// INPUT STOK FILE
+Route::get('/input_stok/file', function () {
+    return view('stok.input_stok_file');
+})->name('stok.input.file');
+
+Route::get('/riwayat_penjualan', function () {
+    return view('penjualan.penjualan_history');
+})->name('penjualan.riwayat');
+
+Route::get('/demand', function () {
+    return view('penjualan.penjualan_prediksi_demand');
+})->name('penjualan.demand');
+
+Route::get('/profit', function () {
+    return view('penjualan.profit');
+})->name('penjualan.profit');
+
+Route::get('/input_stok', function () {
+    return view('stok.stok_input');
+})->name('stok.input');
+
+Route::get('/riwayat_stok', function () {
+    return view('stok.stok_history');
+})->name('stok.riwayat');
+
+Route::get('/buffer_stok', function () {
+    return view('/stok.stok_prediksi_buffer_stok');
+})->name('stok.bufferstok');
+
+Route::get('/profil', function () {
+    return view('profil.profile');
+})->name('profil');
+
+Route::get('/profil/edit-password', function () {
+    return view('profil.edit_password');
+})->name('profil.edit.password');
+
+route::get('/signout', function () {
+    return view('/autentikasi.signin');
+})->name('signout');
+
+route::get('/sign-in', function () {
+    return view('/autentikasi.signin');
+})->name('sign.in');
+
+route::get('/sign-up', function () {
+    return view('/autentikasi.signup');
+})->name('sign.in');
 
