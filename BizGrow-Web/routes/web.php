@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SalesController;
@@ -12,9 +13,9 @@ Route::get('/', function () {
 })->name('landing');
 
 
-Route::get('/sign-in', [AuthController::class, 'signinView'])->name('signin');
-Route::get('/sign-up', [AuthController::class, 'signupView'])->name('signup');
-Route::get('/sign-out', [AuthController::class, 'signoutView'])->name('signout');
+Route::get('/login', [AuthController::class, 'signinView'])->name('login');
+Route::get('/register', [AuthController::class, 'signupView'])->name('register');
+// Route::get('/sign-out', [AuthController::class, 'signoutView'])->name('signout');
 
 // Route::get('/input_penjualan', function () {
 //     return view('penjualan.penjualan_input');
@@ -45,8 +46,8 @@ Route::prefix('profil')->group(function () {
     Route::get('/edit-password', [ProfileController::class, 'profilEditPasswordView'])->name('profil.editPassword');
 });
 
-//ROUTING DENGAN MIDDLEWARE HARUS AUTHENTICATION
-// Route::middleware('auth')->group(function () {
+// ROUTING DENGAN MIDDLEWARE HARUS AUTHENTICATION 
+// Route::middleware([Authenticate::class])->group(function () {
 //     Route::get('/home', [ProductController::class, 'home'])->name('home');
 //     Route::prefix('penjualan')->group(function () {
 //         Route::get('/input', [SalesController::class, 'inputPenjualanView'])->name('penjualan.input');

@@ -21,7 +21,7 @@
                     <img src="{{ asset('images/Boom Es.jpeg') }}" alt="profile-pict">
                 </button>
                 <div class="sidebar-nama text-center">
-                    <a href="#">Nama UMKM</a>
+                    <a href="#" id="userName"></a>
                 </div>
             </div>
             <ul class="sidebar-nav">
@@ -79,7 +79,7 @@
                 </li>
             </ul>
             <div class="sidebar-footer">
-                <a href="{{ route('signout') }}" class="sidebar-link">
+                <a href="#" id="logoutButton" class="sidebar-link">
                     <img src="{{ asset('images/logout.svg') }}" alt="logout-icon">
                     <span>Keluar</span>
                 </a>
@@ -94,6 +94,43 @@
             </header>
             <div class="content overflow-y-auto m-3">
                 @yield('content')
+            </div>
+        </div>
+    </div>
+    <!-- Modal Konfirmasi Logout -->
+    <div class="modal" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin keluar?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="batalButton"
+                        data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger" id="confirmLogoutButton">Keluar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal untuk meminta login jika token tidak ditemukan -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+        aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Belum Login</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Untuk mengakses halaman ini, Anda harus login terlebih dahulu.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="redirectToLoginButton">Oke</button>
+                </div>
             </div>
         </div>
     </div>

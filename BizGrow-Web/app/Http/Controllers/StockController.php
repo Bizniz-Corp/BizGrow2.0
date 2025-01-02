@@ -63,12 +63,12 @@ class StockController extends Controller
 
     public function inputStokFileView()
     {
-        return view('penjualan.input_stok_file'); // Blade view
+        return view('stok.input_stok_file'); // Blade view
     }
 
     public function inputStokManualView()
     {
-        return view('penjualan.input_stok_manual'); // Blade view
+        return view('stok.input_stok_manual'); // Blade view
     }
 
     public function riwayatView()

@@ -1,6 +1,5 @@
 $(document).ready(function () {
-    // const token = localStorage.getItem('auth_token');
-    const token = "7|K8SVDQiX0DiNapLWNO8JeCUKV9GqpVIlzo2cNaud6a51fac9";
+    const token = localStorage.getItem("token");
 
     // Toggle visibility for "Password Lama"
     $("#togglePassLama").on("click", function () {

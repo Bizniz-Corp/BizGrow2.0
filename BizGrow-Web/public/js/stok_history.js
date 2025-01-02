@@ -1,7 +1,6 @@
 $(document).ready(function () {
     const filterModal = new bootstrap.Modal($("#filterModal")[0]);
-    const token = "9|8h5vfax7jPtZff4xFAw78GqYdZHCzJWKMvU1TDwwba6f6d63";
-    // const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     let currentPage = 1;
     let currentFilters = {};
 

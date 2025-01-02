@@ -74,7 +74,9 @@ class SalesController extends Controller
 
     public function riwayatView()
     {
-        return view('penjualan.penjualan_history'); // Blade view
+        $user = Auth::user();
+
+        return view('penjualan.penjualan_history', compact('user'));
     }
 
     public function demandView()
