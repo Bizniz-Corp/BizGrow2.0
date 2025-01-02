@@ -40,24 +40,19 @@ body {
 /* Layout */
 .wrapper {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 .main {
-    margin-left: 4.375rem;
-    margin-top: 4.375rem;
     min-height: 100vh;
-    width: calc(100% - 4.375rem);
+    width: 100%;
     overflow: hidden;
     transition: all 0.35s ease-in-out;
     background-color: var(--white);
-    display: flex;
-    flex-direction: column;
 }
 
 .content {
-    height: auto;
-    overflow-y: auto;
+    height: 100vh;
 }
 
 
@@ -69,7 +64,6 @@ body {
     z-index: 100000000000000000000;
     transition: all 0.25s ease-in-out;
     background-color: var(--primary);
-    position: fixed;
     display: flex;
     flex-direction: column;
 }
@@ -195,9 +189,6 @@ a.sidebar-link:hover {
 
 /* Header */
 header {
-    position: fixed;
-    margin-left: 4.375rem;
-    z-index: 1000;
     height: auto;
     background-color: var(--white);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);

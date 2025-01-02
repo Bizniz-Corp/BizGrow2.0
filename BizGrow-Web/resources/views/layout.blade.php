@@ -72,7 +72,7 @@
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{ route('profil.profil') }}" class="sidebar-link">
+                    <a href="{{ route('profil') }}" class="sidebar-link">
                         <img src="{{ asset('images/profile.svg') }}" alt="profile-icon">
                         <span>Profil</span>
                     </a>
@@ -85,14 +85,14 @@
                 </a>
             </div>
         </aside>
-        <div class="main" id="main">
-            <header class="p-3 d-flex justify-content-between align-items-center fixed-top">
+        <div class="main">
+            <header class="p-3 d-flex justify-content-between align-items-center sticky-top">
                 <h3 class="h3 fw-bold">
                     @yield('header')
                 </h3>
                 <img src="{{ asset('images/logo.png') }}" alt="bizgrowlogo">
             </header>
-            <div class="content overflow-y-auto m-3">
+            <div class="content overflow-y-auto m-5">
                 @yield('content')
             </div>
         </div>

@@ -8,7 +8,6 @@ use App\Models\StockChange;
 use Illuminate\Http\Request;
 use App\Models\SalesTransaction;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
@@ -48,4 +47,5 @@ class ApiController extends Controller
             ], 404);
         }
     }
+
 }

@@ -34,15 +34,11 @@ class AuthController extends Controller
             // Simpan file dan buat path-nya
             $filePath = $request->file('file_surat_izin')->store('public/surat_izin');
 
-            // Foto profile default
-            $defaultProfilePhoto = 'public/images/profil/profile.svg';
-
             // Simpan ke tabel umkms
             $umkm = Umkaem::create([
                 'user_id' => $user->id,
                 'npwp_no' => $data['npwp'],
                 'izin_usaha_path' => $filePath,
-                'profile_picture' => $defaultProfilePhoto,
             ]);
 
             DB::commit(); // Jika semua berhasil, commit transaksi
@@ -91,20 +87,5 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'You have been logged out successfully',
         ]);
-    }
-
-    public function signinView()
-    {
-        return view('autentikasi.signin'); // Blade view
-    }
-
-    public function signupView()
-    {
-        return view('autentikasi.signup'); // Blade view
-    }
-
-    public function signoutView()
-    {
-        return view('autentikasi.signin'); // Blade view
     }
 }
