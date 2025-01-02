@@ -19,6 +19,7 @@ class ProfileController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
+                'profile_picture' => $umkm->profile_picture,
                 'name' => $user->name,
                 'email' => $user->email,
                 'npwp' => $umkm->npwp_no,
