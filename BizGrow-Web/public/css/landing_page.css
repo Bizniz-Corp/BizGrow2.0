@@ -1,10 +1,10 @@
 :root {
-    --primary: #151436; 
-    --secondary: #223777; 
-    --lightBlue: #4E69BA; 
-    --white: #FFFFFF; 
-    --success: #24A618; 
-    --button-hover: #1e8f17; 
+    --primary: #242258;
+    --secondary: #223777;
+    --lightBlue: #4E69BA;
+    --white: #FFFFFF;
+    --success: #24A618;
+    --button-hover: #1e8f17;
     --gray: #686868;
 }
 
@@ -16,7 +16,7 @@ body {
 }
 
 .hero-section {
-    background-image: url('../img/hero-background.jpg'); 
+    background-image: url('../img/hero-background.jpg');
     background-size: cover;
     background-position: center;
     height: 60vh;
@@ -32,20 +32,20 @@ body {
 }
 
 .hero-section .logo {
-    width: 200px; 
+    width: 200px;
 }
 
 h1 {
-    font-size: 3rem; 
+    font-size: 3rem;
     font-weight: 700;
     margin-bottom: 10px;
-    color: var(--primary); 
+    color: var(--primary);
 }
 
 .hero-section p {
-    font-size: 1.25rem; 
+    font-size: 1.25rem;
     margin-bottom: 20px;
-    color: var(--primary); 
+    color: var(--primary);
 }
 
 .btn-custom {
@@ -67,11 +67,11 @@ h1 {
 }
 
 .btn-signup:hover {
-    background-color: red;
+    background-color: rgb(184, 1, 1);
 }
 
 .btn-signin {
-    background-color: var(--secondary);
+    background-color: var(--primary);
     color: var(--white);
     width: 200px;
     height: 50px;
@@ -79,7 +79,7 @@ h1 {
 }
 
 .btn-signin:hover {
-    background-color: var(--lightBlue);
+    background-color: var(--secondary);
 }
 
 .features-section {
@@ -90,25 +90,26 @@ h1 {
 .section-title {
     font-size: 2.4rem;
     font-weight: 700;
-    color: var(--primary); 
+    color: var(--primary);
 }
 
 .section-subtitle {
     font-size: 1rem;
-    color: var(--primary); 
+    color: var(--primary);
 }
 
 .feature-item {
     padding: 20px;
-    background: var(--secondary);
+    background: var(--primary);
     border-color: var(--white);
     border-radius: 80px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: var(--white); 
+    color: var(--white);
 }
 
 .feature-item:hover {
     transform: translateY(-25px);
+    background: var(--secondary);
 }
 
 .feature-icon {

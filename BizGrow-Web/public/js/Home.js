@@ -1,11 +1,19 @@
-// Select the profit element
-const profitElement = document.querySelector('.profit-box');
+document.addEventListener("DOMContentLoaded", function () {
+    // Ambil elemen profit box
+    const profitPembelian = document.getElementById("profit-pembelian");
+    const profitPenjualan = document.getElementById("profit-penjualan");
 
-// Function to update the profit value dynamically
-function updateProfit(profit) {
-    profitElement.innerHTML = `Profit Bulan Ini<br>Rp${profit.toLocaleString('id-ID')},00`;
-}
+    // Tambahkan event listener untuk profit pembelian
+    if (profitPembelian) {
+        profitPembelian.addEventListener("click", function () {
+            alert("Angka total pembelian yang ditampilkan hanya untuk bulan ini.");
+        });
+    }
 
-// Example usage
-const profitValue = 700000000;  // Change this value as needed
-updateProfit(profitValue);
+    // Tambahkan event listener untuk profit penjualan
+    if (profitPenjualan) {
+        profitPenjualan.addEventListener("click", function () {
+            alert("Angka total penjualan yang ditampilkan hanya untuk bulan ini.");
+        });
+    }
+});

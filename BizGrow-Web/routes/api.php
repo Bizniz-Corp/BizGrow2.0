@@ -1,9 +1,12 @@
 <?php
 
-use App\Http\Controllers\ApiController;
-use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 
 
 // Route Public (Tidak membutuhkan autentikasi)
@@ -15,9 +18,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // Tambahkan route lain di sini untuk fitur yang dilindungi
-    Route::get('/profile', [ApiController::class, 'getAllProducts']);
-    Route::get('/products', [ApiController::class, 'getAllProducts']);
-    Route::get('/sales-history', [ApiController::class, 'getSalesHistory']);
+    Route::get('/products', [ProductController::class, 'getAllProduct']);
+    Route::get('/sales-history', [SalesController::class, 'getSalesHistory']);
+    Route::get('/stocks-history', [StockController::class, 'getStockHistory']);
+    Route::get('/profile', [ProfileController::class, 'getProfile']);
+    Route::put('/profile/update', [ProfileController::class, 'updateProfile']);
+    Route::put('/profile/delete', [ProfileController::class, 'deleteProfile']);
+    Route::post('/profile/edit-password', [ProfileController::class, 'checkPassword']);
+    Route::put('/profile/edit-password', [ProfileController::class, 'editPassword']);
 });
 
 Route::get('/user', function (Request $request) {

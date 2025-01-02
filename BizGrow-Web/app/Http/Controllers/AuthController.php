@@ -76,10 +76,16 @@ class AuthController extends Controller
             ], 401);
         }
 
+        $user->tokens()->delete();
+
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
-            'user' => $user,
-            'token' => $token
+            'status' => 'success',
+            'message' => 'Login successful',
+            'data' => [
+                'user' => $user,
+                'token' => $token,
+            ]
         ]);
     }
 
@@ -90,6 +96,21 @@ class AuthController extends Controller
         $user->currentAccessToken()->delete();
         return response()->json([
             'message' => 'You have been logged out successfully',
-        ]);
+        ], 200);
+    }
+
+    public function signinView()
+    {
+        return view('autentikasi.signin'); // Blade view
+    }
+
+    public function signupView()
+    {
+        return view('autentikasi.signup'); // Blade view
+    }
+
+    public function signoutView()
+    {
+        return view('autentikasi.signin'); // Blade view
     }
 }

@@ -1,16 +1,49 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function getAllProduct()
     {
-        $products = Product::all();
-        return view('products.index', compact('products')); // Blade view
+        $userId = Auth::id();
+        $products = Product::join('umkms', 'products.umkm_id', '=', 'umkms.umkm_id')
+            ->where('umkms.user_id', $userId)
+            ->select('products.product_id', 'products.product_name', 'products.product_quantity', 'products.price')
+            ->orderBy('products.product_name', 'asc')
+            ->get();
+        return response()->json([
+            'success' => true,
+            'data' => $products
+        ], 200);
+    }
+
+    public function home()
+    {
+        $currentMonth = Carbon::now()->month; // Bulan saat ini
+        $currentYear = Carbon::now()->year;  // Tahun saat ini
+
+        // Hitung total pembelian pada bulan ini
+        $totalPembelian = DB::table('purchase_transactions')
+            ->whereMonth('created_at', $currentMonth)
+            ->whereYear('created_at', $currentYear)
+            ->sum('total');
+
+        // Hitung total penjualan pada bulan ini
+        $totalPenjualan = DB::table('sales_transactions')
+            ->whereMonth('created_at', $currentMonth)
+            ->whereYear('created_at', $currentYear)
+            ->sum('total');
+
+        return view('home', [
+            'totalPembelian' => $totalPembelian,
+            'totalPenjualan' => $totalPenjualan,
+        ]);
     }
 
     public function show($id)
@@ -23,10 +56,5 @@ class ProductController extends Controller
 
         return view('products.show', compact('product')); // Blade view
     }
-    
-    public function history()
-    {
-        $products = Product::all();
-        return view('penjualan.penjualan_history', compact('products')); // Blade view
-    }
+
 }
