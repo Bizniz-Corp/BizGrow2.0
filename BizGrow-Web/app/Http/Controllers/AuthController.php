@@ -35,7 +35,7 @@ class AuthController extends Controller
             $filePath = $request->file('file_surat_izin')->store('public/surat_izin');
 
             // Foto profile default
-            $defaultProfilePhoto = 'public/images/profil/profile.svg';
+            $defaultProfilePhoto = '/storage/private/default_avatar.jpg';
 
             // Simpan ke tabel umkms
             $umkm = Umkaem::create([
