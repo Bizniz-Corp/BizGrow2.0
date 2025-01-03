@@ -13,45 +13,7 @@
 @endsection
 
 @section('jsCustom')
-    {{ asset('js/profile.js') }}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            axios.get('{{ route('profile.data') }}', {
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            })
-            .then(function (response) {
-                if (response.data.success) {
-                    const user = response.data.data;
-
-                    const profilePicture = document.getElementById('profilePicture');
-                    profilePicture.src = user.profile_picture;
-
-                    const nameInput = document.getElementById('umkmNameInput');
-                    nameInput.value = user.name;
-
-                    const emailInput = document.getElementById('umkmEmailInput');
-                    emailInput.value = user.email;
-
-                    const npwpInput = document.getElementById('umkmNPWP');
-                    npwpInput.value = user.npwp;
-                }
-            })
-            .catch(function (error) {
-                console.error('Error fetching profile data:', error);
-            });
-        });
-
-        function previewImage(event) {
-            const reader = new FileReader();
-            reader.onload = function(){
-                const output = document.getElementById('profilePicture');
-                output.src = reader.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
-    </script>
+    {{ asset('js/profile_edit.js') }}
 @endsection
 
 @section('content')
@@ -78,13 +40,14 @@
                 <input
                     type="file"
                     id="fileInput"
+                    name="profile_picture"
                     style="display: none;"
                     accept="image/*"
                     onchange="previewImage(event)"
                 />
             </div>
             <div class="ms-5">
-                <form id="profileForm" method="POST" action="{{ route('profil.edit') }}">
+                <form id="profileForm" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <label for="umkmNameInput" class="form-label fw-bold">Nama UMKM</label>
@@ -111,7 +74,7 @@
 
                     <label for="umkmNPWP" class="form-label fw-bold">NPWP</label>
                     <div class="position-relative mb-3">
-                        <input type="email" id="umkmNPWP" class="form-control" disabled />
+                        <input type="text" id="umkmNPWP" name="npwp" class="form-control" disabled />
                         <span
                             class="position-absolute right-icon"
                             data-bs-toggle="tooltip"

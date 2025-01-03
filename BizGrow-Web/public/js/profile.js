@@ -1,36 +1,51 @@
 document.addEventListener("DOMContentLoaded", function () {
-    axios
-        .get("/api/profile", {
+    console.log("Fetching profile data...");
+    $(document).ready(function () {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            console.log("Token tidak ditemukan di profil.");
+            return;
+        }
+
+        $.ajax({
+            url: "/api/profile",
+            type: "GET",
             headers: {
-                Authorization: "Bearer " + localStorage.getItem("auth_token"),
+                Authorization: `Bearer ${token}`,
             },
-        })
-        .then(function (response) {
-            if (response.data.success) {
-                const user = response.data.data;
+            success: function (response) {
+                if (response.success) {
+                    const user = response.data;
 
-                const nameInput = document.getElementById("umkmNameInput");
-                nameInput.value = user.name;
-                nameInput.setAttribute("data-original", user.name);
+                    console.log(user.profile_picture);
+                    console.log(user.name);
+                    console.log(user.email);
+                    console.log(user.npwp);
 
-                const emailInput = document.getElementById("umkmEmailInput");
-                emailInput.value = user.email;
-                emailInput.setAttribute("data-original", user.email);
+                    const profilePicture =
+                        document.getElementById("profilePicture");
+                    profilePicture.src = user.profile_picture
+                        ? `/storage/private/${user.profile_picture}`
+                        : "/storage/private/default_profile.jpg";
 
-                const npwpInput = document.getElementById("umkmNPWP");
-                npwpInput.value = user.npwp;
-                npwpInput.setAttribute("data-original", user.npwp);
+                    const nameInput = document.getElementById("umkmNameInput");
+                    nameInput.value = user.name;
 
-                nameInput.addEventListener("focus", handleFocus);
-                nameInput.addEventListener("blur", handleBlur);
+                    const emailInput =
+                        document.getElementById("umkmEmailInput");
+                    emailInput.value = user.email;
 
-                emailInput.addEventListener("focus", handleFocus);
-                emailInput.addEventListener("blur", handleBlur);
-            }
-        })
-        .catch(function (error) {
-            console.error("Error fetching profile data:", error);
+                    const npwpInput = document.getElementById("umkmNPWP");
+                    npwpInput.value = user.npwp;
+                } else {
+                    console.error("Gagal memuat profile:", response.message);
+                }
+            },
+            error: function (error) {
+                console.error("Error fetching profile data:", error);
+            },
         });
+    });
 
     function handleFocus(event) {
         const input = event.target;

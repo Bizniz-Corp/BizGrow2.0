@@ -56,7 +56,7 @@
             <img src="" class="rounded-circle mb-3 profile-photo" alt="User Avatar" id="profilePicture" />
             <div class="ms-5">
                 <label for="umkmNameInput" class="form-label fw-bold">Nama UMKM</label>
-                <input type="text" class="form-control text-muted mb-2" id="umkmNameInput" disabled />
+                <input type="text" class="form-control text-muted mb-2" id="umkmNameInput" disabled></input>
 
                 <label for="umkmEmailInput" class="form-label fw-bold">Email</label>
                 <input type="email" class="form-control text-muted mb-2" id="umkmEmailInput" disabled />

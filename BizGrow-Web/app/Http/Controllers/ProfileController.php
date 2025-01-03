@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -31,10 +32,12 @@ class ProfileController extends Controller
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
+        $umkm = $user->umkm;
 
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk foto profil
         ]);
 
         DB::beginTransaction();
@@ -43,7 +46,21 @@ class ProfileController extends Controller
             // Update user data
             $user->name = $validatedData['name'];
             $user->email = $validatedData['email'];
+
+            // Handle profile picture upload
+            if ($request->hasFile('profile_picture')) {
+                // Delete old profile picture if exists
+                if ($user->profile_picture) {
+                    Storage::delete('private/' . $user->profile_picture);
+                }
+
+                // Store new profile picture
+                $path = $request->file('profile_picture')->store('private/profile_pictures');
+                $umkm->profile_picture = basename($path);
+            }
+
             $user->save();
+            $umkm->save();
 
             DB::commit();
 
@@ -54,7 +71,11 @@ class ProfileController extends Controller
             ], 200);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'Terjadi kesalahan saat memperbarui profil'], 500);
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update profile',
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
 
