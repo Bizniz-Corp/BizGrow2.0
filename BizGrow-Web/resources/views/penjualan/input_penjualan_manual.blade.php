@@ -17,7 +17,7 @@
                 <div class="m-5 align-items-center">
                     <div class="form-container position-absolute top-50 start-50 translate-middle">
                         <h1 class="text-center">Input Data Manual</h1>
-                        <form id="inputForm" action="inputPenjualan.php" method="POST">
+                        <form id="inputForm" action="{{ route('sales.store') }}" method="POST">
                             @csrf
                             <div class="m-3">
                                 <label for="tanggal" class="form-label">Tanggal:</label>
@@ -27,7 +27,7 @@
                                 <label for="namaProduk" class="form-label">Produk:</label>
                                 <select class="form-select" id="product_id" name="product_id" required>
                                     @foreach($products as $product)
-                                        <option value="{{ $product->product_id }}">{{ $product->product_name }}</option>
+                                    <option value="{{ $product->product_id }}">{{ $product->product_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -43,6 +43,11 @@
                                 <button type="submit" class="btn btn-primary">Kirim Data</button>
                             </div>
                         </form>
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

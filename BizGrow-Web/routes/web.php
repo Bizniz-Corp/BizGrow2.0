@@ -4,6 +4,8 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\InputSalesController;
+use App\Http\Controllers\StockChangeController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -25,7 +27,9 @@ Route::get('/input_penjualan', function () {
 })->name('penjualan.input');
 
 // INPUT PENJUALAN MANUAL
-Route::get('/input_penjualan/manual', [ProductsController::class, 'inputManual'])->name('products.inputManual');
+Route::get('/input_penjualan/manual', [ProductsController::class, 'inputPenjualanManual'])->name('products.inputManual');
+// store data p
+Route::post('/input_penjualan/manual', [InputSalesController::class, 'store'])->name('sales.store');
 
 // INPUT PENJUALAN FILE
 Route::get('/input_penjualan/file', function () {
@@ -33,9 +37,10 @@ Route::get('/input_penjualan/file', function () {
 })->name('penjualan.input.file');
 
 // INPUT STOK MANUAL
-Route::get('/input_stok/manual', function () {
-    return view('stok.input_stok_manual');
-})->name('stok.input.manual');
+Route::get('/input_stok/manual', [ProductsController::class, 'inputStokManual'])->name('products.inputStokManual');
+// store data s
+Route::post('/input_stok/manual', [StockChangeController::class, 'store'])->name('stockchange.store');
+
 
 // INPUT STOK FILE
 Route::get('/input_stok/file', function () {
