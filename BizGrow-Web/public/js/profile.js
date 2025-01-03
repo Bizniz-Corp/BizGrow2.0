@@ -1,34 +1,46 @@
 document.addEventListener('DOMContentLoaded', function() {
-  axios.get('/api/profile', {
-    headers: {
-      'Authorization': 'Bearer ' + localStorage.getItem('auth_token')
-    }
-  })
-  .then(function (response) {
-    if (response.data.success) {
-      const user = response.data.data;
+  console.log('Fetching profile data...');
+  $(document).ready(function() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+          console.log('Token tidak ditemukan di profil.');
+          return;
+      }
 
-      const nameInput = document.getElementById('umkmNameInput');
-      nameInput.value = user.name;
-      nameInput.setAttribute('data-original', user.name);
+      $.ajax({
+          url: '/api/profile',
+          type: 'GET',
+          headers: {
+              Authorization: `Bearer ${token}`
+          },
+          success: function(response) {
+              if (response.success) {
+                  const user = response.data;
 
-      const emailInput = document.getElementById('umkmEmailInput');
-      emailInput.value = user.email;
-      emailInput.setAttribute('data-original', user.email);
+                  console.log(user.profile_picture);
+                  console.log(user.name);
+                  console.log(user.email);
+                  console.log(user.npwp);
 
-      const npwpInput = document.getElementById('umkmNPWP');
-      npwpInput.value = user.npwp;
-      npwpInput.setAttribute('data-original', user.npwp);
+                  const profilePicture = document.getElementById('profilePicture');
+                  profilePicture.src = user.profile_picture ? `/storage/private/${user.profile_picture}` : '/storage/private/default_profile.jpg';
 
-      nameInput.addEventListener('focus', handleFocus);
-      nameInput.addEventListener('blur', handleBlur);
+                  const nameInput = document.getElementById('umkmNameInput');
+                  nameInput.value = user.name;
 
-      emailInput.addEventListener('focus', handleFocus);
-      emailInput.addEventListener('blur', handleBlur);
-    }
-  })
-  .catch(function (error) {
-    console.error('Error fetching profile data:', error);
+                  const emailInput = document.getElementById('umkmEmailInput');
+                  emailInput.value = user.email;
+
+                  const npwpInput = document.getElementById('umkmNPWP');
+                  npwpInput.value = user.npwp;
+              } else {
+                  console.error('Gagal memuat profile:', response.message);
+              }
+          },
+          error: function(error) {
+              console.error('Error fetching profile data:', error);
+          }
+      });
   });
 
   function handleFocus(event) {
