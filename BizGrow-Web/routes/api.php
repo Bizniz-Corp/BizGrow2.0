@@ -32,4 +32,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// Route::get('/products', [ApiController::class, 'getAllProducts']);
+Route::get('/products', [ApiController::class, 'getAllProducts']);
+
+Route::get('/profit', [ApiController::class, 'getMonthlyProfit']);
