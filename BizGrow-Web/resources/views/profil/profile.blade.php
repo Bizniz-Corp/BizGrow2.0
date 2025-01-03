@@ -3,9 +3,11 @@
 @section('title', 'Profil')
 
 @section('header')
-<div class="d-flex align-items-center">
-  <a href="{{ route('profil.profil') }}"><h3 class="h3 fw-bold mb-0 text-dark">Profil</h3></a>
-</div>
+    <div class="d-flex align-items-center">
+        <a href="{{ route('profil.profil') }}">
+            <h3 class="h3 fw-bold mb-0 text-dark">Profil</h3>
+        </a>
+    </div>
 @endsection
 
 @section('cssCustom')
@@ -17,33 +19,33 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             axios.get('{{ route('profil.profil') }}', {
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            })
-            .then(function (response) {
-                if (response.data.success) {
-                    const user = response.data.data;
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                })
+                .then(function(response) {
+                    if (response.data.success) {
+                        const user = response.data.data;
 
-                    const profilePicture = document.getElementById('profilePicture');
-                    profilePicture.src = user.profile_picture;
+                        const profilePicture = document.getElementById('profilePicture');
+                        profilePicture.src = user.profile_picture;
 
-                    const nameInput = document.getElementById('umkmNameInput');
-                    nameInput.value = user.name;
-                    nameInput.removeAttribute('disabled');
+                        const nameInput = document.getElementById('umkmNameInput');
+                        nameInput.value = user.name;
+                        nameInput.removeAttribute('disabled');
 
-                    const emailInput = document.getElementById('umkmEmailInput');
-                    emailInput.value = user.email;
-                    emailInput.removeAttribute('disabled');
+                        const emailInput = document.getElementById('umkmEmailInput');
+                        emailInput.value = user.email;
+                        emailInput.removeAttribute('disabled');
 
-                    const npwpInput = document.getElementById('umkmNPWP');
-                    npwpInput.value = user.npwp;
-                    npwpInput.removeAttribute('disabled');
-                }
-            })
-            .catch(function (error) {
-                console.error('Error fetching profile data:', error);
-            });
+                        const npwpInput = document.getElementById('umkmNPWP');
+                        npwpInput.value = user.npwp;
+                        npwpInput.removeAttribute('disabled');
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error fetching profile data:', error);
+                });
         });
     </script>
 @endsection
@@ -51,36 +53,16 @@
 @section('content')
     <div class="wrapper">
         <div class="filter-container m-5 d-flex align-items-start">
-            <img
-                src=""
-                class="rounded-circle mb-3 profile-photo"
-                alt="User Avatar"
-                id="profilePicture"
-            />
+            <img src="" class="rounded-circle mb-3 profile-photo" alt="User Avatar" id="profilePicture" />
             <div class="ms-5">
                 <label for="umkmNameInput" class="form-label fw-bold">Nama UMKM</label>
-                <input
-                    type="text"
-                    class="form-control text-muted mb-2"
-                    id="umkmNameInput"
-                    disabled
-                />
+                <input type="text" class="form-control text-muted mb-2" id="umkmNameInput" disabled />
 
                 <label for="umkmEmailInput" class="form-label fw-bold">Email</label>
-                <input
-                    type="email"
-                    class="form-control text-muted mb-2"
-                    id="umkmEmailInput"
-                    disabled
-                />
+                <input type="email" class="form-control text-muted mb-2" id="umkmEmailInput" disabled />
 
                 <label for="umkmNPWP" class="form-label fw-bold">NPWP</label>
-                <input
-                    type="text"
-                    class="form-control text-muted mb-2"
-                    id="umkmNPWP"
-                    disabled
-                />
+                <input type="text" class="form-control text-muted mb-2" id="umkmNPWP" disabled />
 
                 <div class="m-5 d-flex gap-3">
                     <a href="{{ route('profil.edit') }}" class="btn btn-primary">Edit Profil</a>
