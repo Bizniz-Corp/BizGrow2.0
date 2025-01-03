@@ -57,4 +57,23 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteAccountModalLabel">Konfirmasi Hapus Akun</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus akun? Harap masukkan password Anda untuk konfirmasi.</p>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Password">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Hapus Akun</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

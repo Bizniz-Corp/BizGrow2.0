@@ -50,8 +50,8 @@ class ProfileController extends Controller
             // Handle profile picture upload
             if ($request->hasFile('profile_picture')) {
                 // Delete old profile picture if exists
-                if ($user->profile_picture) {
-                    Storage::delete('private/' . $user->profile_picture);
+                if ($umkm->profile_picture) {
+                    Storage::delete('private/profile_pictures/' . $umkm->profile_picture);
                 }
 
                 // Store new profile picture
@@ -81,7 +81,18 @@ class ProfileController extends Controller
 
     public function deleteProfile(Request $request)
     {
+        $request->validate([
+            'password' => 'required',
+        ]);
+
         $user = Auth::user();
+        
+        if(!Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Password is incorrect',
+            ], 401);
+        }
 
         DB::beginTransaction();
 
