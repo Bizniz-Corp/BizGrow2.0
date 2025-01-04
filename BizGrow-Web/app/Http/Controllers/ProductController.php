@@ -51,8 +51,11 @@ class ProductController extends Controller
 
     public function home()
     {
-        $currentMonth = Carbon::now()->month; // Bulan saat ini
-        $currentYear = Carbon::now()->year;  // Tahun saat ini
+        // $currentMonth = Carbon::now()->month; // Bulan saat ini
+        // $currentYear = Carbon::now()->year;  // Tahun saat ini
+
+        $currentMonth = 12; // Bulan Desember
+        $currentYear = 2024;  // Tahun 2024
 
         // Hitung total pembelian pada bulan ini
         $totalPembelian = DB::table('purchase_transactions')

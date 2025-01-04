@@ -49,29 +49,4 @@ class ApiController extends Controller
         }
     }
 
-    public function getMonthlyProfit()
-    {
-        $currentMonth = Carbon::now()->month; // Bulan saat ini
-        $currentYear = Carbon::now()->year;  // Tahun saat ini
-
-        // Hitung total pembelian pada bulan ini
-        $totalPembelian = DB::table('purchase_transactions')
-            ->whereMonth('created_at', $currentMonth)
-            ->whereYear('created_at', $currentYear)
-            ->sum('total');
-
-        // Hitung total penjualan pada bulan ini
-        $totalPenjualan = DB::table('sales_transactions')
-            ->whereMonth('created_at', $currentMonth)
-            ->whereYear('created_at', $currentYear)
-            ->sum('total');
-
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'total_pembelian' => $totalPembelian,
-                'total_penjualan' => $totalPenjualan,
-            ],
-        ]);
-    }
 }

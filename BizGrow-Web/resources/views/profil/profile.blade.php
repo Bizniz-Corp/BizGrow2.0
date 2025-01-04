@@ -16,38 +16,6 @@
 
 @section('jsCustom')
     {{ asset('js/profile.js') }}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            axios.get('{{ route('profil.profil') }}', {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    }
-                })
-                .then(function(response) {
-                    if (response.data.success) {
-                        const user = response.data.data;
-
-                        const profilePicture = document.getElementById('profilePicture');
-                        profilePicture.src = user.profile_picture;
-
-                        const nameInput = document.getElementById('umkmNameInput');
-                        nameInput.value = user.name;
-                        nameInput.removeAttribute('disabled');
-
-                        const emailInput = document.getElementById('umkmEmailInput');
-                        emailInput.value = user.email;
-                        emailInput.removeAttribute('disabled');
-
-                        const npwpInput = document.getElementById('umkmNPWP');
-                        npwpInput.value = user.npwp;
-                        npwpInput.removeAttribute('disabled');
-                    }
-                })
-                .catch(function(error) {
-                    console.error('Error fetching profile data:', error);
-                });
-        });
-    </script>
 @endsection
 
 @section('content')
