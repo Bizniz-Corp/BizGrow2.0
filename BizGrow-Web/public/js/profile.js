@@ -22,11 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.log(user.email);
                     console.log(user.npwp);
 
-                    const profilePicture =
-                        document.getElementById("profilePicture");
-                    profilePicture.src = user.profile_picture
-                        ? `/storage/private/${user.profile_picture}`
-                        : "/storage/private/default_profile.jpg";
+                    const profilePicture = document.getElementById('profilePicture');
+                    profilePicture.src = user.profile_picture ? `/storage/private/${user.profile_picture}` : '/images/profil/default_avatar.jpg';
 
                     const nameInput = document.getElementById("umkmNameInput");
                     nameInput.value = user.name;
@@ -61,8 +58,55 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    const deleteAccountButton = document.querySelector(".btn-danger");
-    const simpan = document.querySelector(".btn-success");
+  const deleteAccountButton = document.getElementById('deleteAccountButton');
+  const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+
+  deleteAccountButton.addEventListener('click', function() {
+      const deleteAccountModal = new bootstrap.Modal(document.getElementById('deleteAccountModal'));
+      deleteAccountModal.show();
+  });
+
+  confirmDeleteButton.addEventListener('click', function() {
+      const confirmation = confirm("Yakin ingin menghapus akun?");
+      if (confirmation) {
+          const token = localStorage.getItem("token");
+          const password = document.getElementById('confirmPassword').value;
+
+          if (!token) {
+              console.error('Token tidak ditemukan.');
+              return;
+          }
+
+          if (!password) {
+                alert('Password tidak boleh kosong.');
+                return;
+          }
+
+          $.ajax({
+              url: '/api/profile/delete', // Endpoint untuk menghapus profil
+              type: 'PUT',
+              headers: {
+                  Authorization: `Bearer ${token}`
+              },
+              data: {
+                  password: password
+              },
+              success: function(response) {
+                  if (response.success) {
+                      alert('Akun berhasil dihapus.');
+                      window.location.href = '/login'; // Redirect ke halaman login setelah akun dihapus
+                  } else {
+                      alert('Gagal menghapus akun: ' + response.message);
+                  }
+              },
+              error: function(xhr) {
+                  alert('Terjadi kesalahan saat menghapus akun: ' + xhr.responseJSON?.message || 'Unknown error');
+              }
+          });
+      }
+  });
+
+  const simpan = document.querySelector(".btn-success");
 
     simpan.addEventListener("click", function () {
         const confirmation = confirm("Yakin ingin menyimpan perubahan?");
@@ -73,17 +117,10 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "profile.html";
     });
 
-    deleteAccountButton.addEventListener("click", function () {
-        const confirmation = confirm("Yakin ingin menghapus akun?");
-        if (confirmation) {
-            window.location.href = "indexsignin.html";
-        }
-    });
-
-    const tooltipTriggerList = [].slice.call(
-        document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    );
-    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
-        new bootstrap.Tooltip(tooltipTriggerEl);
-    });
+  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+    new bootstrap.Tooltip(tooltipTriggerEl);
+  });
 });
+
+

@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log(user.npwp);
   
                     const profilePicture = document.getElementById('profilePicture');
-                    profilePicture.src = user.profile_picture ? `/storage/private/${user.profile_picture}` : '/storage/private/default_profile.jpg';
+                    profilePicture.src = user.profile_picture ? `/storage/private/${user.profile_picture}` : '/images/profil/default_avatar.jpg';
   
                     const nameInput = document.getElementById('umkmNameInput');
                     nameInput.value = user.name;
