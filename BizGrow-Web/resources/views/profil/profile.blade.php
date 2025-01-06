@@ -3,9 +3,11 @@
 @section('title', 'Profil')
 
 @section('header')
-<div class="d-flex align-items-center">
-  <a href="{{ route('profil.profil') }}"><h3 class="h3 fw-bold mb-0 text-dark">Profil</h3></a>
-</div>
+    <div class="d-flex align-items-center">
+        <a href="{{ route('profil.profil') }}">
+            <h3 class="h3 fw-bold mb-0 text-dark">Profil</h3>
+        </a>
+    </div>
 @endsection
 
 @section('cssCustom')
@@ -19,36 +21,16 @@
 @section('content')
     <div class="wrapper">
         <div class="filter-container m-5 d-flex align-items-start">
-            <img
-                src=""
-                class="rounded-circle mb-3 profile-photo"
-                alt="User Avatar"
-                id="profilePicture"
-            />
+            <img src="" class="rounded-circle mb-3 profile-photo" alt="User Avatar" id="profilePicture" />
             <div class="ms-5">
                 <label for="umkmNameInput" class="form-label fw-bold">Nama UMKM</label>
-                <input
-                    type="text"
-                    class="form-control text-muted mb-2"
-                    id="umkmNameInput"
-                    disabled
-                ></input>
+                <input type="text" class="form-control text-muted mb-2" id="umkmNameInput" disabled></input>
 
                 <label for="umkmEmailInput" class="form-label fw-bold">Email</label>
-                <input
-                    type="email"
-                    class="form-control text-muted mb-2"
-                    id="umkmEmailInput"
-                    disabled
-                />
+                <input type="email" class="form-control text-muted mb-2" id="umkmEmailInput" disabled />
 
                 <label for="umkmNPWP" class="form-label fw-bold">NPWP</label>
-                <input
-                    type="text"
-                    class="form-control text-muted mb-2"
-                    id="umkmNPWP"
-                    disabled
-                />
+                <input type="text" class="form-control text-muted mb-2" id="umkmNPWP" disabled />
 
                 <div class="m-5 d-flex gap-3">
                     <a href="{{ route('profil.edit') }}" class="btn btn-primary">Edit Profil</a>

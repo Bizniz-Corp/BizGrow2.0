@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Tambahkan route lain di sini untuk fitur yang dilindungi
     Route::get('/products', [ProductController::class, 'getAllProduct']);
+    Route::get('/profit', [ProductController::class, 'getMonthlyProfit']);
     Route::get('/sales-history', [SalesController::class, 'getSalesHistory']);
     Route::get('/stocks-history', [StockController::class, 'getStockHistory']);
     Route::get('/profile', [ProfileController::class, 'getProfile']);
@@ -32,4 +33,4 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// Route::get('/products', [ApiController::class, 'getAllProducts']);
+

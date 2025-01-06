@@ -14,7 +14,7 @@
 
 @section('content')
     <div class="container">
-        <div class="header">Selamat Datang, Nama UMKM</div>
+        <div class="header" id="welcome"></div>
 
         <div class="profit-container">
             <div class="profit-box" id="profit-pembelian">

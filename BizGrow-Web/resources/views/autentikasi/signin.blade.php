@@ -25,7 +25,7 @@
                     <input type="password" id="password" class="form-control" placeholder="Isi Password">
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Sign In</button>
-                <p class="mt-3">Belum Punya Akun? <a href="indexsignup.html">Klik Disini</a></p>
+                <p class="mt-3">Belum Punya Akun? <a href="{{ route('register') }}">Klik Disini</a></p>
             </form>
         </div>
         <div class="image-container">
