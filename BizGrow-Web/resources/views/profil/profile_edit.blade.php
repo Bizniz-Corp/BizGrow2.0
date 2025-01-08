@@ -17,39 +17,45 @@
 @endsection
 
 @section('content')
-    <div class="wrapper">
-        <div class="filter-container m-5 d-flex align-items-start">
-            <!-- Foto Profil -->
-            <div class="position-relative">
-                <img
-                    src=""
-                    class="rounded-circle mb-3 profile-photo"
-                    alt="Avatar"
-                    id="profilePicture"
-                />
-                <span
-                    class="position-absolute change-photo"
-                    onclick="document.getElementById('fileInput').click()"
-                >
-                    <img
-                        src="{{ asset('images/camera.svg') }}"
-                        alt="Edit Photo"
-                        style="width: 20px; height: 20px"
-                    />
-                </span>
-                <input
-                    type="file"
-                    id="fileInput"
-                    name="profile_picture"
-                    style="display: none;"
-                    accept="image/*"
-                    onchange="previewImage(event)"
-                />
-            </div>
+    <div class="wrapper d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="filter-container m-5 d-flex flex-column align-items-center">
             <div class="ms-5">
                 <form id="profileForm" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+                    <!-- Foto Profil -->
+                    <div class="d-flex justify-content-center">
+                        <div class="position-relative" style="width: 150px; height: 150px;">
+                            <img
+                                src=""
+                                class="rounded-circle mb-3 profile-photo"
+                                alt="Avatar"
+                                id="profilePicture"
+                                style="width: 100%; height: 100%;"
+                            />
+                            <span
+                                class="position-absolute change-photo"
+                                style="bottom: 0; right: 0; cursor: pointer; transform: translate(50%, 50%);"
+                                onclick="document.getElementById('fileInput').click()"
+                            >
+                                <img
+                                    src="{{ asset('images/camera.svg') }}"
+                                    alt="Edit Photo"
+                                    style="width: 20px; height: 20px"
+                                />
+                            </span>
+                            <input
+                                type="file"
+                                id="fileInput"
+                                name="profile_picture"
+                                style="display: none;"
+                                accept="image/*"
+                                onchange="previewImage(event)"
+                            />
+                        </div>
+                    </div>
+                    <br>
+                    <br>
                     <label for="umkmNameInput" class="form-label fw-bold">Nama UMKM</label>
                     <div class="input-group mb-3">
                         <input type="text" id="umkmNameInput" name="name" class="form-control" />

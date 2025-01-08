@@ -17,13 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.success) {
                     const user = response.data;
   
-                    console.log(user.profile_picture);
-                    console.log(user.name);
-                    console.log(user.email);
-                    console.log(user.npwp);
-  
                     const profilePicture = document.getElementById('profilePicture');
-                    profilePicture.src = user.profile_picture ? `/storage/private/${user.profile_picture}` : '/images/profil/default_avatar.jpg';
+                    profilePicture.src = user.profile_picture;
   
                     const nameInput = document.getElementById('umkmNameInput');
                     nameInput.value = user.name;

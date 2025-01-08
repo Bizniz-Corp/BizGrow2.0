@@ -17,10 +17,12 @@ class ProfileController extends Controller
         $user = Auth::user();
         $umkm = $user->umkm;
 
+        $profilePicture = $umkm->profile_picture ? asset('storage/profile_pict/' . $umkm->profile_picture) : asset('storage/profile_pict/default_avatar.jpg');
+
         return response()->json([
             'success' => true,
             'data' => [
-                'profile_picture' => $umkm->profile_picture,
+                'profile_picture' => $profilePicture,
                 'name' => $user->name,
                 'email' => $user->email,
                 'npwp' => $umkm->npwp_no,
@@ -51,11 +53,11 @@ class ProfileController extends Controller
             if ($request->hasFile('profile_picture')) {
                 // Delete old profile picture if exists
                 if ($umkm->profile_picture) {
-                    Storage::delete('private/profile_pictures/' . $umkm->profile_picture);
+                    Storage::disk('public')->delete('profile_pict/' . $umkm->profile_picture); 
                 }
 
                 // Store new profile picture
-                $path = $request->file('profile_picture')->store('private/profile_pictures');
+                $path = $request->file('profile_picture')->store('profile_pict', 'public');
                 $umkm->profile_picture = basename($path);
             }
 
