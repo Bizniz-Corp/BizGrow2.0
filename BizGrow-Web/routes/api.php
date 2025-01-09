@@ -18,6 +18,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // Tambahkan route lain di sini untuk fitur yang dilindungi
+    Route::get('/monthly-profit', [ProductController::class, 'getMonthlyProfit']);
     Route::get('/products', [ProductController::class, 'getAllProduct']);
     Route::get('/profit', [ProductController::class, 'getMonthlyProfit']);
     Route::get('/sales-history', [SalesController::class, 'getSalesHistory']);

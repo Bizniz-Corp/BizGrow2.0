@@ -1,9 +1,14 @@
 $(document).ready(function () {
+    console.log("Sign Up page ready!");
     $("#registerForm").submit(function (e) {
         e.preventDefault(); // Mencegah form untuk refresh halaman saat submit
 
         var formData = new FormData(this); // Mengambil semua data form termasuk file
         console.log("Data yang dikirim:", formData);
+
+        formData.forEach((value, key) => {
+            console.log(key + ": " + value);
+        });
 
         $.ajax({
             url: "/api/register",
