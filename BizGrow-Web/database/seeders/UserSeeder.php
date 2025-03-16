@@ -68,6 +68,13 @@ class UserSeeder extends Seeder
                 'role' => 'umkm',
                 'status' => 'active',
             ],
+            [
+                'name' => 'Toko Italia Syahreza',
+                'email' => 'reza@gmail.com',
+                'password' => bcrypt('reza'),
+                'role' => 'umkm',
+                'status' => 'active',
+            ],
         ];
 
         foreach ($umkmUsers as $userData) {

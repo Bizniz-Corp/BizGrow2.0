@@ -16,26 +16,30 @@
         <div class="form-container">
             <h2>Sign Up</h2>
             <form id="registerForm" method="POST">
+                @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">Nama</label>
-                    <input type="text" id="name" class="form-control" placeholder="Isi Nama" required>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Isi Nama"
+                        required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" class="form-control" placeholder="Isi Email" required>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Isi Email"
+                        required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="Isi Password" required>
+                    <input type="password" name="password" id="password" class="form-control"
+                        placeholder="Isi Password" required>
                 </div>
                 <div class="mb-3">
                     <label for="npwp" class="form-label">Nomor Pokok Wajib Pajak</label>
-                    <input type="text" id="npwp" class="form-control" placeholder="Isi NPWP">
+                    <input type="text" name="npwp" id="npwp" class="form-control" placeholder="Isi NPWP">
                 </div>
                 <div class="mb-3">
                     <label for="upload" class="form-label">Surat Izin Usaha</label>
                     <div class="btn-upload">
-                        <input type="file" id="upload" class="form-control">
+                        <input type="file" name="file_surat_izin" id="upload" class="form-control">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary w-10 0">Sign Up</button>
@@ -51,7 +55,7 @@
 
     <!-- Link to External JavaScript File -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('js/Signup.js') }}"></script>
+    <script src="{{ asset('js/SignUp.js') }}"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

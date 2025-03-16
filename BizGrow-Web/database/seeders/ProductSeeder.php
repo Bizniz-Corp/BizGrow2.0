@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Umkaem;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ProductSeeder extends Seeder
 {
@@ -66,5 +67,20 @@ class ProductSeeder extends Seeder
                 unset($availableProducts[$randomIndex]);
             }
         }
+
+        $products = [
+            ['product_name' => 'Margherita Pizza', 'product_quantity' => 1, 'price' => 20000, 'umkm_id' => 5],
+            ['product_name' => 'Caprese Salad', 'product_quantity' => 1, 'price' => 16000, 'umkm_id' => 5],
+            ['product_name' => 'Tiramisu', 'product_quantity' => 1, 'price' => 13000, 'umkm_id' => 5],
+            ['product_name' => 'Gelato', 'product_quantity' => 1, 'price' => 9000, 'umkm_id' => 5],
+            ['product_name' => 'Spaghetti Carbonara', 'product_quantity' => 1, 'price' => 24000, 'umkm_id' => 5],
+            ['product_name' => 'Fettuccine Alfredo', 'product_quantity' => 1, 'price' => 26000, 'umkm_id' => 5],
+            ['product_name' => 'Panna Cotta', 'product_quantity' => 1, 'price' => 11000, 'umkm_id' => 5],
+            ['product_name' => 'Minestrone Soup', 'product_quantity' => 1, 'price' => 14000, 'umkm_id' => 5],
+            ['product_name' => 'Lasagna', 'product_quantity' => 1, 'price' => 23000, 'umkm_id' => 5],
+            ['product_name' => 'Bruschetta', 'product_quantity' => 1, 'price' => 10000, 'umkm_id' => 5],
+        ];
+
+        DB::table('products')->insert($products);
     }
 }
