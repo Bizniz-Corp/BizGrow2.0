@@ -10,6 +10,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    const STATUS_ACTIVE = 'active';
+    const STATUS_DELETED = 'deleted';
+
     use HasFactory, Notifiable, HasApiTokens;
 
     /**

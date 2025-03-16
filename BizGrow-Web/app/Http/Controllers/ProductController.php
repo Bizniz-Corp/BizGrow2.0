@@ -25,8 +25,8 @@ class ProductController extends Controller
 
     public function getMonthlyProfit()
     {
-        $currentMonth = Carbon::now()->month; // Bulan saat ini
-        $currentYear = Carbon::now()->year;  // Tahun saat ini
+        $currentMonth = 12; // Bulan saat ini
+        $currentYear = 2024;  // Tahun saat ini
 
         // Hitung total pembelian pada bulan ini
         $totalPembelian = DB::table('purchase_transactions')

@@ -16,6 +16,10 @@ return new class extends Migration {
             $table->string('npwp_no', 25)->nullable();
             $table->string('izin_usaha_path')->nullable(); // Path file upload izin usaha
             $table->string('profile_picture')->nullable(); // Path file upload profile picture
+            $table->boolean('forecasting_demand')->default(false);
+            $table->boolean('buffer_stock')->default(false);
+            $table->boolean('is_verified')->default(false);
+            $table->integer('durasi')->default(0);
             $table->timestamps();
         });
     }
