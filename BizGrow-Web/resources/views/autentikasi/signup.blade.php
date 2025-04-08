@@ -19,18 +19,15 @@
                 @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">Nama</label>
-                    <input type="text" name="name" id="name" class="form-control" placeholder="Isi Nama"
-                        required>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Isi Nama" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="Isi Email"
-                        required>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Isi Email" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" name="password" id="password" class="form-control"
-                        placeholder="Isi Password" required>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Isi Password" required>
                 </div>
                 <div class="mb-3">
                     <label for="npwp" class="form-label">Nomor Pokok Wajib Pajak</label>
@@ -42,7 +39,7 @@
                         <input type="file" name="file_surat_izin" id="upload" class="form-control">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary w-10 0">Sign Up</button>
+                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
             </form>
         </div>
         <div class="image-container">
@@ -58,6 +55,13 @@
     <script src="{{ asset('js/SignUp.js') }}"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Simulasi redirect ke OTP -->
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Mencegah submit form ke backend
+            window.location.href = "{{ url('/otp') }}"; // Arahkan ke halaman OTP
+        });
+    </script>
 </body>
 
 </html>

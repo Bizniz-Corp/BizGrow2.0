@@ -20,6 +20,10 @@ Route::get('/forgot-password', function () {
     return view('autentikasi.forgot-password');
 })->name('password.request');
 
+Route::get('/otp', function () {
+    return view('autentikasi.otp');
+})->name('otp');
+
 Route::get('/login', [AuthController::class, 'signinView'])->name('login');
 Route::get('/register', [AuthController::class, 'signupView'])->name('register');
 // Route::get('/sign-out', [AuthController::class, 'signoutView'])->name('signout');
