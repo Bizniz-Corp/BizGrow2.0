@@ -18,18 +18,42 @@ $(document).ready(function () {
             contentType: false,
             success: function (response) {
                 if (response.message === "Register berhasil!") {
-                    alert("Register:" + response.data);
-                    alert("Pendaftaran berhasil!");
-                    // Lakukan redirect atau tindakan lainnya sesuai kebutuhan
-                    window.location.href = "/login";
+                    console.log("DATANYA WOI:", response); // jangan dihapus buat nyari nama susah bgt
+                    $("#successMessage").html("Selamat, " + response.data.user.name + "! Register berhasil.");
+        
+                    var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                    successModal.show();
                 }
             },
-            error: function (xhr, status, error) {
-                var errorMessage =
-                    xhr.responseJSON?.error ||
-                    "Terjadi kesalahan saat register";
-                alert(errorMessage);
-            },
+    
+          error: function (xhr, status, error) {
+            let errorMessages = "";
+            let uniqueErrors = new Set(); // Gunakan Set agar tidak ada duplikasi
+        
+            if (xhr.responseJSON?.errors) {
+                Object.keys(xhr.responseJSON.errors).forEach((key) => {
+                    let messages = xhr.responseJSON.errors[key];
+                    if (Array.isArray(messages)) {
+                        messages.forEach(msg => uniqueErrors.add(msg)); // Tambah ke Set
+                    } else {
+                        uniqueErrors.add(messages);
+                    }
+                });
+            } else if (xhr.responseJSON?.error) {
+                uniqueErrors.add(xhr.responseJSON.error);
+            } else {
+                uniqueErrors.add("Kesalahan tidak diketahui.");
+            }
+        
+            // Tampilkan pesan error unik di modal
+            $("#errorList").html([...uniqueErrors].map(msg => `<li>${msg}</li>`).join(""));
+            
+            // Tampilkan modal error
+            var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+            errorModal.show();
+          },
+  
+
         });
     });
 });
