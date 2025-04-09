@@ -15,23 +15,27 @@
     <div class="login-container">
         <div class="form-container">
             <h2>Sign In</h2>
-            <form id="loginForm">
+            <form id="loginForm" action="{{ route('login') }}" method="POST">
+                @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" class="form-control" placeholder="Isi Email">
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Isi Email" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="Isi Password">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Isi Password" required>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary w-50">Sign In</button>
+                    <a href="{{ url('/forgot-password') }}" class="text-decoration-none align-self-center">Lupa Password?</a>
+                </div>
                 <p class="mt-3">Belum Punya Akun? <a href="{{ route('register') }}">Klik Disini</a></p>
             </form>
         </div>
         <div class="image-container">
             <img src="{{ asset('images/Sign in.png') }}" alt="bizgrowlogo">
             <div class="overlay-logo">
-                <img src="{{ asset('images/logo1.png') }}" alt="Pizgrow Logo"> <!-- Replace with your logo -->
+                <img src="{{ asset('images/logo1.png') }}" alt="Pizgrow Logo">
             </div>
         </div>
     </div>

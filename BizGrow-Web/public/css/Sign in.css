@@ -17,7 +17,7 @@ body {
     width: 90%;
     max-width: 900px;
     height: 500px;
-    
+
 }
 
 .form-container {
@@ -53,6 +53,22 @@ h2{
     border: 1px solid #ccc;
     border-radius: 5px;
     outline: none;
+}
+
+.btn-primary {
+    background-color: #1a1a3e;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #1b8cff;
 }
 
 .button-container {
