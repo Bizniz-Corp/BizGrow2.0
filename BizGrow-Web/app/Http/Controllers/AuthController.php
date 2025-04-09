@@ -103,7 +103,11 @@ class AuthController extends Controller
 
     public function forgotPassword(Request $request)
     {
-        $request->validate(['email' => 'required|email|exists:users,email']);
+        $request->validate([
+            'email' => 'required|email|exists:users,email'
+        ], [
+            'email.exists' => 'Email tidak ditemukan dalam sistem kami.'
+        ]);
 
         // Generate token unik
         $token = Str::random(60);
