@@ -11,14 +11,14 @@ use App\Http\Controllers\UmkmController;
 
 
 // Route Public (Tidak membutuhkan autentikasi)
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
-Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+Route::post('/register', [AuthController::class, 'register']); //API untuk register akun baru
+Route::post('/login', [AuthController::class, 'login']); //API untuk login
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword']); //API untuk mengirimkan email untuk reset password
+Route::post('/reset-password', [AuthController::class, 'resetPassword']); //API untuk reset password setelah mendapatkan email (Laman masukin pass baru)
 
 // Protected Route (Membutuhkan autentikasi)
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [AuthController::class, 'logout']); //API untuk logout
 
     // Tambahkan route lain di sini untuk fitur yang dilindungi
     Route::middleware('role:umkm')->group(function () {
@@ -35,10 +35,10 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::middleware('role:admin')->group(function () {
-        Route::get('/umkm', [UmkmController::class, 'getDataUmkm']);
-        Route::post('/umkm/delete/{id}', [UmkmController::class, 'deleteUmkm']);
-        Route::get('/umkm-verification', [UmkmController::class, 'getDataUmkmVerification']);
-        Route::post('/umkm-verification-check', [UmkmController::class, 'verifikasiUmkm']);
+        Route::get('/umkm', [UmkmController::class, 'getDataUmkm']); //API mengambil semua data UMKM untuk Admin
+        Route::post('/umkm/delete/{id}', [UmkmController::class, 'deleteUmkm']); //API menghapus UMKM
+        Route::get('/umkm-verification', [UmkmController::class, 'getDataUmkmVerification']); //API untuk get data untuk laman Verifikasi UMKM
+        Route::post('/umkm-verification-check', [UmkmController::class, 'verifikasiUmkm']); //API untuk verify UMKM
     });
 });
 
