@@ -23,13 +23,23 @@ $(document).ready(function () {
                     localStorage.setItem("token", response.data.token); // Simpan token di localStorage
 
                     // Tampilkan modal sukses
-                    $("#successMessage").html("Login berhasil! Anda akan diarahkan ke halaman utama.");
-                    var successModal = new bootstrap.Modal(document.getElementById("successModal"));
+                    $("#successMessage").html(
+                        "Login berhasil! Anda akan diarahkan ke halaman utama."
+                    );
+                    var successModal = new bootstrap.Modal(
+                        document.getElementById("successModal")
+                    );
                     successModal.show();
 
                     // Redirect setelah beberapa detik
                     setTimeout(() => {
-                        window.location.href = "/home";
+                        const role = response.data.user.role;
+
+                        if (role === "admin") {
+                            window.location.href = "/umkm";
+                        } else {
+                            window.location.href = "/home";
+                        }
                     }, 2000);
                 } else {
                     console.log("Token tidak ada dalam respons API");
@@ -44,7 +54,9 @@ $(document).ready(function () {
 
                 // Tampilkan modal error
                 $("#errorMessage").html("Email atau password salah!");
-                var errorModal = new bootstrap.Modal(document.getElementById("errorModal"));
+                var errorModal = new bootstrap.Modal(
+                    document.getElementById("errorModal")
+                );
                 errorModal.show();
             },
         });

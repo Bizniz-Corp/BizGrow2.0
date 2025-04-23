@@ -4,7 +4,7 @@
 
 @section('header')
     <div class="d-flex align-items-center">
-        <a href="{{ route('admin.data_umkm') }}">
+        <a href="{{ route('admin.umkm') }}">
             <h3 class="h3 fw-bold mb-0 text-dark">Data UMKM</h3>
         </a>
     </div>

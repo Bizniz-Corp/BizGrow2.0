@@ -19,11 +19,6 @@ class AuthController extends Controller
             'name' => 'required|max:191',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|regex:/^(?=.*[A-Z])(?=.*\d).+$/',
-            'password' => [
-                'required',
-                'min:8',
-                'regex:/^(?=.*[A-Z])(?=.*\d).+$/',
-            ],
             'npwp' => 'required|size:16',
             'file_surat_izin' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ], [
@@ -39,8 +34,6 @@ class AuthController extends Controller
             'npwp.size' => 'NPWP harus 16 karakter.',
             'file_surat_izin.required' => 'File surat izin harus diunggah.',
             'file_surat_izin.file' => 'File harus berupa file.',
-            'file_surat_izin.mimes' => 'File harus berupa PDF, JPG, JPEG, atau PNG.',
-            'file_surat_izin.max' => 'File maksimal 2MB.',
         ]);
 
         DB::beginTransaction();
@@ -85,15 +78,17 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ],
-        [
-            'email.required' => 'Email harus diisi.',
-            'email.email' => 'Format email tidak valid.',
-            'password.required' => 'Password harus diisi.',
-        ]);
+        $request->validate(
+            [
+                'email' => 'required|email',
+                'password' => 'required',
+            ],
+            [
+                'email.required' => 'Email harus diisi.',
+                'email.email' => 'Format email tidak valid.',
+                'password.required' => 'Password harus diisi.',
+            ]
+        );
 
         $user = User::where('email', $request->email)->first();
 
@@ -189,5 +184,14 @@ class AuthController extends Controller
     public function signoutView()
     {
         return view('autentikasi.signin'); // Blade view
+    }
+
+    public function forgotPasswordView()
+    {
+        return view('autentikasi.forgot-password'); // Blade view
+    }
+    public function otpView()
+    {
+        return view('autentikasi.otp'); // Blade view
     }
 }

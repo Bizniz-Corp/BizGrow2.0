@@ -3,6 +3,7 @@
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UmkmController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\ProductController;
@@ -12,20 +13,11 @@ Route::get('/', function () {
     return view('landing_page');
 })->name('landing');
 
-Route::get('/signin', function () {
-    return view('signin'); // Pastikan nama view sesuai dengan file blade
-});
-
-Route::get('/forgot-password', function () {
-    return view('autentikasi.forgot-password');
-})->name('password.request');
-
-Route::get('/otp', function () {
-    return view('autentikasi.otp');
-})->name('otp');
-
 Route::get('/login', [AuthController::class, 'signinView'])->name('login');
 Route::get('/register', [AuthController::class, 'signupView'])->name('register');
+Route::get('/forgot-password', [AuthController::class, 'forgotPasswordView'])->name('auth.forgotPassword');
+Route::get('/otp', [AuthController::class, 'otpView'])->name('auth.otp');
+
 // Route::get('/sign-out', [AuthController::class, 'signoutView'])->name('signout');
 
 // Route::get('/input_penjualan', function () {
@@ -55,6 +47,11 @@ Route::prefix('profil')->group(function () {
     Route::get('/', [ProfileController::class, 'profilView'])->name('profil.profil');
     Route::get('/edit', [ProfileController::class, 'profilEditView'])->name('profil.edit');
     Route::get('/edit-password', [ProfileController::class, 'profilEditPasswordView'])->name('profil.editPassword');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/', [UmkmController::class, 'dataUmkmView'])->name('admin.umkm');
+    Route::get('/verifikasi', [UmkmController::class, 'umkmVerificationView'])->name('admin.verify');
 });
 
 // ROUTING DENGAN MIDDLEWARE HARUS AUTHENTICATION

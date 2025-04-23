@@ -68,7 +68,7 @@ class UmkmController extends Controller
         ], 200);
     }
 
-    public function verifikasiUmkm($id, Request $request)
+    public function verifikasiUmkm(Request $request)
     {
         $umkm = Umkaem::find($request->id);
 
@@ -79,10 +79,28 @@ class UmkmController extends Controller
         $umkm->is_verified = 1;
         $umkm->save();
 
+        // Kirim email notifikasi ke UMKM
+        $user = User::find($umkm->user_id);
+        if ($user) {
+            Mail::send('emails.verify_umkm', ['name' => $user->name], function ($message) use ($user) {
+                $message->to($user->email, $user->name)
+                    ->subject('Verifikasi UMKM Berhasil');
+            });
+        }
+
         return response()->json([
-            'status' => 'success',
             'message' => 'UMKM berhasil diverifikasi'
         ], 200);
+    }
+
+    public function dataUmkmView()
+    {
+        return view('admin.data_umkm'); // Blade view
+    }
+
+    public function umkmVerificationView()
+    {
+        return view('umkm.verifikasi'); // Blade view
     }
 
 }

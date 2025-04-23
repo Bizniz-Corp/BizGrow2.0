@@ -19,6 +19,7 @@ class UmkmSeeder extends Seeder
 
         foreach ($umkmUsers as $user) {
             Umkaem::create([
+                'umkm_id' => $user->id,
                 'user_id' => $user->id,
                 'npwp_no' => $this->generateNpwp(),
                 'izin_usaha_path' => 'uploads/surat_izin/' . strtolower(str_replace(' ', '_', $user->name)) . '_npwp.pdf',

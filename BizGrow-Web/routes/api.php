@@ -38,7 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/umkm', [UmkmController::class, 'getDataUmkm']);
         Route::post('/umkm/delete/{id}', [UmkmController::class, 'deleteUmkm']);
         Route::get('/umkm-verification', [UmkmController::class, 'getDataUmkmVerification']);
-        Route::post('/umkm-verification/{id}', [UmkmController::class, 'verifyUmkm']);
+        Route::post('/umkm-verification-check', [UmkmController::class, 'verifikasiUmkm']);
     });
 });
 
