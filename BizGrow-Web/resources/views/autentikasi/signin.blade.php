@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Pizgrow</title>
+    <title>Login - Bizgrow</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -35,7 +35,7 @@
         <div class="image-container">
             <img src="{{ asset('images/Sign in.png') }}" alt="bizgrowlogo">
             <div class="overlay-logo">
-                <img src="{{ asset('images/logo1.png') }}" alt="Pizgrow Logo">
+                <img src="{{ asset('images/logo1.png') }}" alt="Bizgrow Logo">
             </div>
         </div>
     </div>
