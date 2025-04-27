@@ -36,7 +36,7 @@ $(document).ready(function () {
                         const role = response.data.user.role;
 
                         if (role === "admin") {
-                            window.location.href = "/umkm";
+                            window.location.href = "/admin";
                         } else {
                             window.location.href = "/home";
                         }

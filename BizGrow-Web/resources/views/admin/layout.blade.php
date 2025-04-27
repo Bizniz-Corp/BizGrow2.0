@@ -39,7 +39,14 @@
                         <span>Verifikasi UMKM</span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a href="{{ route('admin.feedback') }}" class="sidebar-link">
+                        <img src="{{ asset('images/feedback.svg') }}" alt="settings-icon">
+                        <span>Feedback</span>
+                    </a>
+                </li>
             </ul>
+
             <div class="sidebar-footer">
                 <a href="#" id="logoutButton" class="sidebar-link">
                     <img src="{{ asset('images/logout.svg') }}" alt="logout-icon">
