@@ -8,6 +8,8 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UmkmController;
+use App\Http\Controllers\FeedbackController;
+
 
 
 // Route Public (Tidak membutuhkan autentikasi)
@@ -32,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/profile/delete', [ProfileController::class, 'deleteProfile']);
         Route::post('/profile/edit-password', [ProfileController::class, 'checkPassword']);
         Route::put('/profile/edit-password', [ProfileController::class, 'editPassword']);
+        Route::post('/feedback-post', [FeedbackController::class, 'postFeedback']); //API untuk mengirimkan feedback (User)
     });
 
     Route::middleware('role:admin')->group(function () {
@@ -39,6 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/umkm/delete/{id}', [UmkmController::class, 'deleteUmkm']); //API menghapus UMKM
         Route::get('/umkm-verification', [UmkmController::class, 'getDataUmkmVerification']); //API untuk get data untuk laman Verifikasi UMKM
         Route::post('/umkm-verification-check', [UmkmController::class, 'verifikasiUmkm']); //API untuk verify UMKM
+        Route::get('/feedback', [FeedbackController::class, 'getAllFeedback']); //API untuk mendapatkan semua feedback (Admin)
     });
 });
 
