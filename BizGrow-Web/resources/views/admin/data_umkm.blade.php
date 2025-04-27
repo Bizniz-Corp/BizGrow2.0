@@ -19,6 +19,26 @@
 @endsection
 
 @section('content')
+    <div class="m-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">UMKM Aktif</h5>
+                        <p id="activeUmkmCount" class="card-text fs-3 fw-bold">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">UMKM Tidak Aktif</h5>
+                        <p id="inactiveUmkmCount" class="card-text fs-3 fw-bold">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="filter-container m-5 d-flex align-items-center">
         <input type="text" id="umkmNameInput" class="form-control me-3" style="width: 300px;" placeholder="Cari Nama Toko">
@@ -45,24 +65,5 @@
             </tbody>
         </table>
         <div id="pagination" class="d-flex justify-content-center align-items-center mt-4"></div>
-    </div>
-
-    <!-- Modal Konfirmasi -->
-    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Konfirmasi Penghapusan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="deleteConfirmationMessage">Apakah Anda yakin ingin menghapus UMKM ini?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Hapus</button>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection
