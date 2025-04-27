@@ -1,53 +1,37 @@
 $(document).ready(function () {
     let currentFilters = {};
+    let currentPage = 1;
+    const token = localStorage.getItem("token");
+    let actionType = ""; 
+    let selectedId = null;
+
     loadTableData();
 
-    // Load data dari JSON dan tampilkan di tabel
     function loadTableData(page = 1, filters = {}) {
         currentFilters = filters;
 
-        // Data dummy
-        const dummyData = [
-            {
-                name: "Toko Jaya Abadi",
-                status: "Menunggu Verifikasi",
-                npwp: "15.203.001.01.112.12",
-                surat_izin: "suratizin_jayaabadi.pdf",
+        $.ajax({
+            url: `/api/umkm-verification?page=${page}`,
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
             },
-            {
-                name: "Toko Makmur Sentosa",
-                status: "Menunggu Verifikasi",
-                npwp: "15.203.002.01.112.13",
-                surat_izin: "suratizin_makmursentosa.pdf",
+            data: filters,
+            success: function (response) {
+                if (response.status === "success") {
+                    const data = response.data;
+                    const pagination = response.pagination;
+
+                    renderTable(data);
+                    updatePaginationControls(pagination);
+                } else {
+                    console.error("Gagal memuat data UMKM untuk verifikasi:", response);
+                }
             },
-            {
-                name: "Toko Sejahtera",
-                status: "Menunggu Verifikasi",
-                npwp: "15.203.003.01.112.14",
-                surat_izin: "suratizin_sejahtera.pdf",
+            error: function (xhr, status, error) {
+                console.error("Error fetching UMKM verification data:", xhr.responseText);
             },
-        ];
-
-        // Pagination dummy
-        const pagination = {
-            current_page: page,
-            last_page: 2, // Misalnya ada 2 halaman
-        };
-
-        // Filter data dummy berdasarkan filter yang diterapkan
-        let filteredData = dummyData;
-        if (filters.name && filters.name !== "all") {
-            filteredData = filteredData.filter(item => item.name === filters.name);
-        }
-
-        // Simulasikan data per halaman
-        const itemsPerPage = 2;
-        const startIndex = (page - 1) * itemsPerPage;
-        const paginatedData = filteredData.slice(startIndex, startIndex + itemsPerPage);
-
-        // Render tabel dan kontrol pagination
-        renderTable(paginatedData);
-        updatePaginationControls(pagination);
+        });
     }
 
     function renderTable(data) {
@@ -56,21 +40,18 @@ $(document).ready(function () {
             rows += `
                 <tr>
                     <td>${item.name}</td>
-                    <td>${item.status}</td>
-                    <td>${item.npwp}</td>
+                    <td>${item.is_verified ? "Terverifikasi" : "Menunggu Verifikasi"}</td>
+                    <td>${item.npwp_no || "-"}</td>
                     <td>
-                        <a href="/files/${item.surat_izin}" target="_blank" class="text-decoration-none">
-                            ${item.surat_izin}
+                        <a href="/files/${item.izin_usaha_path}" target="_blank" class="text-decoration-none">
+                            ${item.izin_usaha_path || "Tidak Ada"}
                         </a>
                     </td>
                     <td>
-                        <button class="btn btn-warning btn-sm me-2">
-                            <i class="bi bi-file-earmark-text"></i>
-                        </button>
-                        <button class="btn btn-success btn-sm me-2">
+                        <button class="btn btn-success btn-sm me-2" data-id="${item.id}" data-action="verify">
                             <i class="bi bi-check-lg"></i>
                         </button>
-                        <button class="btn btn-danger btn-sm">
+                        <button class="btn btn-danger btn-sm" data-id="${item.id}" data-action="delete">
                             <i class="bi bi-x-lg"></i>
                         </button>
                     </td>
@@ -80,7 +61,6 @@ $(document).ready(function () {
         $("tbody").html(rows);
     }
 
-    // Fungsi untuk memperbarui kontrol pagination
     function updatePaginationControls(pagination) {
         const paginationContainer = $("#pagination");
         let paginationHTML = "";
@@ -102,55 +82,70 @@ $(document).ready(function () {
         paginationContainer.html(paginationHTML);
     }
 
-    // Listener untuk tombol pagination
     $("#pagination").on("click", "button", function () {
         const page = $(this).data("page");
         currentPage = page;
         loadTableData(page, currentFilters);
     });
 
-    // Tampilkan data awal
-    loadTableData();
+    $(document).on("click", ".btn-success, .btn-danger", function () {
+        selectedId = $(this).data("id");
+        actionType = $(this).data("action");
 
-    // Fungsi untuk memuat daftar produk
-    function fetchUMKMList() {
-        // $.ajax({
-        //     url: "/api/......", // TODO : ganti nanti kalo udah ada di backend
-        //     method: "GET",
-        //     headers: {
-        //         Authorization: `Bearer ${token}`,
-        //     },
-        //     success: function (response) {
-        //         if (response.success) {
-        //             let options = '<option value="all">Semua Produk</option>';
-        //             response.data.forEach((product) => {
-        //                 options += `<option value="${product.product_name}">${product.product_name}</option>`;
-        //             });
-        //             $("#productFilter").html(options);
-        //         }
-        //     },
-        //     error: function (xhr, status, error) {
-        //         console.error(
-        //             "Failed to fetch product list:",
-        //             xhr.responseText
-        //         );
-        //     },
-        // });
-    }
+        if (actionType === "verify") {
+            $("#confirmationMessage").text("Apakah Anda yakin ingin memverifikasi UMKM ini?");
+        } else if (actionType === "delete") {
+            $("#confirmationMessage").text("Apakah Anda yakin tidak memverifikasi UMKM ini?");
+        }
 
-});
+        $("#confirmationModal").modal("show");
+    });
 
-$(document).on("click", ".btn-warning", function () {
-    // TODO : ini nanti diganti dengan fungsi untuk mengubah status
-    alert('Tombol dokumen diklik!');
-});
+    $("#confirmActionButton").on("click", function () {
+        if (actionType === "verify") {
+            $.ajax({
+                url: "/api/umkm-verification-check",
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                data: { id: selectedId },
+                success: function (response) {
+                    loadTableData(currentPage, currentFilters); // Refresh data setelah verifikasi
+                    $("#confirmationModal").modal("hide");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error verifying UMKM:", xhr.responseText);
+                },
+            });
+        } else if (actionType === "delete") {
+            $.ajax({
+                url: `/api/umkm/delete/${selectedId}`,
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                success: function (response) {
+                    loadTableData(currentPage, currentFilters); // Refresh data setelah penghapusan
+                    $("#confirmationModal").modal("hide");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error deleting UMKM:", xhr.responseText);
+                },
+            });
+        }
+    });
 
-$(document).on('click', '.btn-success', function () {
-    // TODO : ini nanti diganti dengan fungsi untuk mengubah status
-    alert('Tombol ceklis diklik!');
-});
+    $("#umkmNameInput").on("input", function () {
+        const searchQuery = $(this).val().trim();
+        console.log("Pencarian:", searchQuery);
+        currentFilters.name = searchQuery; 
+        loadTableData(1, currentFilters); 
+    });
 
-$(document).on('click', '.btn-danger', function () {
-    // TODO : ini nanti diganti dengan fungsi untuk menghapus data
-    alert('Tombol silang diklik!');
+    $("#resetButton").on("click", function () {
+        $("#umkmNameInput").val(""); 
+        currentFilters = {}; 
+        loadTableData(1);
+    });
 });
