@@ -11,8 +11,13 @@ class FeedbackController extends Controller
     function getAllFeedback(Request $request)
     {
         $perPage = $request->query('per_page', 10);
+        $umkm = $request->query('umkm');
         $feedback = Feedback::select('feedback_id', 'nama_umkm', 'deskripsi')
             ->orderBy('created_at', 'desc');
+
+        if ($umkm) {
+            $feedback->where('nama_umkm', 'like', '%' . $umkm . '%');
+        }
 
         // Pagination
         $feedback = $feedback->paginate($perPage);
@@ -31,13 +36,15 @@ class FeedbackController extends Controller
     public function postFeedback(Request $request)
     {
         try {
+            $user = $request->user();
+            $namaUmkm = $user->name;
+
             $request->validate([
-                'nama_umkm' => 'required|string|max:255',
                 'deskripsi' => 'required|string|max:1000',
             ]);
 
             $feedback = Feedback::create([
-                'nama_umkm' => $request->nama_umkm,
+                'nama_umkm' => $namaUmkm,
                 'deskripsi' => $request->deskripsi,
             ]);
 

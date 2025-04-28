@@ -2,46 +2,34 @@ $(document).ready(function () {
     let currentFilters = {};
     loadTableData();
 
-    // Load data dari JSON dan tampilkan di tabel
+    // Load data dari API dan tampilkan di tabel
     function loadTableData(page = 1, filters = {}) {
         currentFilters = filters;
 
-        // Data dummy untuk feedback UMKM
-        const dummyData = [
-            {
-                name: "Toko Jaya Abadi",
-                feedback: "Pelayanan sangat baik, produk berkualitas.",
+        // Lakukan permintaan AJAX ke API
+        $.ajax({
+            url: `/api/feedback?page=${page}`, // Endpoint API untuk mendapatkan feedback
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`, // Pastikan token autentikasi disertakan
             },
-            {
-                name: "Toko Makmur Sentosa",
-                feedback: "Pengiriman cepat, namun kemasan perlu diperbaiki.",
+            data: filters, 
+            success: function (response) {
+                console.log("API Response:", response); // Log seluruh respons API
+                console.log("Feedback Data:", response.data); // Log data feedback
+                console.log("Pagination Data:", response.pagination); // Log data pagination
+
+                const feedbackData = response.data; // Data feedback
+                const pagination = response.pagination; // Data pagination
+
+                renderTable(feedbackData);
+                updatePaginationControls(pagination);
             },
-            {
-                name: "Toko Sejahtera",
-                feedback: "Harga bersaing, tetapi stok sering habis.",
+            error: function (xhr) {
+                console.error("Gagal memuat data:", xhr.responseText); // Log error
+                alert("Terjadi kesalahan saat memuat data.");
             },
-        ];
-
-        // Pagination
-        const pagination = {
-            current_page: page,
-            last_page: Math.ceil(dummyData.length / 10),
-        };
-
-        // Filter data dummy berdasarkan filter yang diterapkan
-        let filteredData = dummyData;
-        if (filters.name && filters.name !== "all") {
-            filteredData = filteredData.filter(item => item.name === filters.name);
-        }
-
-        // Simulasikan data per halaman
-        const itemsPerPage = 10;
-        const startIndex = (page - 1) * itemsPerPage;
-        const paginatedData = filteredData.slice(startIndex, startIndex + itemsPerPage);
-
-        // Render tabel dan kontrol pagination
-        renderTable(paginatedData);
-        updatePaginationControls(pagination);
+        });
     }
 
     function renderTable(data) {
@@ -49,8 +37,8 @@ $(document).ready(function () {
         data.forEach((item) => {
             rows += `
                 <tr>
-                    <td>${item.name}</td>
-                    <td>${item.feedback}</td>
+                    <td>${item.nama_umkm}</td>
+                    <td>${item.deskripsi}</td>
                 </tr>
             `;
         });
@@ -82,10 +70,52 @@ $(document).ready(function () {
     // Listener untuk tombol pagination
     $("#pagination").on("click", "button", function () {
         const page = $(this).data("page");
-        currentPage = page;
         loadTableData(page, currentFilters);
     });
 
     // Tampilkan data awal
     loadTableData();
+    $("#submitFeedbackButton").on("click", function () {
+        const deskripsi = $("#feedbackInput").val().trim();
+
+        if (!deskripsi) {
+            alert("Feedback tidak boleh kosong!");
+            return;
+        }
+
+        $.ajax({
+            url: "/api/feedback-post",
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            data: { deskripsi },
+            success: function (response) {
+                console.log("Feedback berhasil dikirim:", response); // Log respons sukses
+                alert("Feedback berhasil dikirim. Terima kasih!");
+                $("#feedbackModal").modal("hide");
+                $("#feedbackInput").val("");
+            },
+            error: function (xhr, status, error) {
+                console.error("Error submitting feedback:", xhr.responseText); // Log error
+                console.error("Status:", status);
+                console.error("Error:", error);
+                alert("Terjadi kesalahan saat mengirim feedback. Silakan coba lagi.");
+            },
+        });
+    });
+
+    $("#umkmNameInput").on("input", function () {
+        const searchQuery = $(this).val().trim();
+        console.log("Pencarian:", searchQuery);
+        currentFilters.umkm = searchQuery; 
+        loadTableData(1, currentFilters); 
+    });
+
+    $("#resetButton").on("click", function () {
+        $("#umkmNameInput").val(""); 
+        currentFilters = {};
+        loadTableData(1);
+    });
+
 });
