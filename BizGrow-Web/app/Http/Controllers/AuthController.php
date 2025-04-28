@@ -19,8 +19,21 @@ class AuthController extends Controller
             'name' => 'required|max:191',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|regex:/^(?=.*[A-Z])(?=.*\d).+$/',
-            'npwp' => 'required|max:25',
+            'npwp' => 'required|size:16',
             'file_surat_izin' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+        ], [
+            'name.required' => 'Nama harus diisi.',
+            'email.required' => 'Email harus diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah digunakan.',
+            'password.regex' => 'Password harus mengandung huruf kapital dan angka.',
+            'password.min' => 'Password minimal 8 karakter.',
+            'file_surat_izin.mimes' => 'File harus berupa PDF, JPG, JPEG, atau PNG.',
+            'file_surat_izin.max' => 'File maksimal 2MB.',
+            'npwp.required' => 'NPWP harus diisi.',
+            'npwp.size' => 'NPWP harus 16 karakter.',
+            'file_surat_izin.required' => 'File surat izin harus diunggah.',
+            'file_surat_izin.file' => 'File harus berupa file.',
         ]);
 
         DB::beginTransaction();
@@ -65,16 +78,23 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $request->validate(
+            [
+                'email' => 'required|email',
+                'password' => 'required',
+            ],
+            [
+                'email.required' => 'Email harus diisi.',
+                'email.email' => 'Format email tidak valid.',
+                'password.required' => 'Password harus diisi.',
+            ]
+        );
 
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
-                'message' => 'Email or password is incorrect'
+                'message' => 'Email atau password salah!'
             ], 401);
         }
 
@@ -103,7 +123,11 @@ class AuthController extends Controller
 
     public function forgotPassword(Request $request)
     {
-        $request->validate(['email' => 'required|email|exists:users,email']);
+        $request->validate([
+            'email' => 'required|email|exists:users,email'
+        ], [
+            'email.exists' => 'Email tidak ditemukan dalam sistem kami.'
+        ]);
 
         // Generate token unik
         $token = Str::random(60);
@@ -160,5 +184,14 @@ class AuthController extends Controller
     public function signoutView()
     {
         return view('autentikasi.signin'); // Blade view
+    }
+
+    public function forgotPasswordView()
+    {
+        return view('autentikasi.forgot-password'); // Blade view
+    }
+    public function otpView()
+    {
+        return view('autentikasi.otp'); // Blade view
     }
 }

@@ -53,7 +53,7 @@ class ProfileController extends Controller
             if ($request->hasFile('profile_picture')) {
                 // Delete old profile picture if exists
                 if ($umkm->profile_picture) {
-                    Storage::disk('public')->delete('profile_pict/' . $umkm->profile_picture); 
+                    Storage::disk('public')->delete('profile_pict/' . $umkm->profile_picture);
                 }
 
                 // Store new profile picture
@@ -88,8 +88,8 @@ class ProfileController extends Controller
         ]);
 
         $user = Auth::user();
-        
-        if(!Hash::check($request->password, $user->password)) {
+
+        if (!Hash::check($request->password, $user->password)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Password is incorrect',

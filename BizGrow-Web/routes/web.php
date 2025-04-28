@@ -4,6 +4,7 @@ use App\Http\Controllers\InputManualController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UmkmController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\ProductController;
@@ -13,9 +14,11 @@ Route::get('/', function () {
     return view('landing_page');
 })->name('landing');
 
-
 Route::get('/login', [AuthController::class, 'signinView'])->name('login');
 Route::get('/register', [AuthController::class, 'signupView'])->name('register');
+Route::get('/forgot-password', [AuthController::class, 'forgotPasswordView'])->name('auth.forgotPassword');
+Route::get('/otp', [AuthController::class, 'otpView'])->name('auth.otp');
+
 // Route::get('/sign-out', [AuthController::class, 'signoutView'])->name('signout');
 
 // Route::get('/input_penjualan', function () {
@@ -53,7 +56,13 @@ Route::prefix('profil')->group(function () {
     Route::get('/edit-password', [ProfileController::class, 'profilEditPasswordView'])->name('profil.editPassword');
 });
 
-// ROUTING DENGAN MIDDLEWARE HARUS AUTHENTICATION 
+Route::prefix('admin')->group(function () {
+    Route::get('/', [UmkmController::class, 'dataUmkmView'])->name('admin.data_umkm');
+    Route::get('/verifikasi', [UmkmController::class, 'umkmVerificationView'])->name('admin.verifikasi');
+    Route::get('/feedback', [UmkmController::class, 'feedbackView'])->name('admin.feedback');
+});
+
+// ROUTING DENGAN MIDDLEWARE HARUS AUTHENTICATION
 // Route::middleware([Authenticate::class])->group(function () {
 //     Route::get('/home', [ProductController::class, 'home'])->name('home');
 //     Route::prefix('penjualan')->group(function () {
