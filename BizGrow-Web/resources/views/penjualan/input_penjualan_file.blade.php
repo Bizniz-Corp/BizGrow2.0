@@ -116,6 +116,7 @@
         crossorigin="anonymous"></script>
     <script src="../assets/js/script.js"></script>
     <script src="../assets/js/input_file.js"></script>
+    <script src="{{ asset('js/autologout.js') }}"></script>
 </body>
 
 </html>

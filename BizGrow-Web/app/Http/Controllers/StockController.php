@@ -53,7 +53,6 @@ class StockController extends Controller
                 'total' => $stockHistory->total(),
             ],
         ], 200);
-
     }
 
     public function inputStokView()
@@ -79,5 +78,27 @@ class StockController extends Controller
     public function bufferstokView()
     {
         return view('stok.stok_prediksi_buffer_stok'); // Blade view
+    }
+
+    // Tambahan untuk input stok manual
+    public function storeManualStock(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,product_id',
+            'changes_quantity' => 'required|integer',
+            'changes_date' => 'required|date',
+        ]);
+
+        $userId = Auth::id();
+
+        // Menyimpan data stok manual
+        $stockChange = new StockChange();
+        $stockChange->product_id = $request->product_id;
+        $stockChange->changes_quantity = $request->changes_quantity;
+        $stockChange->changes_date = $request->changes_date;
+        $stockChange->total_stock = StockChange::where('product_id', $request->product_id)->sum('changes_quantity') + $request->changes_quantity;
+        $stockChange->save();
+
+        return redirect()->route('stok.inputManual')->with('success', 'Data stok berhasil ditambahkan!');
     }
 }
