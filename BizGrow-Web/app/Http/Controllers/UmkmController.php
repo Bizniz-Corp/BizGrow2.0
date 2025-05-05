@@ -66,7 +66,7 @@ class UmkmController extends Controller
         if ($umkm) {
             $querry->where('users.name', 'like', '%' . $umkm . '%');
         }
-        
+
         $umkms = $querry->paginate(10);
 
         return response()->json([
@@ -105,7 +105,26 @@ class UmkmController extends Controller
             'message' => 'UMKM berhasil diverifikasi'
         ], 200);
     }
+    public function getUmkmStats()
+    {
+        $activeUmkmCount = Umkaem::join('users', 'umkms.user_id', '=', 'users.id')
+            ->where('umkms.is_verified', 1)
+            ->where('users.status', 'active')
+            ->count();
 
+        $inactiveUmkmCount = Umkaem::join('users', 'umkms.user_id', '=', 'users.id')
+            ->where('umkms.is_verified', 1)
+            ->where('users.status', 'deleted')
+            ->count();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'active_umkm_count' => $activeUmkmCount,
+                'inactive_umkm_count' => $inactiveUmkmCount,
+            ],
+        ], 200);
+    }
     public function dataUmkmView()
     {
         return view('admin.data_umkm'); // Blade view

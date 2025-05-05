@@ -4,7 +4,32 @@ $(document).ready(function () {
     const token = localStorage.getItem("token");
     let selectedId = null; // ID UMKM yg mau dihapus
 
+    // Panggil fungsi untuk memuat statistik UMKM dan data tabel
+    loadUmkmStats();
     loadTableData();
+
+    // Fungsi untuk memuat statistik UMKM
+    function loadUmkmStats() {
+        $.ajax({
+            url: "/api/umkm-stats",
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            success: function (response) {
+                if (response.status === "success") {
+                    const data = response.data;
+                    $("#activeUmkmCount").text(data.active_umkm_count);
+                    $("#inactiveUmkmCount").text(data.inactive_umkm_count);
+                } else {
+                    console.error("Gagal memuat statistik UMKM:", response);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching UMKM stats:", xhr.responseText);
+            },
+        });
+    }
 
     function loadTableData(page = 1, filters = {}) {
         currentFilters = filters;
@@ -84,8 +109,8 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".delete-button", function () {
-        selectedId = $(this).data("id"); 
-        $("#deleteConfirmationModal").modal("show"); 
+        selectedId = $(this).data("id");
+        $("#deleteConfirmationModal").modal("show");
     });
 
     $("#confirmDeleteButton").on("click", function () {
@@ -97,8 +122,9 @@ $(document).ready(function () {
                     Authorization: `Bearer ${token}`,
                 },
                 success: function (response) {
-                    loadTableData(currentPage, currentFilters); // Refresh data setelah penghapusan
-                    $("#deleteConfirmationModal").modal("hide"); // Tutup modal
+                    loadTableData(currentPage, currentFilters); // Refresh tabel
+                    loadUmkmStats(); // Refresh statistik setelah penghapusan
+                    $("#deleteConfirmationModal").modal("hide");
                 },
                 error: function (xhr, status, error) {
                     console.error("Error deleting UMKM:", xhr.responseText);
@@ -107,18 +133,16 @@ $(document).ready(function () {
         }
     });
 
-   $("#umkmNameInput").on("input", function () {
+    $("#umkmNameInput").on("input", function () {
         const searchQuery = $(this).val().trim();
         console.log("Pencarian:", searchQuery);
-        currentFilters.name = searchQuery; 
-        loadTableData(1, currentFilters); 
+        currentFilters.name = searchQuery;
+        loadTableData(1, currentFilters);
     });
 
     $("#resetButton").on("click", function () {
-        $("#umkmNameInput").val(""); 
+        $("#umkmNameInput").val("");
         currentFilters = {};
         loadTableData(1);
     });
 });
-
-

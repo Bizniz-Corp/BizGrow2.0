@@ -43,6 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/umkm-verification', [UmkmController::class, 'getDataUmkmVerification']); //API untuk get data untuk laman Verifikasi UMKM
         Route::post('/umkm-verification-check', [UmkmController::class, 'verifikasiUmkm']); //API untuk verify UMKM
         Route::get('/feedback', [FeedbackController::class, 'getAllFeedback']); //API untuk mendapatkan semua feedback (Admin)
+        Route::get('/umkm-stats', [UmkmController::class, 'getUmkmStats']); // Endpoint baru untuk statistik UMKM
     });
 });
 
