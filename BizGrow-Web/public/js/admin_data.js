@@ -4,8 +4,6 @@ $(document).ready(function () {
     const token = localStorage.getItem("token");
     let selectedId = null; // ID UMKM yg mau dihapus
 
-    // Panggil fungsi untuk memuat statistik UMKM dan data tabel
-    loadUmkmStats();
     loadTableData();
 
     if (token) {
