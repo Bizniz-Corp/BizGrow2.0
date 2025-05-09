@@ -6,6 +6,26 @@ $(document).ready(function () {
 
     loadTableData();
 
+    if (token) {
+        $.ajax({
+            url: "/api/umkm-active-inactive",
+            type: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            success: function (response) {
+                $("#activeUmkmCount").text(response.data.active);
+                $("#inactiveUmkmCount").text(response.data.inactive);
+            },
+            error: function (xhr, status, error) {
+                console.error(
+                    "Error fetching Actvice and Inactive UMKM data:",
+                    xhr.responseText
+                );
+            },
+        });
+    }
+
     function loadTableData(page = 1, filters = {}) {
         currentFilters = filters;
 
