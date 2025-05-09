@@ -40,13 +40,23 @@ $(document).ready(function () {
                 <tr>
                     <td>${item.name}</td>
                     <td>${item.durasi} Menit</td>
-                    <td>${item.forecasting_demand ? '<button class="btn btn-success btn-sm"><i class="bi bi-check-lg"></i></button>' : '<button class="btn btn-danger btn-sm"><i class="bi bi-x-lg"></i></button>'}</td>
-                    <td>${item.buffer_stock ? '<button class="btn btn-success btn-sm"><i class="bi bi-check-lg"></i></button>' : '<button class="btn btn-danger btn-sm"><i class="bi bi-x-lg"></i></button>'}</td>
+                    <td>${
+                        item.forecasting_demand
+                            ? '<button class="btn btn-success btn-sm"><i class="bi bi-check-lg"></i></button>'
+                            : '<button class="btn btn-danger btn-sm"><i class="bi bi-x-lg"></i></button>'
+                    }</td>
+                    <td>${
+                        item.buffer_stock
+                            ? '<button class="btn btn-success btn-sm"><i class="bi bi-check-lg"></i></button>'
+                            : '<button class="btn btn-danger btn-sm"><i class="bi bi-x-lg"></i></button>'
+                    }</td>
                     <td>${item.demand_accuracy || "-"}</td>
                     <td>${item.stock_accuracy || "-"}</td>
                     <td>${item.status}</td>
                     <td>
-                        <button class="btn btn-danger btn-sm delete-button" data-id="${item.id}">
+                        <button class="btn btn-danger btn-sm delete-button" data-id="${
+                            item.id
+                        }">
                             <i class="bi bi-trash"></i>
                         </button>
                     </td>
@@ -84,8 +94,8 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".delete-button", function () {
-        selectedId = $(this).data("id"); 
-        $("#deleteConfirmationModal").modal("show"); 
+        selectedId = $(this).data("id");
+        $("#deleteConfirmationModal").modal("show");
     });
 
     $("#confirmDeleteButton").on("click", function () {
@@ -107,18 +117,16 @@ $(document).ready(function () {
         }
     });
 
-   $("#umkmNameInput").on("input", function () {
+    $("#umkmNameInput").on("input", function () {
         const searchQuery = $(this).val().trim();
         console.log("Pencarian:", searchQuery);
-        currentFilters.name = searchQuery; 
-        loadTableData(1, currentFilters); 
+        currentFilters.name = searchQuery;
+        loadTableData(1, currentFilters);
     });
 
     $("#resetButton").on("click", function () {
-        $("#umkmNameInput").val(""); 
+        $("#umkmNameInput").val("");
         currentFilters = {};
         loadTableData(1);
     });
 });
-
-

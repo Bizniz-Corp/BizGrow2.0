@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Umkaem;
-use Illuminate\Support\Str;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UmkmController extends Controller
 {
@@ -19,7 +20,7 @@ class UmkmController extends Controller
         $querry = Umkaem::join('users', 'umkms.user_id', '=', 'users.id')
             ->where('is_verified', 1)
             ->where('users.status', 'active')
-            ->select('users.id', 'users.name', 'umkms.durasi', 'umkms.forecasting_demand', 'umkms.buffer_stock', 'users.status')
+            ->select('users.id', 'users.name', 'users.login_at', 'umkms.forecasting_demand', 'umkms.buffer_stock', 'users.status')
             ->orderBy('users.created_at', 'desc');
 
         if ($umkm) {
@@ -28,9 +29,29 @@ class UmkmController extends Controller
 
         $umkms = $querry->paginate(10);
 
+        // Hitung durasi aktif (dalam menit) untuk setiap item
+        $data = $umkms->map(function ($item) {
+            if ($item->login_at) {
+                $loginTime = Carbon::parse($item->login_at);
+                $now = now();
+                $durationInMinutes = (int) $loginTime->diffInMinutes($now);
+            } else {
+                $durationInMinutes = 0;
+            }
+
+            return [
+                'id' => $item->id,
+                'name' => $item->name,
+                'forecasting_demand' => $item->forecasting_demand,
+                'buffer_stock' => $item->buffer_stock,
+                'durasi' => $durationInMinutes,
+                'status' => $item->status,
+            ];
+        });
+
         return response()->json([
             'status' => 'success',
-            'data' => $umkms->items(),
+            'data' => $data,
             'pagination' => [
                 'current_page' => $umkms->currentPage(),
                 'last_page' => $umkms->lastPage(),
@@ -66,7 +87,7 @@ class UmkmController extends Controller
         if ($umkm) {
             $querry->where('users.name', 'like', '%' . $umkm . '%');
         }
-        
+
         $umkms = $querry->paginate(10);
 
         return response()->json([
@@ -106,6 +127,40 @@ class UmkmController extends Controller
         ], 200);
     }
 
+    public function tolakVerifikasiUmkm(Request $request)
+    {
+        $umkm = Umkaem::find($request->id);
+
+        if (!$umkm) {
+            return response()->json(['message' => 'UMKM tidak ditemukan'], 404);
+        }
+
+        $user = User::find($umkm->user_id);
+        if ($user) {
+            Mail::send('emails.verify_umkm_cancel', ['name' => $user->name, 'messageCancel' => $request->messageCancel], function ($message) use ($user) {
+                $message->to($user->email, $user->name)
+                    ->subject('Verifikasi UMKM Berhasil');
+            });
+            $user->delete();
+        }
+
+        return response()->json([
+            'message' => 'UMKM ditolak verifikasinya'
+        ], 200);
+    }
+
+    public function getDataUmkmActiveInactive()
+    {
+        $umkmActive = User::where('role', 'umkm')->where('status', 'active')->count();
+        $umkmInactive = User::where('role', 'umkm')->where('status', 'deleted')->count();
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'active' => $umkmActive,
+                'inactive' => $umkmInactive,
+            ]
+        ], 200);
+    }
     public function dataUmkmView()
     {
         return view('admin.data_umkm'); // Blade view

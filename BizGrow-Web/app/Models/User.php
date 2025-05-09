@@ -26,6 +26,7 @@ class User extends Authenticatable
         'password',
         'role',
         'status',
+        'login_at',
     ];
 
     /**
@@ -48,6 +49,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'login_at' => 'datetime',
         ];
     }
     public function umkm()
