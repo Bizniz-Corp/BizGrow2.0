@@ -23,7 +23,6 @@
                     <label for="password" class="form-label">Password Baru</label>
                     <input type="password" id="password" name="password" class="form-control"
                         placeholder="Isi Password Baru" required>
-                    <div id="passwordError" class="text-danger mt-1" style="display: none;"></div>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Konfirmasi Password</label>
