@@ -88,6 +88,7 @@ class UmkmController extends Controller
             $querry->where('users.name', 'like', '%' . $umkm . '%');
         }
 
+
         $umkms = $querry->paginate(10);
 
         return response()->json([

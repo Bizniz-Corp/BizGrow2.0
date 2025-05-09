@@ -4,6 +4,8 @@ $(document).ready(function () {
     const token = localStorage.getItem("token");
     let selectedId = null; // ID UMKM yg mau dihapus
 
+    // Panggil fungsi untuk memuat statistik UMKM dan data tabel
+    loadUmkmStats();
     loadTableData();
 
     if (token) {
@@ -116,6 +118,8 @@ $(document).ready(function () {
     $(document).on("click", ".delete-button", function () {
         selectedId = $(this).data("id");
         $("#deleteConfirmationModal").modal("show");
+        selectedId = $(this).data("id");
+        $("#deleteConfirmationModal").modal("show");
     });
 
     $("#confirmDeleteButton").on("click", function () {
@@ -127,8 +131,9 @@ $(document).ready(function () {
                     Authorization: `Bearer ${token}`,
                 },
                 success: function (response) {
-                    loadTableData(currentPage, currentFilters); // Refresh data setelah penghapusan
-                    $("#deleteConfirmationModal").modal("hide"); // Tutup modal
+                    loadTableData(currentPage, currentFilters); // Refresh tabel
+                    loadUmkmStats(); // Refresh statistik setelah penghapusan
+                    $("#deleteConfirmationModal").modal("hide");
                 },
                 error: function (xhr, status, error) {
                     console.error("Error deleting UMKM:", xhr.responseText);
