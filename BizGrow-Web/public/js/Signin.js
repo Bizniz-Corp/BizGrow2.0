@@ -52,8 +52,11 @@ $(document).ready(function () {
                     error: error,
                 });
 
+                var errorMessage = xhr.responseJSON.message;
+                console.log("Pesan error: ", errorMessage);
+
                 // Tampilkan modal error
-                $("#errorMessage").html("Email atau password salah!");
+                $("#errorMessage").html(errorMessage);
                 var errorModal = new bootstrap.Modal(
                     document.getElementById("errorModal")
                 );

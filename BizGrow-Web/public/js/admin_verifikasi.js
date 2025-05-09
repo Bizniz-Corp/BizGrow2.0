@@ -2,7 +2,7 @@ $(document).ready(function () {
     let currentFilters = {};
     let currentPage = 1;
     const token = localStorage.getItem("token");
-    let actionType = ""; 
+    let actionType = "";
     let selectedId = null;
 
     loadTableData();
@@ -25,11 +25,17 @@ $(document).ready(function () {
                     renderTable(data);
                     updatePaginationControls(pagination);
                 } else {
-                    console.error("Gagal memuat data UMKM untuk verifikasi:", response);
+                    console.error(
+                        "Gagal memuat data UMKM untuk verifikasi:",
+                        response
+                    );
                 }
             },
             error: function (xhr, status, error) {
-                console.error("Error fetching UMKM verification data:", xhr.responseText);
+                console.error(
+                    "Error fetching UMKM verification data:",
+                    xhr.responseText
+                );
             },
         });
     }
@@ -40,18 +46,28 @@ $(document).ready(function () {
             rows += `
                 <tr>
                     <td>${item.name}</td>
-                    <td>${item.is_verified ? "Terverifikasi" : "Menunggu Verifikasi"}</td>
+                    <td>${
+                        item.is_verified
+                            ? "Terverifikasi"
+                            : "Menunggu Verifikasi"
+                    }</td>
                     <td>${item.npwp_no || "-"}</td>
                     <td>
-                        <a href="/files/${item.izin_usaha_path}" target="_blank" class="text-decoration-none">
+                        <a href="/files/${
+                            item.izin_usaha_path
+                        }" target="_blank" class="text-decoration-none">
                             ${item.izin_usaha_path || "Tidak Ada"}
                         </a>
                     </td>
                     <td>
-                        <button class="btn btn-success btn-sm me-2" data-id="${item.id}" data-action="verify">
+                        <button class="btn btn-success btn-sm me-2" data-id="${
+                            item.id
+                        }" data-action="verify">
                             <i class="bi bi-check-lg"></i>
                         </button>
-                        <button class="btn btn-danger btn-sm" data-id="${item.id}" data-action="delete">
+                        <button class="btn btn-danger btn-sm" data-id="${
+                            item.id
+                        }" data-action="delete">
                             <i class="bi bi-x-lg"></i>
                         </button>
                     </td>
@@ -93,9 +109,13 @@ $(document).ready(function () {
         actionType = $(this).data("action");
 
         if (actionType === "verify") {
-            $("#confirmationMessage").text("Apakah Anda yakin ingin memverifikasi UMKM ini?");
+            $("#confirmationMessage").html(
+                'Apakah Anda yakin <span style="color: green; font-weight: bold;">INGIN</span> memverifikasi UMKM ini?'
+            );
         } else if (actionType === "delete") {
-            $("#confirmationMessage").text("Apakah Anda yakin tidak memverifikasi UMKM ini?");
+            $("#confirmationMessage").html(
+                'Apakah Anda yakin <span style="color: red; font-weight: bold;">TIDAK</span> memverifikasi UMKM ini?'
+            );
         }
 
         $("#confirmationModal").modal("show");
@@ -120,17 +140,18 @@ $(document).ready(function () {
             });
         } else if (actionType === "delete") {
             $.ajax({
-                url: `/api/umkm/delete/${selectedId}`,
+                url: `/api/umkm-verification-reject`,
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
+                data: { id: selectedId },
                 success: function (response) {
                     loadTableData(currentPage, currentFilters); // Refresh data setelah penghapusan
                     $("#confirmationModal").modal("hide");
                 },
                 error: function (xhr, status, error) {
-                    console.error("Error deleting UMKM:", xhr.responseText);
+                    console.error("Error rejecting UMKM:", xhr.responseText);
                 },
             });
         }
@@ -139,13 +160,13 @@ $(document).ready(function () {
     $("#umkmNameInput").on("input", function () {
         const searchQuery = $(this).val().trim();
         console.log("Pencarian:", searchQuery);
-        currentFilters.name = searchQuery; 
-        loadTableData(1, currentFilters); 
+        currentFilters.name = searchQuery;
+        loadTableData(1, currentFilters);
     });
 
     $("#resetButton").on("click", function () {
-        $("#umkmNameInput").val(""); 
-        currentFilters = {}; 
+        $("#umkmNameInput").val("");
+        currentFilters = {};
         loadTableData(1);
     });
 });

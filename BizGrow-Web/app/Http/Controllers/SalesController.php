@@ -79,7 +79,7 @@ class SalesController extends Controller
         return view('penjualan.penjualan_history', compact('user'));
     }
 
-    public function demandView()
+public function demandView()
     {
         return view('penjualan.penjualan_prediksi_demand'); // Blade view
     }

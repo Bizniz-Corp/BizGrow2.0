@@ -42,7 +42,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/umkm/delete/{id}', [UmkmController::class, 'deleteUmkm']); //API menghapus UMKM
         Route::get('/umkm-verification', [UmkmController::class, 'getDataUmkmVerification']); //API untuk get data untuk laman Verifikasi UMKM
         Route::post('/umkm-verification-check', [UmkmController::class, 'verifikasiUmkm']); //API untuk verify UMKM
+        Route::post('/umkm-verification-reject', [UmkmController::class, 'tolakVerifikasiUmkm']); //API untuk reject UMKM
         Route::get('/feedback', [FeedbackController::class, 'getAllFeedback']); //API untuk mendapatkan semua feedback (Admin)
+        Route::get('/umkm-active-inactive', [UmkmController::class, 'getDataUmkmActiveInactive']); //API untuk mendapatkan semua jumlah aktif dan tidak aktif UMKM (admin)
     });
 });
 
