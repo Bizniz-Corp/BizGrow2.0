@@ -17,12 +17,7 @@ Route::get('/login', [AuthController::class, 'signinView'])->name('login');
 Route::get('/register', [AuthController::class, 'signupView'])->name('register');
 Route::get('/forgot-password', [AuthController::class, 'forgotPasswordView'])->name('auth.forgotPassword');
 Route::get('/otp', [AuthController::class, 'otpView'])->name('auth.otp');
-
-// Route::get('/sign-out', [AuthController::class, 'signoutView'])->name('signout');
-
-// Route::get('/input_penjualan', function () {
-//     return view('penjualan.penjualan_input');
-// })->name('penjualan.input');
+Route::get('/reset-password', [AuthController::class, 'resetPasswordView'])->name('auth.resetPassword');
 
 Route::get('/home', [ProductController::class, 'home'])->name('home');
 

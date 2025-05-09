@@ -151,7 +151,7 @@ class AuthController extends Controller
         );
 
         // Kirim email ke user
-        Mail::send('emails.forgot_password', ['token' => $token], function ($message) use ($request) {
+        Mail::send('emails.forgot_password_mails', ['token' => $token], function ($message) use ($request) {
             $message->to($request->email);
             $message->subject('Reset Password Request');
         });
@@ -164,6 +164,9 @@ class AuthController extends Controller
         $request->validate([
             'token' => 'required',
             'password' => 'required|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[!@#$%^&*]/',
+        ], [
+            'password.regex' => 'Password harus mengandung huruf kapital, angka, dan karakter spesial.',
+            'password.min' => 'Password minimal 8 karakter.',
         ]);
 
         // Cek token
@@ -201,6 +204,11 @@ class AuthController extends Controller
     public function forgotPasswordView()
     {
         return view('autentikasi.forgot-password'); // Blade view
+    }
+
+    public function resetPasswordView()
+    {
+        return view('autentikasi.new_password'); // Blade view
     }
     public function otpView()
     {
