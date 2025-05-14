@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InputManualController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -24,19 +25,25 @@ Route::get('/home', [ProductController::class, 'home'])->name('home');
 Route::prefix('penjualan')->group(function () {
     Route::get('/input', [SalesController::class, 'inputPenjualanView'])->name('penjualan.input');
     Route::get('/input-file', [SalesController::class, 'inputPenjualanFileView'])->name('penjualan.inputFile');
-    Route::get('/input-manual', [SalesController::class, 'inputPenjualanManualView'])->name('penjualan.inputManual');
+    Route::get('/input-manual', [InputManualController::class, 'inputPenjualanManualView'])->name('penjualan.inputManual');
+    Route::post('/input-manual', [InputManualController::class, 'storeManualSales'])->name('penjualan.storeManualSales'); // ✅ Pastikan ini ada
     Route::get('/riwayat', [SalesController::class, 'riwayatView'])->name('penjualan.riwayat');
     Route::get('/demand', [SalesController::class, 'demand'])->name('penjualan.demand');
     Route::get('/profit', [SalesController::class, 'profit'])->name('penjualan.profit');
+    Route::post('/penjualan/input-manual', [SalesController::class, 'storeManualSales'])->name('penjualan.storeManual');
+
+    
 });
 
 Route::prefix('stok')->group(function () {
     Route::get('/input', [StockController::class, 'inputStokView'])->name('stok.input');
     Route::get('/input-file', [StockController::class, 'inputStokFileView'])->name('stok.inputFile');
     Route::get('/input-manual', [StockController::class, 'inputStokManualView'])->name('stok.inputManual');
+    Route::post('/input-manual', [StockController::class, 'storeManualStock'])->name('stok.storeManualStock'); // Tambahan
     Route::get('/riwayat', [StockController::class, 'riwayatView'])->name('stok.riwayat');
     Route::get('/bufferstok', [StockController::class, 'bufferstokView'])->name('stok.bufferstok');
 });
+
 
 Route::prefix('profil')->group(function () {
     Route::get('/', [ProfileController::class, 'profilView'])->name('profil.profil');

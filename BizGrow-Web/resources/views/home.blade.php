@@ -9,8 +9,11 @@
 @endsection
 
 @section('jsCustom')
-    {{ asset('js/Home.js') }}
+    <script src="{{ asset('js/Home.js') }}"></script>
+    <script src="{{ asset('js/autologout.js') }}"></script>
 @endsection
+
+
 
 @section('content')
     <div class="container">
@@ -25,7 +28,7 @@
             </div>
         </div>
 
-        <div class="features-heading">Akses Fitur Cepat</div> <!-- Added heading here -->
+        <div class="features-heading">Akses Fitur Cepat</div>
 
         <div class="features">
             <div class="feature">
@@ -65,6 +68,5 @@
                 </a>
             </div>
         </div>
-
     </div>
 @endsection

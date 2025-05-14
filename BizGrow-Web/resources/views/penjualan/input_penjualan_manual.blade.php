@@ -7,8 +7,8 @@
     <title>Input Penjualan Manual</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="../assets/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/riwayat.css">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/riwayat.css') }}">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
         <aside id="sidebar">
             <div class="d-flex flex-column mt-3">
                 <button class="toggle-btn" type="button">
-                    <img src="../img/Boom Es.jpeg" alt="profile_pict">
+                    <img src="{{ asset('img/Boom Es.jpeg') }}" alt="profile_pict">
                 </button>
                 <div class="sidebar-nama text-center">
                     <a href="#">Nama UMKM</a>
@@ -25,26 +25,26 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="indexhome.html" class="sidebar-link">
-                        <img src="../img/keyboard.svg" alt="moneyicon">
+                    <a href="{{ url('indexhome') }}" class="sidebar-link">
+                        <img src="{{ asset('img/keyboard.svg') }}" alt="moneyicon">
                         <span>Beranda</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
                         data-bs-target="#penjualan" aria-expanded="true" aria-controls="penjualan">
-                        <img src="../img/money-send.svg" class="money-icon">
+                        <img src="{{ asset('img/money-send.svg') }}" class="money-icon">
                         <span>Penjualan</span>
                     </a>
                     <ul class="sidebar-dropdown list-unstyled collapse" id="penjualan" data-bs-parent="#penjualan">
                         <li class="sidebar-item">
-                            <a href="../pages/penjualan_input.html" class="sidebar-link">Input Data</a>
+                            <a href="{{ url('penjualan/input') }}" class="sidebar-link">Input Data</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="../pages/penjualan_history.html" class="sidebar-link">Riwayat Penjualan</a>
+                            <a href="{{ url('penjualan/history') }}" class="sidebar-link">Riwayat Penjualan</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="penjualan/penjualan_prediksi_demand.html" class="sidebar-link">Prediksi Permintaan</a>
+                            <a href="{{ url('penjualan/prediksi_demand') }}" class="sidebar-link">Prediksi Permintaan</a>
                         </li>
                         <li class="sidebar-item">
                             <a href="#" class="sidebar-link">Prediksi Profit</a>
@@ -54,15 +54,15 @@
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse" data-bs-target="#stok"
                         aria-expanded="true" aria-controls="stok">
-                        <img src="../img/box.svg" alt="iconbox">
+                        <img src="{{ asset('img/box.svg') }}" alt="iconbox">
                         <span>Stok</span>
                     </a>
                     <ul class="sidebar-dropdown list-unstyled collapse" id="stok" data-bs-parent="#stok">
                         <li class="sidebar-item">
-                            <a href="../pages/stok_input.html" class="sidebar-link">Input Data</a>
+                            <a href="{{ url('stok/input') }}" class="sidebar-link">Input Data</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="../pages/stok_history.html" class="sidebar-link">Riwayat Stok</a>
+                            <a href="{{ url('stok/history') }}" class="sidebar-link">Riwayat Stok</a>
                         </li>
                         <li class="sidebar-item">
                             <a href="#" class="sidebar-link">Prediksi Stok</a>
@@ -70,15 +70,15 @@
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a href="../pages/profile.html" class="sidebar-link">
-                        <img src="../img/profile.svg" alt="iconprofile">
+                    <a href="{{ url('profile') }}" class="sidebar-link">
+                        <img src="{{ asset('img/profile.svg') }}" alt="iconprofile">
                         <span>Profil</span>
                     </a>
                 </li>
             </ul>
             <div class="sidebar-footer">
-                <a href="../index.html" class="sidebar-link">
-                    <img src="../img/logout.svg" alt="iconprofile">
+                <a href="{{ url('/') }}" class="sidebar-link">
+                    <img src="{{ asset('img/logout.svg') }}" alt="iconlogout">
                     <span>Keluar</span>
                 </a>
             </div>
@@ -89,13 +89,14 @@
                 <h3 class="h3 fw-bold">
                     Input Data Penjualan
                 </h3>
-                <img src="../img/logo.png" alt="bizgrowlogo">
+                <img src="{{ asset('img/logo.png') }}" alt="bizgrowlogo">
             </header>
             <div class="content overflow-y-auto">
                 <div class="m-5 align-items-center">
                     <div class="form-container position-absolute top-50 start-50 translate-middle">
                         <h1 class="text-center">Input Data Manual</h1>
-                        <form id="inputForm" action="inputPenjualan.php" method="POST">
+                        <form id="inputForm" method="POST">
+                            @csrf <!-- Token CSRF agar form aman -->
                             <div class="m-3">
                                 <label for="tanggal" class="form-label">Tanggal:</label>
                                 <input type="date" class="form-control" id="tanggal" name="tanggal" required>
@@ -124,7 +125,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <script src="../assets/js/script.js"></script>
+    <script src="{{ asset('assets/js/script.js') }}"></script>
 </body>
 
 </html>

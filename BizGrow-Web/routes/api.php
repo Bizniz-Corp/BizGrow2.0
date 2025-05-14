@@ -50,4 +50,22 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
+Route::middleware(['auth:sanctum', 'check.blacklist'])->get('/home', function () {
+    return response()->json(['message' => 'Selamat datang di halaman Home']);
+});
+
+Route::middleware('auth:sanctum')->post('/logout', function () {
+    $token = request()->bearerToken();
+
+    if ($token) {
+        DB::table('blacklisted_tokens')->insert([
+            'token' => $token,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+
+    return response()->json(['message' => 'Logout berhasil'], 200);
+});
+
 
