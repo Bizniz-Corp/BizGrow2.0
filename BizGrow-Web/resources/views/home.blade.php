@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="features-heading">Akses Fitur Cepat</div> <!-- Added heading here -->
+        <div class="features-heading">Akses Fitur Cepat</div>
 
         <div class="features">
             <div class="feature">
