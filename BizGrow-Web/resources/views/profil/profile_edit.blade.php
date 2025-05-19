@@ -30,7 +30,7 @@
                                 src=""
                                 class="rounded-circle mb-3 profile-photo"
                                 alt="Avatar"
-                                id="profilePicture"
+                                id="profile-picture"
                                 style="width: 100%; height: 100%;"
                             />
                             <span

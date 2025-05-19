@@ -15,21 +15,27 @@ $(document).ready(function () {
         // Tampilkan halaman atau lanjutkan dengan logika lainnya
         console.log("Token ditemukan, menampilkan halaman...");
 
-        // $.ajax({
-        //     url: "/api/profile",
-        //     type: "GET",
-        //     headers: {
-        //         Authorization: `Bearer ${token}`,
-        //     },
-        //     success: function (response) {
-        //         console.log("Berhasil memuat profile", response);
-        //         // Update nama user di navbar
-        //         $("#userName").text(response.data.name);
-        //     },
-        //     error: function () {
-        //         console.log("Gagal memuat profile.");
-        //     },
-        // });
+        $.ajax({
+        url: "/api/profile",
+        type: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        success: function (response) {
+            const user = response.data;
+
+            const profilePicture = document.getElementById("profilePicture");
+            profilePicture.src = user.profile_picture
+                ? user.profile_picture
+                : "/img/default-profile.png";
+
+            const userName = document.getElementById("userName");
+            userName.textContent = user.name;
+        },
+        error: function () {
+            console.log("Gagal memuat profile.");
+        },
+    });
     }
 
     // Menangani klik logout untuk menampilkan modal
