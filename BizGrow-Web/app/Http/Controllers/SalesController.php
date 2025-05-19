@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SalesTransaction;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class SalesController extends Controller
@@ -56,6 +57,40 @@ class SalesController extends Controller
             ],
         ], 200);
     }
+    public function storeManualSales(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required',
+            'tanggal' => 'required|date',
+            'harga' => 'required|numeric|min:0',
+            'kuantitas' => 'required|integer|min:1',
+        ], [
+            'product_id.required' => 'Produk tidak ada',
+            'tanggal.required' => 'Tanggal tidak boleh kosong',
+            'harga.required' => 'Harga tidak boleh kosong',
+            'kuantitas.required' => 'Kuantitas tidak boleh kosong',
+            'kuantitas.integer' => 'Kuantitas harus berupa angka bulat',
+            'kuantitas.min' => 'Kuantitas minimal 1',
+            'harga.numeric' => 'Harga harus berupa angka',
+            'harga.min' => 'Harga minimal 0'
+        ]);
+
+        $productId = $request->product_id;
+        $total = $request->harga * $request->kuantitas;
+
+        $salesTransaction = SalesTransaction::create([
+            'product_id' => $productId,
+            'sales_date' => $request->tanggal,
+            'price_per_item' => $request->harga,
+            'sales_quantity' => $request->kuantitas,
+            'total' => $total,
+        ]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Transaksi penjualan berhasil disimpan',
+            'data' => $salesTransaction,
+        ], 201);
+    }
 
     public function inputPenjualanView()
     {
@@ -79,7 +114,7 @@ class SalesController extends Controller
         return view('penjualan.penjualan_history', compact('user'));
     }
 
-public function demandView()
+    public function demandView()
     {
         return view('penjualan.penjualan_prediksi_demand'); // Blade view
     }

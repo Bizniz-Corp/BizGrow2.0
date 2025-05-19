@@ -13,23 +13,28 @@
 @endsection
 
 @section('content')
-    <div class="filter-container m-5 d-flex align-items-center">
-        <button class="btn btn-primary me-2" id="filterButton" data-bs-toggle="modal" data-bs-target="#filterModal">
-            <img src="{{ asset('images/filter.svg') }}" alt="filter-icon"> Filter
-        </button>
-        <button class="btn btn-primary me-2" id="resetButton">
-            <img src="{{ asset('images/refresh.svg') }}" alt="reset-icon"> Reset
-        </button>
+    <div class="d-flex justify-content-between align-items-center mx-5">
+        <div class="filter-container m-5 d-flex align-items-center">
+            <button class="btn btn-primary me-2" id="filterButton" data-bs-toggle="modal" data-bs-target="#filterModal">
+                <img src="{{ asset('images/filter.svg') }}" alt="filter-icon"> Filter
+            </button>
+            <button class="btn btn-primary me-2" id="resetButton">
+                <img src="{{ asset('images/refresh.svg') }}" alt="reset-icon"> Reset
+            </button>
 
-        <div class="me-3">
-            <label for="startDate" class="me-2">Tanggal Awal:</label>
-            <input type="date" id="startDate" class="form-control d-inline">
-        </div>
+            <div class="me-3">
+                <label for="startDate" class="me-2">Tanggal Awal:</label>
+                <input type="date" id="startDate" class="form-control d-inline">
+            </div>
 
-        <div>
-            <label for="endDate" class="me-2">Tanggal Akhir:</label>
-            <input type="date" id="endDate" class="form-control d-inline">
+            <div>
+                <label for="endDate" class="me-2">Tanggal Akhir:</label>
+                <input type="date" id="endDate" class="form-control d-inline">
+            </div>
         </div>
+        <button class="btn btn-primary me-2" id="downloadButton">
+            <img src="{{ asset('images/document-download.svg') }}" alt="download-icon"> Download Laporan
+        </button>
     </div>
 
     <div class="mx-5 mb-5">

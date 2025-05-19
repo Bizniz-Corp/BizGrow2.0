@@ -9,8 +9,11 @@
 @endsection
 
 @section('jsCustom')
-    {{ asset('js/Home.js') }}
+    <script src="{{ asset('js/Home.js') }}"></script>
+    <script src="{{ asset('js/autologout.js') }}"></script>
 @endsection
+
+
 
 @section('content')
     <div class="container">
@@ -65,6 +68,5 @@
                 </a>
             </div>
         </div>
-
     </div>
 @endsection
