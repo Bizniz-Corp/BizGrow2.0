@@ -25,14 +25,10 @@ Route::get('/home', [ProductController::class, 'home'])->name('home');
 Route::prefix('penjualan')->group(function () {
     Route::get('/input', [SalesController::class, 'inputPenjualanView'])->name('penjualan.input');
     Route::get('/input-file', [SalesController::class, 'inputPenjualanFileView'])->name('penjualan.inputFile');
-    Route::get('/input-manual', [InputManualController::class, 'inputPenjualanManualView'])->name('penjualan.inputManual');
-    Route::post('/input-manual', [InputManualController::class, 'storeManualSales'])->name('penjualan.storeManualSales'); // ✅ Pastikan ini ada
     Route::get('/riwayat', [SalesController::class, 'riwayatView'])->name('penjualan.riwayat');
     Route::get('/demand', [SalesController::class, 'demand'])->name('penjualan.demand');
     Route::get('/profit', [SalesController::class, 'profit'])->name('penjualan.profit');
-    Route::post('/penjualan/input-manual', [SalesController::class, 'storeManualSales'])->name('penjualan.storeManual');
-
-    
+    Route::get('/input-manual', [SalesController::class, 'inputPenjualanManualView'])->name('penjualan.storeManual');
 });
 
 Route::prefix('stok')->group(function () {

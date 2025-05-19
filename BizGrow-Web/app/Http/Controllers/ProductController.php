@@ -23,6 +23,31 @@ class ProductController extends Controller
         ], 200);
     }
 
+    public function addNewProduct(Request $request)
+    {
+        $request->validate([
+            'product_name' => 'required|string|max:255',
+            'product_quantity' => 'required|integer|min:0',
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        $userId = Auth::id();
+        $umkmId = DB::table('umkms')->where('user_id', $userId)->value('umkm_id');
+
+        $product = new Product();
+        $product->product_name = $request->input('product_name');
+        $product->price = $request->input('price');
+        $product->product_quantity = $request->input('product_quantity');
+        $product->umkm_id = $umkmId;
+        $product->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Product berhasil ditambahkan',
+            'data' => $product
+        ], 201);
+    }
+
     public function getMonthlyProfit()
     {
         $currentMonth = 12; // Bulan saat ini
@@ -73,17 +98,6 @@ class ProductController extends Controller
             'totalPembelian' => $totalPembelian,
             'totalPenjualan' => $totalPenjualan,
         ]);
-    }
-
-    public function show($id)
-    {
-        $product = Product::find($id);
-
-        if (!$product) {
-            return redirect()->back()->with('error', 'Product not found');
-        }
-
-        return view('products.show', compact('product')); // Blade view
     }
 
 }
