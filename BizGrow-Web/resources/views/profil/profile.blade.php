@@ -21,7 +21,7 @@
 @section('content')
     <div class="wrapper">
         <div class="filter-container m-5 d-flex align-items-start">
-            <img src="" class="rounded-circle mb-3 profile-photo" alt="User Avatar" id="profilePicture" />
+            <img src="" class="rounded-circle mb-3 profile-photo" alt="User Avatar" id="profile-picture" />
             <div class="ms-5">
                 <label for="umkmNameInput" class="form-label fw-bold">Nama UMKM</label>
                 <input type="text" class="form-control text-muted mb-2" id="umkmNameInput" disabled></input>

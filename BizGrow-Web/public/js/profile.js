@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (response.success) {
                     const user = response.data;
                     
-                    const profilePicture = document.getElementById('profilePicture');
+                    const profilePicture = document.getElementById('profile-picture');
                     profilePicture.src = user.profile_picture;
 
                     const nameInput = document.getElementById("umkmNameInput");

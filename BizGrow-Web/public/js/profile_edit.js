@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.success) {
                     const user = response.data;
   
-                    const profilePicture = document.getElementById('profilePicture');
+                    const profilePicture = document.getElementById('profile-picture');
                     profilePicture.src = user.profile_picture;
   
                     const nameInput = document.getElementById('umkmNameInput');
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function previewImage(event) {
     const reader = new FileReader();
     reader.onload = function() {
-        const output = document.getElementById('profilePicture');
+        const output = document.getElementById('profile-picture');
         output.src = reader.result;
     };
     reader.readAsDataURL(event.target.files[0]);

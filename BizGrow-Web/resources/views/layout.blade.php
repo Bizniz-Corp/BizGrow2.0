@@ -18,7 +18,7 @@
         <aside id="sidebar">
             <div class="d-flex flex-column mt-3">
                 <button class="toggle-btn" type="button">
-                    <img src="{{ asset('images/Boom Es.jpeg') }}" alt="profile-pict">
+                    <img src="" alt="profile-pict" id="profilePicture">
                 </button>
                 <div class="sidebar-nama text-center">
                     <a href="#" id="userName"></a>
