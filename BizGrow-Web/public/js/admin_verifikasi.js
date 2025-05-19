@@ -112,13 +112,14 @@ $(document).ready(function () {
             $("#confirmationMessage").html(
                 'Apakah Anda yakin <span style="color: green; font-weight: bold;">INGIN</span> memverifikasi UMKM ini?'
             );
+            $("#confirmationModal").modal("show");
         } else if (actionType === "delete") {
             $("#confirmationMessage").html(
                 'Apakah Anda yakin <span style="color: red; font-weight: bold;">TIDAK</span> memverifikasi UMKM ini?'
             );
+            $("#rejectReasonInput").val(""); // Kosongkan textarea
+            $("#rejectReasonModal").modal("show");
         }
-
-        $("#confirmationModal").modal("show");
     });
 
     $("#confirmActionButton").on("click", function () {
@@ -168,5 +169,28 @@ $(document).ready(function () {
         $("#umkmNameInput").val("");
         currentFilters = {};
         loadTableData(1);
+    });
+
+    $("#sendRejectReasonButton").on("click", function () {
+        const reason = $("#rejectReasonInput").val().trim();
+        if (!reason) {
+            alert("Alasan penolakan harus diisi!");
+            return;
+        }
+        $.ajax({
+            url: `/api/umkm-verification-reject`,
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: { id: selectedId, messageCancel: reason },
+            success: function (response) {
+                loadTableData(currentPage, currentFilters); 
+                $("#rejectReasonModal").modal("hide");
+            },
+            error: function (xhr, status, error) {
+                alert("Gagal mengirim penolakan: " + xhr.responseText);
+            },
+        });
     });
 });

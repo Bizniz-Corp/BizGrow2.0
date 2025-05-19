@@ -64,4 +64,24 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Pesan Penolakan -->
+    <div class="modal fade" id="rejectReasonModal" tabindex="-1" role="dialog" aria-labelledby="rejectReasonModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rejectReasonModalLabel">Alasan Penolakan UMKM</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="rejectReasonInput" class="form-label">Masukkan alasan penolakan:</label>
+                    <textarea id="rejectReasonInput" class="form-control" rows="3" placeholder="Tulis alasan penolakan di sini..."></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger" id="sendRejectReasonButton">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
