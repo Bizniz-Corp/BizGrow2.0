@@ -2,12 +2,6 @@
 
 @section('title', 'Input Penjualan File')
 
-@section('cssCustom')
-    {{-- <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/riwayat.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/input.css') }}"> --}}
-@endsection
-
 @section('jsCustom')
     {{ asset('js/input_file_penjualan.js') }}
 @endsection
