@@ -54,6 +54,38 @@ class StockController extends Controller
             ],
         ], 200);
     }
+    // Tambahan untuk input stok manual
+    public function storeManualStockChange(Request $request)
+    {
+        $request->validate(
+            [
+                'product_id' => 'required|exists:products,product_id',
+                'changes_quantity' => 'required|integer',
+                'changes_date' => 'required|date',
+            ],
+            [
+                'product_id.required' => 'Product Harus Dipilih',
+                'product_id.exists' => 'Product tidak ada.',
+                'changes_quantity.required' => 'Kutantitas perubahan harus diisi.',
+                'changes_quantity.integer' => 'Kuantitas perubahan harus berupa angka.',
+                'changes_date.required' => 'Tanggal perubahan harus diisi.',
+                'changes_date.date' => 'Tanggal perubahan tidak valid.',
+            ]
+        );
+
+        $stockChange = StockChange::create([
+            'product_id' => $request->product_id,
+            'changes_quantity' => $request->changes_quantity,
+            'changes_date' => $request->changes_date,
+            'total_stock' => StockChange::where('product_id', $request->product_id)->sum('changes_quantity') + $request->changes_quantity,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Perubahan stok berhasil disimpan',
+            'data' => $stockChange,
+        ], 201);
+    }
 
     public function inputStokView()
     {
@@ -80,25 +112,5 @@ class StockController extends Controller
         return view('stok.stok_prediksi_buffer_stok'); // Blade view
     }
 
-    // Tambahan untuk input stok manual
-    public function storeManualStock(Request $request)
-    {
-        $request->validate([
-            'product_id' => 'required|exists:products,product_id',
-            'changes_quantity' => 'required|integer',
-            'changes_date' => 'required|date',
-        ]);
 
-        $userId = Auth::id();
-
-        // Menyimpan data stok manual
-        $stockChange = new StockChange();
-        $stockChange->product_id = $request->product_id;
-        $stockChange->changes_quantity = $request->changes_quantity;
-        $stockChange->changes_date = $request->changes_date;
-        $stockChange->total_stock = StockChange::where('product_id', $request->product_id)->sum('changes_quantity') + $request->changes_quantity;
-        $stockChange->save();
-
-        return redirect()->route('stok.inputManual')->with('success', 'Data stok berhasil ditambahkan!');
-    }
 }
