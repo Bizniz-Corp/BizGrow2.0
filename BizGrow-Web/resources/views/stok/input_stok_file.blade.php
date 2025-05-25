@@ -2,9 +2,6 @@
 
 @section('title', 'Input Stok File')
 
-@section('cssCustom')
-@endsection
-
 @section('jsCustom')
     {{ asset('js/input_file_stok.js') }}
 @endsection
