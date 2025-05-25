@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/products', [ProductController::class, 'addNewProduct']); //API untuk menambah produk baru
         Route::get('/profit', [ProductController::class, 'getMonthlyProfit']);
         Route::post('/input-manual-sales', [SalesController::class, 'storeManualSales']); //Api untuk input manual penjualan
+        Route::post('/input-manual-stock', [StockController::class, 'storeManualStockChange']); //API untuk input manual stok
         Route::get('/sales-history', [SalesController::class, 'getSalesHistory']);
         Route::get('/stocks-history', [StockController::class, 'getStockHistory']);
         Route::get('/profile', [ProfileController::class, 'getProfile']);
@@ -60,28 +61,28 @@ Route::middleware(['auth:sanctum', 'check.blacklist'])->get('/home', function ()
     return response()->json(['message' => 'Selamat datang di halaman Home']);
 });
 
-Route::middleware('auth:sanctum')->post('/logout', function () {
-    $token = request()->bearerToken();
+// Route::middleware('auth:sanctum')->post('/logout', function () {
+//     $token = request()->bearerToken();
 
-    if ($token) {
-        DB::table('blacklisted_tokens')->insert([
-            'token' => $token,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-    }
+//     if ($token) {
+//         DB::table('blacklisted_tokens')->insert([
+//             'token' => $token,
+//             'created_at' => now(),
+//             'updated_at' => now(),
+//         ]);
+//     }
 
-    return response()->json(['message' => 'Logout berhasil'], 200);
-});
+//     return response()->json(['message' => 'Logout berhasil'], 200);
+// });
 
-Route::middleware('auth')->group(function () {
-    Route::view('/dashboard', 'dashboard');
+// Route::middleware('auth')->group(function () {
+//     Route::view('/dashboard', 'dashboard');
 
-    Route::post('/logout', function () {
-        Auth::logout();
-        request()->session()->invalidate();
-        request()->session()->regenerateToken();
-        return response()->json(['message' => 'Logged out']);
-    })->name('logout');
-});
+//     Route::post('/logout', function () {
+//         Auth::logout();
+//         request()->session()->invalidate();
+//         request()->session()->regenerateToken();
+//         return response()->json(['message' => 'Logged out']);
+//     })->name('logout');
+// });
 
