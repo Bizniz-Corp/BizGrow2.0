@@ -140,7 +140,7 @@ class UmkmController extends Controller
         if ($user) {
             Mail::send('emails.verify_umkm_cancel', ['name' => $user->name, 'messageCancel' => $request->messageCancel], function ($message) use ($user) {
                 $message->to($user->email, $user->name)
-                    ->subject('Verifikasi UMKM Berhasil');
+                    ->subject('Verifikasi UMKM Ditolak');
             });
             $user->delete();
         }
