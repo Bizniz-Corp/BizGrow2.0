@@ -9,7 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UmkmController;
 use App\Http\Controllers\FeedbackController;
-
+use App\Http\Controllers\Api\InventoryUploadController;
 
 
 // Route Public (Tidak membutuhkan autentikasi)
@@ -17,6 +17,10 @@ Route::post('/register', [AuthController::class, 'register']); //API untuk regis
 Route::post('/login', [AuthController::class, 'login']); //API untuk login
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']); //API untuk mengirimkan email untuk reset password
 Route::post('/reset-password', [AuthController::class, 'resetPassword']); //API untuk reset password setelah mendapatkan email (Laman masukin pass baru)
+// routes/api.php
+
+Route::post('/upload-inventory', [InventoryUploadController::class, 'uploadExcel']);
+
 
 // Protected Route (Membutuhkan autentikasi)
 Route::middleware('auth:sanctum')->group(function () {
