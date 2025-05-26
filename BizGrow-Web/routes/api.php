@@ -32,6 +32,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/input-manual-stock', [StockController::class, 'storeManualStockChange']); //API untuk input manual stok
         Route::get('/sales-history', [SalesController::class, 'getSalesHistory']);
         Route::get('/stocks-history', [StockController::class, 'getStockHistory']);
+        Route::get('/sales-history/export/pdf', [SalesController::class, 'exportPdf']);
+        Route::get('/stocks-history/export/pdf', [StockController::class, 'exportPdf']);
         Route::get('/profile', [ProfileController::class, 'getProfile']);
         Route::put('/profile/edit', [ProfileController::class, 'updateProfile']);
         Route::put('/profile/delete', [ProfileController::class, 'deleteProfile']);

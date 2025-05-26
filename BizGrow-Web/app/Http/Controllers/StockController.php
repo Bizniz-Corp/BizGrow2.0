@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\StockChange;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 
 class StockController extends Controller
@@ -85,6 +86,26 @@ class StockController extends Controller
             'message' => 'Perubahan stok berhasil disimpan',
             'data' => $stockChange,
         ], 201);
+    }
+
+    public function exportPdf()
+    {
+        $stockChanges = StockChange::join('products', 'stock_changes.product_id', '=', 'products.product_id')
+            ->join('umkms', 'products.umkm_id', '=', 'umkms.umkm_id')
+            ->where('umkms.user_id', Auth::id())
+            ->select(
+                'stock_changes.stock_change_id',
+                'products.product_name',
+                'stock_changes.changes_date',
+                'stock_changes.changes_quantity',
+                'stock_changes.total_stock'
+            )
+            ->orderBy('stock_changes.changes_date', 'desc')
+            ->orderBy('products.product_name', 'asc')
+            ->get();
+
+        $pdf = Pdf::loadView('stok.stok_history_pdf', compact('stockChanges'));
+        return $pdf->download('riwayat_stok.pdf');
     }
 
     public function inputStokView()

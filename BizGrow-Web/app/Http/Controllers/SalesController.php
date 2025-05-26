@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Models\SalesTransaction;
 use Illuminate\Support\Facades\DB;
@@ -90,6 +91,27 @@ class SalesController extends Controller
             'message' => 'Transaksi penjualan berhasil disimpan',
             'data' => $salesTransaction,
         ], 201);
+    }
+
+    public function exportPdf()
+    {
+        $sales = SalesTransaction::join('products', 'sales_transactions.product_id', '=', 'products.product_id')
+            ->join('umkms', 'products.umkm_id', '=', 'umkms.umkm_id')
+            ->where('umkms.user_id', Auth::id())
+            ->select(
+                'sales_transactions.sales_id',
+                'products.product_name',
+                'sales_transactions.sales_date',
+                'sales_transactions.sales_quantity',
+                'sales_transactions.price_per_item',
+                'sales_transactions.total'
+            )
+            ->orderBy('sales_transactions.sales_date', 'desc')
+            ->orderBy('products.product_name', 'asc')
+            ->get();
+
+        $pdf = Pdf::loadView('penjualan.penjualan_history_pdf', compact('sales'));
+        return $pdf->download('riwayat_penjualan.pdf');
     }
 
     public function inputPenjualanView()
