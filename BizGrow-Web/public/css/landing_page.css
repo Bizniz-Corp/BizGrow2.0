@@ -1,118 +1,287 @@
 :root {
-    --primary: #242258;
-    --secondary: #223777;
-    --lightBlue: #4E69BA;
-    --white: #FFFFFF;
-    --success: #24A618;
-    --button-hover: #1e8f17;
-    --gray: #686868;
+  --bizgrow-primary: #151436; /* Warna utama baru Anda */
+  --bizgrow-primary-hover: #11112c; /* Warna hover yang sedikit lebih gelap */
+  --bizgrow-text-light: rgba(255, 255, 255, 0.75);
+  --bizgrow-text-dark: #212529;
+  --bizgrow-background-light: #f8f9fa; /* Bootstrap bg-light */
+  --bizgrow-divider-light: #fff;
+  --bizgrow-divider-dark: var(--bizgrow-text-dark);
 }
 
 body {
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
-    color: var(--primary);
-    background-color: var(--secondary);
+  font-family: 'Inter', sans-serif;
+  color: #444444;
 }
 
-.hero-section {
-    background-image: url('../img/hero-background.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 60vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: var(--white);
-    background-color: var(--white);
-    padding: 20px;
-    position: relative;
+a {
+  color: var(--bizgrow-primary); /* Menggunakan variabel warna baru */
+  text-decoration: none;
 }
 
-.hero-section .logo {
-    width: 200px;
+a:hover {
+  color: var(--bizgrow-primary-hover); /* Menggunakan variabel warna hover baru */
+  text-decoration: none;
 }
 
-h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--primary);
+h1, h2, h3, h4, h5, h6, .font-weight-bold {
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
 }
 
-.hero-section p {
-    font-size: 1.25rem;
-    margin-bottom: 20px;
-    color: var(--primary);
+.section-heading {
+    font-size: 2.25rem;
+    margin-bottom: 1rem;
 }
 
-.btn-custom {
-    padding: 12px 30px;
-    font-size: 1rem;
-    border-radius: 25px;
-    transition: background-color 0.3s ease;
-    color: var(--white);
-    text-align: center;
+.page-section {
+  padding: 6rem 0;
 }
 
-.btn-signup {
-    background-color: rgb(161, 2, 2);
-    color: var(--text-white);
-    width: 200px;
-    height: 50px;
-    text-align: center;
-    margin-bottom: 10px;
+.page-section h2.section-heading, .page-section .section-heading.h2 {
+  font-size: 2.25rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
 }
 
-.btn-signup:hover {
-    background-color: rgb(184, 1, 1);
+/* Divider */
+hr.divider {
+  height: 0.2rem;
+  max-width: 3.25rem;
+  margin: 1.5rem auto;
+  background-color: var(--bizgrow-primary); /* Menggunakan variabel warna baru */
+  opacity: 1;
 }
 
-.btn-signin {
-    background-color: var(--primary);
-    color: var(--white);
-    width: 200px;
-    height: 50px;
-    text-align: center;
+hr.divider-light {
+  background-color: var(--bizgrow-divider-light);
+}
+hr.divider-dark {
+  background-color: var(--bizgrow-divider-dark); /* Bisa juga var(--bizgrow-primary) jika ingin divider gelap juga pakai warna utama */
 }
 
-.btn-signin:hover {
-    background-color: var(--secondary);
+#mainNav {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #fff;
+  transition: padding-top 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
+  border-bottom: 1px solid #dee2e6;
+}
+#mainNav .navbar-brand {
+  font-size: 1.5rem;
+  color: var(--bizgrow-text-dark);
+}
+#mainNav .navbar-toggler {
+  padding: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--bizgrow-text-dark);
+  border:1px solid var(--bizgrow-text-dark);
+}
+#mainNav .navbar-nav .nav-item .nav-link {
+  color: var(--bizgrow-text-dark);
+  font-weight: 500;
+  padding: 0.75rem 0;
+}
+#mainNav .navbar-nav .nav-item .nav-link.active,
+#mainNav .navbar-nav .nav-item .nav-link:hover {
+  color: var(--bizgrow-primary); 
 }
 
-.features-section {
-    padding: 10px;
-    background-color: var(--white);
+/* Tombol di Navbar */
+#mainNav .btn-primary {
+  background-color: var(--bizgrow-primary);
+  border-color: var(--bizgrow-primary);
+}
+#mainNav .btn-primary:hover {
+  background-color: var(--bizgrow-primary-hover);
+  border-color: var(--bizgrow-primary-hover);
+}
+#mainNav .btn-outline-primary {
+  color: var(--bizgrow-primary);
+  border-color: var(--bizgrow-primary);
+}
+#mainNav .btn-outline-primary:hover {
+  color: #fff;
+  background-color: var(--bizgrow-primary);
+  border-color: var(--bizgrow-primary);
 }
 
-.section-title {
-    font-size: 2.4rem;
-    font-weight: 700;
-    color: var(--primary);
+
+/* Navbar Shrink */
+#mainNav.navbar-shrink {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #fff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+#mainNav.navbar-shrink .navbar-brand {
+  font-size: 1.25em;
 }
 
-.section-subtitle {
-    font-size: 1rem;
-    color: var(--primary);
+header.masthead {
+  padding-top: 10rem;
+  padding-bottom: calc(10rem - 4.5rem);
+  /* Overlay di hero section mungkin perlu disesuaikan jika warna utama sangat gelap */
+  /* Misal, jika #1a1a3e jadi warna utama, overlay bisa tetap gelap atau sedikit lebih terang dari #1a1a3e */
+  background: linear-gradient(to bottom, rgba(26, 26, 62, 0.6) 0%, rgba(26, 26, 62, 0.6) 100%), url("../images/Sign\ in.png"); /* Contoh overlay dengan warna baru, sesuaikan opasitas (0.6) */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+header.masthead h1 {
+  font-size: 3rem;
+}
+header.masthead p.text-white-75 { /* Ini adalah kelas Bootstrap */
+  color: var(--bizgrow-text-light) !important;
+}
+/* Tombol di Hero Section */
+header.masthead .btn-primary {
+  background-color: var(--bizgrow-primary);
+  border-color: var(--bizgrow-primary);
+}
+header.masthead .btn-primary:hover {
+  background-color: var(--bizgrow-primary-hover);
+  border-color: var(--bizgrow-primary-hover);
 }
 
-.feature-item {
-    padding: 20px;
-    background: var(--primary);
-    border-color: var(--white);
-    border-radius: 80px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: var(--white);
+
+@media (min-width: 992px) {
+  header.masthead {
+    height: 100vh;
+    min-height: 40rem;
+    padding-top: 4.5rem;
+    padding-bottom: 0;
+  }
+  header.masthead h1 {
+    font-size: 4rem;
+  }
+}
+@media (min-width: 1200px) {
+  header.masthead h1 {
+    font-size: 4.5rem;
+  }
 }
 
-.feature-item:hover {
-    transform: translateY(-25px);
-    background: var(--secondary);
+.btn-xl {
+  padding: 1.25rem 2.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 10rem;
+}
+.btn-primary {
+  background-color: var(--bizgrow-primary) !important; 
+  border-color: var(--bizgrow-primary) !important;
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: var(--bizgrow-primary-hover) !important;
+  border-color: var(--bizgrow-primary-hover) !important;
+}
+.btn-outline-primary {
+  color: var(--bizgrow-primary) !important;
+  border-color: var(--bizgrow-primary) !important;
+}
+.btn-outline-primary:hover {
+  color: #fff !important;
+  background-color: var(--bizgrow-primary) !important;
+  border-color: var(--bizgrow-primary) !important;
 }
 
-.feature-icon {
-    width: 100px;
-    height: 70px;
+.card-feature {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  height: 100%;
+}
+.card-feature:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 1rem 3rem rgba(33, 37, 41, 0.175) !important;
+}
+
+#fitur .bi-archive-fill,
+#fitur .bi-receipt-cutoff,
+#fitur .bi-graph-up,
+#fitur .bi-bar-chart-line-fill,
+#fitur .bi-people-fill,
+#fitur .bi-shield-check,
+#pain-points .bi-boxes,     
+#pain-points .bi-pencil-square,
+#pain-points .bi-graph-up-arrow,
+#pain-points .bi-gear,
+#how-it-works .bi-person-plus-fill, 
+#how-it-works .bi-cloud-upload-fill,
+#how-it-works .bi-rocket-takeoff-fill {
+  color: var(--bizgrow-primary) !important;
+}
+
+.feature-icon-bg {
+    background-color: var(--bizgrow-primary) !important; 
+}
+
+.testimonial-card {
+  border: none;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.05);
+  background-color: #fff;
+  color: var(--bizgrow-text-dark);
+  transition: transform 0.3s ease;
+}
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+.testimonial-card .card-footer {
+    background-color: transparent;
+}
+#testimonials.bg-dark .testimonial-card {
+    background-color: rgba(255,255,255,0.1);
+    color: var(--bizgrow-divider-light);
+}
+#testimonials.bg-dark .testimonial-card small.text-muted {
+    color: var(--bizgrow-text-light) !important;
+}
+
+
+#kontak .bi-envelope {
+  color: var(--bizgrow-primary) !important;
+}
+.btn-social {
+  height: 2.5rem;
+  width: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 100%;
+}
+
+footer.bg-light {
+  border-top: 1px solid #e9ecef;
+}
+footer h5, footer h6 {
+    color: var(--bizgrow-text-dark);
+}
+footer a.text-muted:hover { /* Link di footer */
+    color: var(--bizgrow-primary) !important; /* Menggunakan variabel warna baru */
+}
+
+.text-white-75 {
+  color: var(--bizgrow-text-light) !important;
+}
+
+.accordion-button {
+    color: var(--bizgrow-text-dark);
+}
+.accordion-button:not(.collapsed) {
+    color: var(--bizgrow-primary);
+    background-color: #e7f1ff; 
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+}
+.accordion-button:focus {
+    border-color: var(--bizgrow-primary-hover);
+    box-shadow: 0 0 0 0.25rem rgba(26, 26, 62, 0.25); 
 }
