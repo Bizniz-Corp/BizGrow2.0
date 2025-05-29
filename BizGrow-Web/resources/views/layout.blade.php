@@ -135,36 +135,70 @@
         </div>
     </div>
 
-    <!-- Floating Button -->
-<div class="floating-button">
-    <button class="btn btn-primary rounded-circle" id="feedbackButton">
-        <i class="bi bi-chat-dots"></i>
-    </button>
-</div>
-
-<!-- Modal Feedback -->
-<div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="feedbackModalLabel">Feedback</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="feedbackForm">
-                    <div class="mb-3">
-                        <label for="feedbackInput" class="form-label">Masukkan Feedback Anda</label>
-                        <textarea class="form-control" id="feedbackInput" rows="4" placeholder="Tulis feedback Anda di sini..."></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-primary" id="submitFeedbackButton">Kirim</button>
+    <!-- Modal Auto Logout -->
+    <div class="modal fade" id="autoLogoutModal" tabindex="-1" role="dialog"
+        aria-labelledby="autoLogoutModalLabel" data-bs-backdrop="static" data-bs-keyboard="false"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="autoLogoutModalLabel">Keluar Otomatis</h5>
+                </div>
+                <div class="modal-body">
+                    Anda telah logout otomatis karena tidak ada aktivitas selama 1 menit.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="redirectToLoginButtonAutoLog">Oke</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- Modal Auto Logout -->
+    <div class="modal fade" id="autoLogoutModal" tabindex="-1" aria-labelledby="autoLogoutModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="autoLogoutModalLabel">Keluar Otomatis</h5>
+                </div>
+                <div class="modal-body">
+                    Anda telah logout otomatis karena tidak ada aktivitas selama 1 menit.
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Floating Button -->
+    <div class="floating-button">
+        <button class="btn btn-primary rounded-circle" id="feedbackButton">
+            <i class="bi bi-chat-dots"></i>
+        </button>
+    </div>
+
+    <!-- Modal Feedback -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="feedbackModalLabel">Feedback</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="feedbackForm">
+                        <div class="mb-3">
+                            <label for="feedbackInput" class="form-label">Masukkan Feedback Anda</label>
+                            <textarea class="form-control" id="feedbackInput" rows="4" placeholder="Tulis feedback Anda di sini..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" id="submitFeedbackButton">Kirim</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
@@ -176,22 +210,23 @@
     <script src="@yield('jsCustom')"></script>
 
     <!-- Modal untuk Pesan -->
-<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="messageModalLabel">Pesan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="messageModalBody">
-                <!-- Pesan akan ditampilkan di sini -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">Pesan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="messageModalBody">
+                    <!-- Pesan akan ditampilkan di sini -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 </body>
 

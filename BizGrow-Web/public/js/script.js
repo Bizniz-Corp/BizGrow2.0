@@ -16,31 +16,32 @@ $(document).ready(function () {
         console.log("Token ditemukan, menampilkan halaman...");
 
         $.ajax({
-        url: "/api/profile",
-        type: "GET",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-        success: function (response) {
-            const user = response.data;
+            url: "/api/profile",
+            type: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            success: function (response) {
+                const user = response.data;
 
-            const profilePicture = document.getElementById("profilePicture");
-            profilePicture.src = user.profile_picture
-                ? user.profile_picture
-                : "/img/default-profile.png";
+                const profilePicture =
+                    document.getElementById("profilePicture");
+                profilePicture.src = user.profile_picture
+                    ? user.profile_picture
+                    : "/img/default-profile.png";
 
-            const userName = document.getElementById("userName");
-            userName.textContent = user.name;
-        },
-        error: function () {
-            console.log("Gagal memuat profile.");
-        },
-    });
+                const userName = document.getElementById("userName");
+                userName.textContent = user.name;
+            },
+            error: function () {
+                console.log("Gagal memuat profile.");
+            },
+        });
     }
 
     // Menangani klik logout untuk menampilkan modal
     $("#logoutButton").click(function (e) {
-        e.preventDefault(); // Mencegah navigasi default
+        e.preloginModalentDefault(); // Mencegah navigasi default
 
         // Tampilkan modal konfirmasi logout
         $("#logoutModal").modal("show");
@@ -81,4 +82,46 @@ $(document).ready(function () {
     $("#redirectToLoginButton").click(function () {
         window.location.href = "/login";
     });
+
+    $("#redirectToLoginButtonAutoLog").click(function () {
+        window.location.href = "/login";
+    });
+
+    // Auto logout setelah 1 menit tidak ada aktivitas
+    let idleTime = 0;
+    let idleInterval = setInterval(timerIncrement, 60000); // 1 menit
+
+    function timerIncrement() {
+        idleTime += 1;
+        if (idleTime >= 1) {
+            // 1 menit
+            autoLogout();
+        }
+    }
+
+    // Reset idle timer jika ada aktivitas
+    $(document).on("mousemove keydown click scroll", function () {
+        idleTime = 0;
+    });
+
+    function autoLogout() {
+        // Panggil endpoint logout via AJAX
+        $.ajax({
+            url: "/api/logout",
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`, // pastikan token sudah tersedia di JS
+            },
+            success: function () {
+                // Tampilkan modal auto logout
+                $("#autoLogoutModal").modal("show");
+            },
+            error: function () {
+                console.error("Gagal melakukan auto logout");
+                alert("Terjadi kesalahan saat melakukan auto logout.");
+            },
+        });
+        clearInterval(idleInterval);
+        localStorage.removeItem("token");
+    }
 });
