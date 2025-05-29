@@ -154,4 +154,42 @@ $(document).ready(function () {
         currentFilters = {};
         loadTableData(1); // Memuat ulang semua data tanpa filter
     });
+
+    $("#downloadButton").on("click", function () {
+        $.ajax({
+            url: "/api/stocks-history/export/pdf",
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            xhrFields: {
+                responseType: "blob", // Penting: agar response berupa file/binary
+            },
+            success: function (data, status, xhr) {
+                // Ambil nama file dari header jika ada
+                let filename = "riwayat_sperubahan_stok.pdf";
+                const disposition = xhr.getResponseHeader(
+                    "Content-Disposition"
+                );
+                if (disposition && disposition.indexOf("filename=") !== -1) {
+                    filename = disposition
+                        .split("filename=")[1]
+                        .replace(/['"]/g, "");
+                }
+
+                // Buat link download manual
+                const url = window.URL.createObjectURL(data);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            },
+            error: function (xhr, status, error) {
+                console.error("Failed to download file:", xhr.responseText);
+            },
+        });
+    });
 });

@@ -10,7 +10,6 @@
 
 @section('jsCustom')
     <script src="{{ asset('js/Home.js') }}"></script>
-    <script src="{{ asset('js/autologout.js') }}"></script>
 @endsection
 
 

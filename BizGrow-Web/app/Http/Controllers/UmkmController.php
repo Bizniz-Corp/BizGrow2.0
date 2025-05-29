@@ -140,7 +140,7 @@ class UmkmController extends Controller
         if ($user) {
             Mail::send('emails.verify_umkm_cancel', ['name' => $user->name, 'messageCancel' => $request->messageCancel], function ($message) use ($user) {
                 $message->to($user->email, $user->name)
-                    ->subject('Verifikasi UMKM Berhasil');
+                    ->subject('Verifikasi UMKM Ditolak');
             });
             $user->delete();
         }
@@ -152,8 +152,15 @@ class UmkmController extends Controller
 
     public function getDataUmkmActiveInactive()
     {
-        $umkmActive = User::where('role', 'umkm')->where('status', 'active')->count();
-        $umkmInactive = User::where('role', 'umkm')->where('status', 'deleted')->count();
+        $umkmActive = User::join('umkms', 'users.id', '=', 'umkms.user_id')
+            ->where('role', 'umkm')
+            ->where('status', 'active')
+            ->where('umkms.is_verified', 1)
+            ->count();
+        $umkmInactive = User::join('umkms', 'users.id', '=', 'umkms.user_id')
+            ->where('role', 'umkm')
+            ->where('status', 'deleted')
+            ->count();
         return response()->json([
             'status' => 'success',
             'data' => [

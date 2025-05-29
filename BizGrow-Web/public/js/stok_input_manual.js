@@ -30,27 +30,30 @@ $(document).ready(function () {
 
     $("#inputForm").submit(function (e) {
         e.preventDefault(); // Mencegah form untuk refresh halaman saat submit
-
+        if ($("jenisPerubahan").val() === "tambah") {
+            $("#jenisPerubahan").val("tambah");
+        } else if ($("jenisPerubahan").val() === "kurang") {
+            $("#jenisPerubahan").val("kurang");
+        }
         $.ajax({
-            url: "/api/input-manual-sales", // Endpoint API untuk input manual
-            type: "POST", // Menggunakan metode POST
+            url: "/api/input-manual-stock",
+            type: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
             },
             data: {
                 product_id: $("#namaProduk").val(),
-                kuantitas: $("#kuantitas").val(),
-                harga: $("#harga").val(),
-                tanggal: $("#tanggal").val(),
+                changes_quantity: $("#kuantitas").val(),
+                changes_date: $("#tanggal").val(),
             },
             success: function (response) {
                 console.log("Respons API: ", response);
                 // Tampilkan modal sukses
-                $("#successMessageAddSales").html(
-                    "Input data penjualan berhasil!"
+                $("#successMessageAddStockChange").html(
+                    "Input data perubahan stok berhasil!"
                 );
                 var successModal = new bootstrap.Modal(
-                    document.getElementById("successModalAddSales")
+                    document.getElementById("successModalAddStockChange")
                 );
                 successModal.show();
             },
@@ -65,9 +68,9 @@ $(document).ready(function () {
                 console.log("Pesan error: ", errorMessage);
 
                 // Tampilkan modal error
-                $("#errorMessageAddSales").html(errorMessage);
+                $("#errorMessageAddStockChange").html(errorMessage);
                 var errorModal = new bootstrap.Modal(
-                    document.getElementById("errorModalAddSales")
+                    document.getElementById("errorModalAddStockChange")
                 );
                 errorModal.show();
             },

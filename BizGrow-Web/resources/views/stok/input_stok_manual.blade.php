@@ -9,7 +9,7 @@
 @endsection
 
 @section('jsCustom')
-    {{ asset('js/penjualan_input_manual.js') }}
+    {{ asset('js/stok_input_manual.js') }}
 @endsection
 
 @section('content')
@@ -22,7 +22,7 @@
                         <form id="inputForm" method="POST">
                             @csrf
                             <div class="m-3">
-                                <label for="tanggal" class="form-label fw-bold">Tanggal Terjual:</label>
+                                <label for="tanggal" class="form-label fw-bold">Tanggal Perubahan Stok:</label>
                                 <input type="date" class="form-control" id="tanggal" name="tanggal" required>
                             </div>
                             <div class="m-3">
@@ -40,13 +40,16 @@
 
                             </div>
                             <div class="m-3">
-                                <label for="harga" class="form-label fw-bold">Harga
-                                    Satuan:</label>
-                                <input type="number" class="form-control" id="harga" name="harga" required>
+                                <label for="kuantitas" class="form-label fw-bold">Kuantitas:</label>
+                                <input type="number" class="form-control" id="kuantitas" name="kuantitas" required>
                             </div>
                             <div class="m-3">
-                                <label for="kuantitas" class="form-label fw-bold">Kuantitas Terjual:</label>
-                                <input type="number" class="form-control" id="kuantitas" name="kuantitas" required>
+                                <label class="form-label fw-bold">Jenis Perubahan:</label>
+                                <select class="form-select" id="jenisPerubahan" name="jenisPerubahan" required>
+                                    <option value="" disabled selected>Pilih jenis perubahan</option>
+                                    <option value="tambah">Menambah Stok (+)</option>
+                                    <option value="kurang">Mengurangi Stok (-)</option>
+                                </select>
                             </div>
                             <div class="m-3 d-flex justify-content-center">
                                 <button type="submit" class="btn btn-primary w-100">Kirim Data</button>
@@ -111,7 +114,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="errorModalLabel">Gagak menambahkan produk</h5>
+                    <h5 class="modal-title" id="errorModalLabel">Gagal menambahkan produk</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="errorMessageAddProduct">
@@ -123,16 +126,16 @@
             </div>
         </div>
     </div>
-    <!-- Modal untuk Berhasil nambah sales transaction -->
-    <div class="modal fade" id="successModalAddSales" tabindex="-1" aria-labelledby="successModalLabel"
+    <!-- Modal untuk Berhasil nambah stock change -->
+    <div class="modal fade" id="successModalAddStockChange" tabindex="-1" aria-labelledby="successModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title" id="successModalLabel">Tambah Produk Berhasil</h5>
+                    <h5 class="modal-title" id="successModalLabel">Tambah Perubhana Stok Berhasil</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="successMessageAddSales">
+                <div class="modal-body" id="successMessageAddStockChange">
                     <!-- Pesan sukses -->
                 </div>
                 <div class="modal-footer">
@@ -142,15 +145,15 @@
         </div>
     </div>
     <!-- Modal untuk  Gagal tambah sales stransaction -->
-    <div class="modal fade" id="errorModalAddSales" tabindex="-1" aria-labelledby="errorModalLabel"
+    <div class="modal fade" id="errorModalAddStockChange" tabindex="-1" aria-labelledby="errorModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="errorModalLabel">Gagak data penjualan</h5>
+                    <h5 class="modal-title" id="errorModalLabel">Gagal Perubahan Stok</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="errorMessageAddSales">
+                <div class="modal-body" id="errorMessageAddStockChange">
                     <!-- Pesan error -->
                 </div>
                 <div class="modal-footer">
