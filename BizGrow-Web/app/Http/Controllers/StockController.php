@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\StockChange;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Imports\StockChangeImport;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StockController extends Controller
 {
@@ -86,6 +88,24 @@ class StockController extends Controller
             'message' => 'Perubahan stok berhasil disimpan',
             'data' => $stockChange,
         ], 201);
+    }
+
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'inputFileStock' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        try {
+            Excel::import(new StockChangeImport, $request->file('inputFileStock'));
+            return response()->json([
+                'message' => 'Data perubahan stok berhasil diimpor',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 422);
+        }
     }
 
     public function exportPdf()

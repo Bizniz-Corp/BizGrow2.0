@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\SalesTransaction;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\SalesTransactionImport;
 
 class SalesController extends Controller
 {
@@ -91,6 +93,19 @@ class SalesController extends Controller
             'message' => 'Transaksi penjualan berhasil disimpan',
             'data' => $salesTransaction,
         ], 201);
+    }
+
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'inputFileSale' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        Excel::import(new SalesTransactionImport, $request->file('inputFileSale'));
+
+        return response()->json([
+            'message' => 'Data penjualan berhasil diimpor',
+        ], 200);
     }
 
     public function exportPdf()

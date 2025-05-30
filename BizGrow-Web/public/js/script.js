@@ -88,40 +88,40 @@ $(document).ready(function () {
     });
 
     // Auto logout setelah 1 menit tidak ada aktivitas
-    let idleTime = 0;
-    let idleInterval = setInterval(timerIncrement, 60000); // 1 menit
+    // let idleTime = 0;
+    // let idleInterval = setInterval(timerIncrement, 60000); // 1 menit
 
-    function timerIncrement() {
-        idleTime += 1;
-        if (idleTime >= 1) {
-            // 1 menit
-            autoLogout();
-        }
-    }
+    // function timerIncrement() {
+    //     idleTime += 1;
+    //     if (idleTime >= 1) {
+    //         // 1 menit
+    //         autoLogout();
+    //     }
+    // }
 
-    // Reset idle timer jika ada aktivitas
-    $(document).on("mousemove keydown click scroll", function () {
-        idleTime = 0;
-    });
+    // // Reset idle timer jika ada aktivitas
+    // $(document).on("mousemove keydown click scroll", function () {
+    //     idleTime = 0;
+    // });
 
-    function autoLogout() {
-        // Panggil endpoint logout via AJAX
-        $.ajax({
-            url: "/api/logout",
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${token}`, // pastikan token sudah tersedia di JS
-            },
-            success: function () {
-                // Tampilkan modal auto logout
-                $("#autoLogoutModal").modal("show");
-            },
-            error: function () {
-                console.error("Gagal melakukan auto logout");
-                alert("Terjadi kesalahan saat melakukan auto logout.");
-            },
-        });
-        clearInterval(idleInterval);
-        localStorage.removeItem("token");
-    }
+    // function autoLogout() {
+    //     // Panggil endpoint logout via AJAX
+    //     $.ajax({
+    //         url: "/api/logout",
+    //         method: "POST",
+    //         headers: {
+    //             Authorization: `Bearer ${token}`, // pastikan token sudah tersedia di JS
+    //         },
+    //         success: function () {
+    //             // Tampilkan modal auto logout
+    //             $("#autoLogoutModal").modal("show");
+    //         },
+    //         error: function () {
+    //             console.error("Gagal melakukan auto logout");
+    //             alert("Terjadi kesalahan saat melakukan auto logout.");
+    //         },
+    //     });
+    //     clearInterval(idleInterval);
+    //     localStorage.removeItem("token");
+    // }
 });

@@ -28,12 +28,14 @@
                         placeholder="Isi Password" required>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary w-50">Sign In</button>
-                    <a href="{{ url('/forgot-password') }}" class="text-decoration-none align-self-center">Lupa
-                        Password?</a>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
                 </div>
-                <p class="mt-3">Belum Punya Akun? <a href="{{ route('register') }}">Klik Disini</a></p>
             </form>
+            <div>
+                <p class="mt-3">Belum Punya Akun? <a href="{{ route('register') }}">Klik Disini</a></p>
+                <a href="{{ url('/forgot-password') }}" class="text-decoration-none align-self-center">Lupa
+                    Password?</a>
+            </div>
         </div>
         <div class="image-container">
             <img src="{{ asset('images/Sign in.png') }}" alt="bizgrowlogo">

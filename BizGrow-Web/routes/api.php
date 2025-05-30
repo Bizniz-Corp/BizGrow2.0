@@ -30,6 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/profit', [ProductController::class, 'getMonthlyProfit']);
         Route::post('/input-manual-sales', [SalesController::class, 'storeManualSales']); //Api untuk input manual penjualan
         Route::post('/input-manual-stock', [StockController::class, 'storeManualStockChange']); //API untuk input manual stok
+        Route::post('/input-file-sales', [SalesController::class, 'importExcel']); //API untuk input file excel penjualan
+        Route::post('/input-file-stock', [StockController::class, 'importExcel']); //API untuk input file excel stok
         Route::get('/sales-history', [SalesController::class, 'getSalesHistory']);
         Route::get('/stocks-history', [StockController::class, 'getStockHistory']);
         Route::get('/sales-history/export/pdf', [SalesController::class, 'exportPdf']);

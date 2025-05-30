@@ -1,121 +1,126 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Stok File</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="../assets/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/riwayat.css">
-</head>
+@section('title', 'Input Perubahan Stok Manual')
 
-<body>
-     <div class="wrapper">
-        <!-- Side Bar -->
-        <aside id="sidebar">
-            <div class="d-flex flex-column mt-3">
-                <button class="toggle-btn" type="button">
-                    <img src="../img/Boom Es.jpeg" alt="profile_pict">
-                </button>
-                <div class="sidebar-nama text-center">
-                    <a href="#">Nama UMKM</a>
-                </div>
-            </div>
-            <ul class="sidebar-nav">
-                <li class="sidebar-item">
-                    <a href="indexhome.html" class="sidebar-link">
-                        <img src="../img/keyboard.svg" alt="moneyicon">
-                        <span>Beranda</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#penjualan" aria-expanded="true" aria-controls="penjualan">
-                        <img src="../img/money-send.svg" class="money-icon">
-                        <span>Penjualan</span>
-                    </a>
-                    <ul class="sidebar-dropdown list-unstyled collapse" id="penjualan" data-bs-parent="#penjualan">
-                        <li class="sidebar-item">
-                            <a href="../pages/penjualan_input.html" class="sidebar-link">Input Data</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="../pages/penjualan_history.html" class="sidebar-link">Riwayat Penjualan</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="penjualan/penjualan_prediksi_demand.html" class="sidebar-link">Prediksi Permintaan</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Prediksi Profit</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse" data-bs-target="#stok"
-                        aria-expanded="true" aria-controls="stok">
-                        <img src="../img/box.svg" alt="iconbox">
-                        <span>Stok</span>
-                    </a>
-                    <ul class="sidebar-dropdown list-unstyled collapse" id="stok" data-bs-parent="#stok">
-                        <li class="sidebar-item">
-                            <a href="../pages/stok_input.html" class="sidebar-link">Input Data</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="../pages/stok_history.html" class="sidebar-link">Riwayat Stok</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Prediksi Stok</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="sidebar-item">
-                    <a href="../pages/profile.html" class="sidebar-link">
-                        <img src="../img/profile.svg" alt="iconprofile">
-                        <span>Profil</span>
-                    </a>
-                </li>
-            </ul>
-            <div class="sidebar-footer">
-                <a href="../index.html" class="sidebar-link">
-                    <img src="../img/logout.svg" alt="iconprofile">
-                    <span>Keluar</span>
-                </a>
-            </div>
-        </aside>
+@section('header', 'Input Data Perubahan Stok')
 
+@section('cssCustom')
+    {{ asset('css/input.css') }}
+@endsection
+
+@section('jsCustom')
+    {{ asset('js/stok_input_file.js') }}
+@endsection
+
+@section('content')
+    <div class="wrapper">
         <div class="main">
-            <header class="p-3 d-flex justify-content-between align-items-center sticky-top">
-                <h3 class="h3 fw-bold">
-                    Input Data Stok
-                </h3>
-                <img src="../img/logo.png" alt="bizgrowlogo">
-            </header>
             <div class="content overflow-y-auto">
-                <div class="align-items-center">
-                    <div class="form-container position-absolute top-50 start-50 translate-middle">
-                        <div class="m-3">
-                            <h1 class="text-center">Input Data File</h1>
+                <div class="m-5 align-items-center">
+                    <div class="container bg-light p-4 shadow rounded-5">
+                        <h1 class="text-center fw-bold mb-4">Input Data Perubahan Stok via File Excel</h1>
+                        <div class="mb-3">
+                            <label class="fw-bold">Petunjuk Pengisian:</label>
+                            <p>
+                                File yang diupload <b>WAJIB</b> memiliki kolom header berikut (bebas urutan, tapi nama harus
+                                persis):
+                            </p>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-sm w-auto">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Nama Kolom (Header)</th>
+                                            <th>Keterangan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>produk</code></td>
+                                            <td>Nama produk (harus sesuai dengan produk yang sudah ada, atau akan otomatis
+                                                dibuat)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>jumlah_perubahan</code></td>
+                                            <td>Jumlah perubahan stok (<b>positif</b> untuk penambahan, <b>negatif</b> untuk
+                                                pengurangan)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>tanggal_perubahan</code></td>
+                                            <td>Tanggal perubahan stok (format: YYYY-MM-DD)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="mb-2">
+                                <a href="{{ asset('storage/templates/template_file_data_stok.xlsx') }}"
+                                    class="btn btn-success btn-sm" download>
+                                    <i class="bi bi-download"></i> Download Template Excel
+                                </a>
+                            </div>
+                            <p class="text-muted mb-0">
+                                <small>
+                                    Silakan gunakan template di atas agar format file Anda sesuai. Jika tidak ingin,
+                                    silahkan sesuaikan dengan header yang ditentukan.
+                                </small>
+                            </p>
                         </div>
-                        <div class="m-3">
-                            <input type="file" id="fileInputStok" class="form-control mb-3" accept=".xls,.xlsx">
-                        </div>
-                        <div class="m-3">
-                            <p id="infoMessageStok" class="text-muted">File belum dipilih</p>
-                        </div>
-                        <div class="m-3 d-flex justify-content-center">
-                            <button id="submitButtonStok" class="btn btn-primary" disabled>Kirim File</button>
-                        </div>
+                        <form id="inputStockForm" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="m-3">
+                                <label for="inputFileStock" class="form-label fw-bold">File Data Perubahan Stok</label>
+                                <input type="file" class="form-control" id="inputFileStock" name="inputFileStock"
+                                    accept=".xlsx,.xls,.csv" required>
+                                <p class="note">*Masukkan file Excel berisi data perubahan stok sesuai format di atas</p>
+                            </div>
+                            <div class="m-3 d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary w-100">Kirim Data</button>
+                            </div>
+                        </form>
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
-     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <script src="../assets/js/script.js"></script>
-    <script src="../assets/js/input_file.js"></script>
-</body>
-
-</html>
+    </div>
+    <!-- Modal untuk Berhasil nambah stok -->
+    <div class="modal fade" id="successModalAddStock" tabindex="-1" aria-labelledby="successModalStockLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="successModalStockLabel">Tambah Perubahan Stok Berhasil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="successMessageAddStock">
+                    <!-- Pesan sukses -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal untuk Gagal tambah stok -->
+    <div class="modal fade" id="errorModalAddStock" tabindex="-1" aria-labelledby="errorModalStockLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="errorModalStockLabel">Gagal Input Data Perubahan Stok</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="errorMessageAddStock">
+                    <!-- Pesan error -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Coba Lagi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
