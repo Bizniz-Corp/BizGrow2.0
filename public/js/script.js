@@ -41,7 +41,6 @@ $(document).ready(function () {
 
     // Menangani klik logout untuk menampilkan modal
     $("#logoutButton").click(function (e) {
-        e.preloginModalentDefault(); // Mencegah navigasi default
 
         // Tampilkan modal konfirmasi logout
         $("#logoutModal").modal("show");
