@@ -18,7 +18,7 @@ class ProfileController extends Controller
         $umkm = $user->umkm;
 
         // $profilePicture = $umkm->profile_picture ? asset('storage/profile_pict/' . $umkm->profile_picture) : asset('storage/profile_pict/default_avatar.jpg');
-        $profilePicture = $umkm->profile_picture ? asset('storage/profile_pict/' . $umkm->profile_picture) : asset('images/profile/default_avatar.jpg');
+        $profilePicture = $umkm->profile_picture ? asset('storage/profile_pict/' . $umkm->profile_picture) : asset('images/profil/default_avatar.jpg');
 
         return response()->json([
             'success' => true,
