@@ -50,7 +50,7 @@ class AuthController extends Controller
             $filePath = $request->file('file_surat_izin')->store('public/surat_izin');
 
             // Foto profile default
-            $defaultProfilePhoto = basename(asset('storage/default_avatar.jpg'));
+            $defaultProfilePhoto = basename(asset('images/profil/default_avatar.jpg'));
 
             // Simpan ke tabel umkms
             $umkm = Umkaem::create([
