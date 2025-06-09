@@ -35,7 +35,7 @@
                 <div class="mb-3">
                     <label for="npwp" class="form-label">Nomor Pokok Wajib Pajak</label>
                     <input type="text" name="npwp" id="npwp" class="form-control" maxlength="20"
-                        placeholder="99.999.999.9-999.999">
+                        placeholder="xx.xxx.xxx.x-xxx.xxx">
                 </div>
                 <div class="mb-3">
                     <label for="upload" class="form-label">Surat Izin Usaha</label>
