@@ -29,6 +29,12 @@ Route::prefix('penjualan')->group(function () {
     Route::get('/demand', [SalesController::class, 'demand'])->name('penjualan.demand');
     Route::get('/profit', [SalesController::class, 'profit'])->name('penjualan.profit');
     Route::get('/input-manual', [SalesController::class, 'inputPenjualanManualView'])->name('penjualan.storeManual');
+
+    // Prediksi Profit
+    Route::get('/prediksi-profit', [SalesController::class, 'prediksiProfitView'])->name('prediksi.profit.view');
+
+    // Prediksi Demand
+    Route::get('/prediksi-demand', [SalesController::class, 'prediksiDemandView'])->name('prediksi.demand.view');
 });
 
 Route::prefix('stok')->group(function () {
@@ -48,6 +54,8 @@ Route::prefix('profil')->group(function () {
 });
 
 Route::prefix('admin')->group(function () {
+    Route::get('/', [UmkmController::class, 'dataUmkmView'])->name('admin.umkm');
+    Route::get('/verifikasi', [UmkmController::class, 'umkmVerificationView'])->name('admin.verify');
     Route::get('/', [UmkmController::class, 'dataUmkmView'])->name('admin.data_umkm');
     Route::get('/verifikasi', [UmkmController::class, 'umkmVerificationView'])->name('admin.verifikasi');
     Route::get('/feedback', [UmkmController::class, 'feedbackView'])->name('admin.feedback');
@@ -79,5 +87,3 @@ Route::prefix('admin')->group(function () {
 //         Route::get('/edit-password', [ProfileController::class, 'profilEditPasswordView'])->name('profil.editPassword');
 //     });
 // });
-
-
