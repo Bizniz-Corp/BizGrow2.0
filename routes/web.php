@@ -48,8 +48,6 @@ Route::prefix('profil')->group(function () {
 });
 
 Route::prefix('admin')->group(function () {
-    Route::get('/', [UmkmController::class, 'dataUmkmView'])->name('admin.umkm');
-    Route::get('/verifikasi', [UmkmController::class, 'umkmVerificationView'])->name('admin.verify');
     Route::get('/', [UmkmController::class, 'dataUmkmView'])->name('admin.data_umkm');
     Route::get('/verifikasi', [UmkmController::class, 'umkmVerificationView'])->name('admin.verifikasi');
     Route::get('/feedback', [UmkmController::class, 'feedbackView'])->name('admin.feedback');
