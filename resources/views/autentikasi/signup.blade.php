@@ -34,7 +34,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="npwp" class="form-label">Nomor Pokok Wajib Pajak</label>
-                    <input type="text" name="npwp" id="npwp" class="form-control" placeholder="Isi NPWP">
+                    <input type="text" name="npwp" id="npwp" class="form-control" maxlength="20"
+                        placeholder="99.999.999.9-999.999">
                 </div>
                 <div class="mb-3">
                     <label for="upload" class="form-label">Surat Izin Usaha</label>
@@ -104,6 +105,22 @@
             window.location.href = "{{ url('/otp') }}"; // Arahkan ke halaman OTP
         });
     </script> --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const npwpInput = document.getElementById('npwp');
+            npwpInput.addEventListener('input', function(e) {
+                let value = this.value.replace(/\D/g, '').substring(0,15); // max 15 digit angka
+                let formatted = '';
+                if(value.length > 0) formatted += value.substring(0,2);
+                if(value.length > 2) formatted += '.' + value.substring(2,5);
+                if(value.length > 5) formatted += '.' + value.substring(5,8);
+                if(value.length > 8) formatted += '.' + value.substring(8,9);
+                if(value.length > 9) formatted += '-' + value.substring(9,12);
+                if(value.length > 12) formatted += '.' + value.substring(12,15);
+                this.value = formatted;
+            });
+        });
+    </script>
 </body>
 
 </html>
