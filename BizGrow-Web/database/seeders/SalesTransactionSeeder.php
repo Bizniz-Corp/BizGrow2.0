@@ -17,65 +17,97 @@ class SalesTransactionSeeder extends Seeder
      */
     public function run(): void
     {
-        // Ambil semua produk yang tersedia
-        $products = Product::all();
+        $filePath = database_path('data/sales_transactions.csv');
+        $excludedProductIds = [];
 
-        foreach ($products as $product) {
-            // Minimal 15 transaksi untuk setiap produk
-            $numTransactions = 15;
+        // --- LANGKAH 1: Identifikasi produk dari CSV untuk dikecualikan ---
+        if (File::exists($filePath)) {
+            $data = array_map('str_getcsv', file($filePath));
+            $header = array_map('trim', array_shift($data)); // Ambil dan hapus header
+
+            // Dapatkan semua nama produk unik dari file CSV
+            $productNamesInCsv = [];
+            $productColumnIndex = array_search('product', $header); // Cari indeks kolom 'product'
+
+            if ($productColumnIndex !== false) {
+                foreach ($data as $row) {
+                    // Pastikan baris dan kolom ada untuk menghindari error
+                    if (isset($row[$productColumnIndex])) {
+                        $productNamesInCsv[] = $row[$productColumnIndex];
+                    }
+                }
+            }
+            
+            // Jika ada nama produk di CSV, cari ID mereka di database
+            if (!empty($productNamesInCsv)) {
+                $uniqueProductNames = array_unique($productNamesInCsv);
+                $excludedProductIds = Product::whereIn('product_name', $uniqueProductNames)
+                                             ->pluck('product_id')
+                                             ->toArray();
+            }
+        }
+
+        // --- LANGKAH 2: Generate transaksi random untuk produk yang TIDAK ada di CSV ---
+
+        // Ambil semua produk yang ID-nya TIDAK ADA dalam daftar pengecualian ($excludedProductIds)
+        $productsForRandomSeeding = Product::whereNotIn('product_id', $excludedProductIds)->get();
+
+        $this->command->info(count($productsForRandomSeeding) . ' produk akan dibuatkan transaksi random.');
+
+        foreach ($productsForRandomSeeding as $product) {
+            $numTransactions = 15; // Minimal 15 transaksi untuk setiap produk
 
             for ($i = 0; $i < $numTransactions; $i++) {
-                // Tentukan tanggal acak dalam rentang 60 hari terakhir
-                $randomDate = Carbon::now()->subDays(rand(1, 450)); // Menghasilkan tanggal acak dalam 60 hari terakhir
-
-                // Tentukan jumlah yang dijual dan harga totalnya
-                $salesQuantity = rand(1, 40); // Kuantitas transaksi acak
-                $pricePerItem = $product->price; // Harga produk yang konsisten
-
-                // Hitung total transaksi
+                $randomDate = Carbon::now()->subDays(rand(1, 450));
+                $salesQuantity = rand(1, 40);
+                $pricePerItem = $product->price;
                 $total = $salesQuantity * $pricePerItem;
 
-                // Buat transaksi penjualan baru
                 SalesTransaction::create([
                     'product_id' => $product->product_id,
-                    'sales_date' => $randomDate, // Menggunakan tanggal acak
+                    'sales_date' => $randomDate,
                     'sales_quantity' => $salesQuantity,
                     'price_per_item' => $pricePerItem,
                     'total' => $total,
                 ]);
             }
         }
-
-
-        // Untuk Model
-        $filePath = database_path('data/sales_transactions.csv');
+        
+        // --- LANGKAH 3: Impor data transaksi dari file CSV ---
 
         if (!File::exists($filePath)) {
-            // $this->command->error("File not found: $filePath");
+            $this->command->warn("File CSV tidak ditemukan, proses impor dilewati.");
             return;
         }
 
+        // Membaca ulang file untuk proses impor (agar struktur kode tetap jelas)
         $data = array_map('str_getcsv', file($filePath));
         $header = array_map('trim', $data[0]); // Ambil header CSV
         unset($data[0]); // Hapus header dari data
 
+        $this->command->info('Memulai impor transaksi dari file sales_transactions.csv...');
+
         foreach ($data as $row) {
+            // Pastikan jumlah kolom di baris cocok dengan jumlah header
+            if (count($header) !== count($row)) {
+                continue;
+            }
             $rowData = array_combine($header, $row);
 
             // Cari product_id berdasarkan nama produk
-            $productId = DB::table('products')
-                ->where('product_name', $rowData['product'])
-                ->value('product_id');
+            // Menggunakan array yang sudah kita buat sebelumnya untuk efisiensi jika diperlukan,
+            // tapi query langsung juga tidak masalah.
+            $product = Product::where('product_name', $rowData['product'])->first();
 
-            if (!$productId) {
-                // $this->command->error("Product not found: " . $rowData['product']);
+            if (!$product) {
+                $this->command->error("Produk tidak ditemukan di database: " . $rowData['product']);
                 continue; // Skip jika produk tidak ditemukan
             }
 
             // Insert ke database
             DB::table('sales_transactions')->insert([
-                'sales_date' => $rowData['sales_date'], // Pastikan format sudah sesuai
-                'product_id' => $productId,
+                'sales_date' => Carbon::parse($rowData['sales_date'])->toDateTimeString(), // Pastikan format tanggal benar
+                'product_id' => $product->product_id,
                 'sales_quantity' => (int)$rowData['sales_quantity'],
                 'price_per_item' => (int)$rowData['price_per_item'],
                 'total' => (int)$rowData['total'],
@@ -83,7 +115,7 @@ class SalesTransactionSeeder extends Seeder
                 'updated_at' => now(),
             ]);
         }
-
-
+        
+        $this->command->info('Impor transaksi dari CSV selesai.');
     }
 }

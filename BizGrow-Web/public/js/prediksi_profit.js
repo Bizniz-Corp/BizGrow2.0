@@ -6,13 +6,12 @@ $(document).ready(function () {
     const predictButton = $("#predictButton");
     const loadingOverlay = $("#loadingOverlay");
     const alertContainer = $("#alert-container");
-    // const chartContainer = $("#chartContainer"); // Komentari atau hapus jika tidak digunakan lagi
-    const echartsWrapper = $("#echartsContainerWrapper"); // Wrapper div untuk chart ECharts
-    const profitChartContainerDOM = document.getElementById('profitChartContainer'); // DOM elemen untuk ECharts
+    const echartsWrapper = $("#echartsContainerWrapper");
+    const profitChartContainerDOM = document.getElementById('profitChartContainer');
 
-    let profitChartInstance = null; // Variabel untuk menyimpan instance chart
+    let profitChartInstance = null;
+    let currentChartData = []; // Untuk menyimpan data yang sedang ditampilkan di chart
 
-    // ... (fungsi showAlert, formatDateForDisplay, formatCurrency, renderProfitTable tetap sama) ...
     function showAlert(message, type = 'danger', duration = 0) {
         alertContainer.html('');
         const alertId = 'alert-' + Date.now();
@@ -28,15 +27,17 @@ $(document).ready(function () {
         }
     }
 
-    function formatDateForDisplay(dateString) {
-        if (!dateString) return '-';
+    // Fungsi ini untuk menampilkan tanggal di tooltip (dd-mm-yyyy)
+    // Asumsi input dateString adalah YYYY-MM-DD
+    function formatDateForDisplay(dateString_YYYY_MM_DD) {
+        if (!dateString_YYYY_MM_DD) return '-';
         try {
-            const parts = dateString.split('-');
-            if (parts.length !== 3) return dateString;
-            return `${parts[2]}-${parts[1]}-${parts[0]}`;
+            const parts = dateString_YYYY_MM_DD.split('-'); // [YYYY, MM, DD]
+            if (parts.length !== 3) return dateString_YYYY_MM_DD; // Format tidak sesuai
+            return `${parts[2]}-${parts[1]}-${parts[0]}`; // dd-mm-yyyy
         } catch (e) {
-            console.warn("Error formatting date:", dateString, e);
-            return dateString;
+            console.warn("Error formatting date for display:", dateString_YYYY_MM_DD, e);
+            return dateString_YYYY_MM_DD;
         }
     }
 
@@ -52,6 +53,7 @@ $(document).ready(function () {
             return;
         }
         let rows = "";
+        // Sort data by date, JavaScript Date object akan mem-parse YYYY-MM-DD dengan benar
         dataItems.sort((a, b) => new Date(a.date) - new Date(b.date));
         dataItems.forEach((item, index) => {
             const profit = item.Profit_Per_Day;
@@ -63,7 +65,7 @@ $(document).ready(function () {
             } else if (item.type === 'historical_model') {
                 statusText = 'Historis (Model)';
                 statusClass = 'historical-model';
-            } else if (item.type === 'predicted_model' || item.type === 'predicted') { // Menyesuaikan dengan kemungkinan type
+            } else if (item.type === 'predicted_model' || item.type === 'predicted') {
                 statusText = 'Prediksi (Model)';
                 statusClass = 'predicted';
             }
@@ -79,117 +81,138 @@ $(document).ready(function () {
         profitTableBody.html(rows);
     }
 
-    // --- FUNGSI BARU UNTUK ECHARTS ---
-    function initOrUpdateProfitChart(chartData) {
-        console.log("initOrUpdateProfitChart CALLED with data:", chartData);
+    function initOrUpdateProfitChart(newChartData) {
+        currentChartData = newChartData; // Simpan data terbaru
+        console.log("initOrUpdateProfitChart CALLED with new data count:", newChartData.length);
+
         if (!profitChartContainerDOM) {
-            console.error("Elemen kontainer chart ECharts tidak ditemukan!");
+            console.error("Elemen kontainer chart ECharts (#profitChartContainer) tidak ditemukan!");
             return;
         }
         if (typeof echarts === 'undefined') {
-            console.error("ECharts library is NOT defined at the moment of initOrUpdateProfitChart call!"); // DEBUG
+            console.error("ECharts library is NOT defined!");
             return;
         }
 
-        // Olah data untuk ECharts
-        // ECharts membutuhkan array tanggal untuk xAxis dan array nilai untuk series.data
-        const dates = chartData.map(item => item.date); // Format YYYY-MM-DD
-        const profits = chartData.map(item => parseFloat(item.Profit_Per_Day) || 0);
+        if (echartsWrapper.is(':hidden')) {
+            console.log("Showing echartsContainerWrapper BEFORE init...");
+            echartsWrapper.show();
+        }
 
-        console.log("Chart Dates:", dates); // DEBUG
-        console.log("Chart Profits:", profits); // DEBUG
+        setTimeout(function() {
+            console.log("Attempting to init/update ECharts inside setTimeout...");
 
-        const option = {
-            tooltip: {
-                trigger: 'axis', // Tooltip muncul saat hover di sumbu/data point
-                formatter: function (params) { // Kustomisasi format tooltip
-                    let tooltipText = formatDateForDisplay(params[0].name) + '<br/>'; // params[0].name adalah tanggal
-                    params.forEach(function (item) {
-                        tooltipText += item.marker + item.seriesName + ': ' + formatCurrency(item.value) + '<br/>';
-                    });
-                    return tooltipText;
-                }
-            },
-            grid: { // Memberi padding agar label tidak terpotong
-                left: '3%',
-                right: '4%',
-                bottom: '10%', // Beri ruang lebih untuk dataZoom nanti
-                containLabel: true
-            },
-            xAxis: {
-                type: 'category',
-                boundaryGap: false, // Garis mulai dari tepi
-                data: dates,
-                axisLabel: {
-                    show: false // Sembunyikan label sumbu X untuk sementara (sesuai permintaan)
-                }
-            },
-            yAxis: {
-                type: 'value',
-                name: 'Profit (Rp)',
-                axisLabel: {
-                    formatter: function (value) {
-                        return 'Rp' + (value / 1000) + 'K'; // Format nilai Y (misal: Rp100K)
-                    }
-                }
-            },
-            series: [
-                {
-                    name: 'Profit Harian',
-                    type: 'line',
-                    smooth: true, // Membuat garis lebih halus
-                    data: profits,
-                    itemStyle: { // Warna garis
-                        color: '#0d6efd' // Biru Bootstrap primer
-                    },
-                    areaStyle: { // Memberi sedikit area di bawah garis (opsional)
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: 'rgba(13, 110, 253, 0.3)'
-                        }, {
-                            offset: 1,
-                            color: 'rgba(13, 110, 253, 0)'
-                        }])
-                    }
-                }
-            ],
-            // Kita akan tambahkan dataZoom di sini nanti untuk filter & zoom
-        };
+            if (profitChartInstance) {
+                profitChartInstance.dispose();
+                profitChartInstance = null;
+                console.log("Previous ECharts instance disposed for update.");
+            }
 
-
-
-        if (!profitChartInstance) {
-            console.log("Initializing new ECharts instance..."); // DEBUG
             try {
                 profitChartInstance = echarts.init(profitChartContainerDOM);
+                console.log("ECharts instance created/recreated inside setTimeout.");
+
+                // Asumsi newChartData.date adalah YYYY-MM-DD
+                const historicalData = newChartData.filter(item => item.type && (item.type.startsWith('historical_db') || item.type.startsWith('historical_model')));
+                const predictedData = newChartData.filter(item => item.type && (item.type.startsWith('predicted_model') || item.type.startsWith('predicted')));
+
+                historicalData.sort((a, b) => new Date(a.date) - new Date(b.date));
+                predictedData.sort((a, b) => new Date(a.date) - new Date(b.date));
+                
+                // Siapkan data untuk ECharts: array [tanggal, nilai]
+                // Ini lebih robust jika ada missing dates di salah satu series
+                const seriesHistoricalData = historicalData.map(item => [item.date, parseFloat(item.Profit_Per_Day) || 0]);
+                const seriesPredictedData = predictedData.map(item => [item.date, parseFloat(item.Profit_Per_Day) || 0]);
+
+                console.log("Historical Series Data Points:", seriesHistoricalData.length);
+                console.log("Predicted Series Data Points:", seriesPredictedData.length);
+
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        formatter: function (params) {
+                            if (!params || params.length === 0 || !params[0].value) return ''; // params[0].value adalah [tanggal, nilai]
+                            let tooltipText = formatDateForDisplay(params[0].value[0]) + '<br/>'; // Ambil tanggal dari value
+                            params.forEach(function (item) {
+                                if(item.value && item.value[1] !== undefined && item.value[1] !== null){ // Hanya tampilkan jika ada nilai
+                                    tooltipText += item.marker + item.seriesName + ': ' + formatCurrency(item.value[1]) + '<br/>'; // Ambil nilai profit
+                                }
+                            });
+                            return tooltipText;
+                        }
+                    },
+                    legend: {
+                        data: ['Profit Historis', 'Profit Prediksi'],
+                        bottom: 0
+                    },
+                    grid: {
+                        left: '3%', right: '4%', bottom: '15%', containLabel: true
+                    },
+                    xAxis: {
+                        type: 'time', // Gunakan tipe 'time' karena data kita punya tanggal spesifik
+                        boundaryGap: false,
+                        axisLabel: {
+                            show: false // Sembunyikan label sumbu X (sesuai permintaan awal)
+                                        // Nanti bisa dikonfigurasi untuk format tanggal
+                        }
+                        // 'data' tidak diperlukan jika type: 'time' dan series.data adalah [tanggal, nilai]
+                    },
+                    yAxis: {
+                        type: 'value',
+                        name: 'Profit (Rp)',
+                        axisLabel: {
+                            formatter: function (value) { return 'Rp' + (value / 1000) + 'K'; }
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'Profit Historis',
+                            type: 'line',
+                            smooth: true,
+                            data: seriesHistoricalData, // Format: [[date1, value1], [date2, value2], ...]
+                            itemStyle: { color: '#0d6efd' },
+                            areaStyle: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0, color: 'rgba(13, 110, 253, 0.3)'
+                                }, {
+                                    offset: 1, color: 'rgba(13, 110, 253, 0)'
+                                }])
+                            },
+                            connectNulls: true
+                        },
+                        {
+                            name: 'Profit Prediksi',
+                            type: 'line',
+                            smooth: true,
+                            data: seriesPredictedData, // Format: [[date1, value1], [date2, value2], ...]
+                            itemStyle: { color: '#198754' },
+                            lineStyle: {
+                                width: 2,
+                                type: 'dashed'
+                            },
+                            connectNulls: true
+                        }
+                    ]
+                };
+
+                if(seriesHistoricalData.length === 0 && seriesPredictedData.length === 0){
+                    console.warn("Both historical and predicted data are empty. Chart might not render series.");
+                }
+
+                profitChartInstance.setOption(option, true);
+                console.log("ECharts option set successfully with historical and predicted series (time axis).");
+
             } catch (e) {
-                console.error("Error initializing ECharts:", e); // DEBUG
-                return;
+                console.error("Error during ECharts init/setOption inside setTimeout:", e);
             }
-        } else {
-            console.log("Updating existing ECharts instance..."); // DEBUG
-        }
-        // Set opsi ke chart (akan merender atau mengupdate)
-        try {
-            profitChartInstance.setOption(option);
-            console.log("ECharts option set successfully."); // DEBUG
-        } catch (e) {
-            console.error("Error setting ECharts option:", e); // DEBUG
-            return;
-        }
+        }, 50);
 
-        // Tampilkan container chart
-        // echartsWrapper.show();
-        console.log("echartsContainerWrapper shown."); // DEBUG
-
-        // Handle window resize untuk chart responsif
-        $(window).on('resize', function(){
+        $(window).off('resize.echarts').on('resize.echarts', function(){
             if (profitChartInstance) {
                 profitChartInstance.resize();
             }
         });
     }
-    // --- AKHIR FUNGSI BARU UNTUK ECHARTS ---
 
 
     function loadInitialDailyProfitData() {
@@ -202,11 +225,10 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success && response.data) {
                     renderProfitTable(response.data);
-                    // Panggil fungsi untuk render chart dengan data historis awal
                     if (response.data.length > 0) {
                         initOrUpdateProfitChart(response.data);
                     } else {
-                        echartsWrapper.hide(); // Sembunyikan chart jika tidak ada data
+                        echartsWrapper.hide();
                     }
                 } else {
                     showAlert(response.message || "Gagal memuat data profit historis awal.");
@@ -234,7 +256,6 @@ $(document).ready(function () {
         }
         alertContainer.html('');
         loadingOverlay.removeClass("hidden");
-        // echartsWrapper.hide(); // Untuk sementara, jangan sembunyikan chart saat prediksi
 
         $.ajax({
             url: "/api/request-profit-predictions",
@@ -243,12 +264,15 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success && response.data) {
                     showAlert("Prediksi berhasil diterima!", "success", 5000);
-                    renderProfitTable(response.data);
-                    // Untuk step ini, kita BELUM mengupdate chart dengan data prediksi
-                    // Jika Anda ingin chart tetap menampilkan data historis awal:
-                    // 1. Pastikan data historis awal tersimpan di variabel global jika perlu.
-                    // 2. Atau, jika initOrUpdateProfitChart dipanggil hanya sekali di loadInitialDailyProfitData, chart akan tetap.
-                    // Untuk sekarang, chart akan tetap menampilkan data dari loadInitialDailyProfitData.
+                    renderProfitTable(response.data); // Update tabel
+                    if (response.data.length > 0) {
+                        initOrUpdateProfitChart(response.data); // Update chart dengan data baru
+                    } else {
+                        console.warn("Data prediksi kosong, chart tidak diupdate dengan data baru.");
+                        // Jika ingin chart dikosongkan/disembunyikan saat data prediksi kosong:
+                        // if (profitChartInstance) { profitChartInstance.dispose(); profitChartInstance = null; }
+                        // echartsWrapper.hide();
+                    }
                 } else {
                     showAlert(response.message || "Gagal mendapatkan prediksi.");
                 }
