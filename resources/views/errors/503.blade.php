@@ -1,6 +1,6 @@
 @extends('hnf')
 
-@section('title', 'Maintenance Mode')
+@section('title', 'Bizgrow - Maintenance')
 
 @section('content')
 <div class="d-flex align-items-center justify-content-center" style="min-height: 70vh;">
