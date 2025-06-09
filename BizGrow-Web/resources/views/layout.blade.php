@@ -45,8 +45,8 @@
                             <a href="{{ route('penjualan.riwayat') }}" class="sidebar-link">Riwayat Penjualan</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="{{ route('penjualan.demand') }}" class="sidebar-link">Prediksi
-                                Permintaan</a>
+                            <a href="{{ route('prediksi.demand.view') }}" class="sidebar-link">Prediksi
+                                Permintaan Produk</a>
                         </li>
                         <li class="sidebar-item">
                             <a href="{{ route('prediksi.profit.view') }}" class="sidebar-link">Prediksi Profit</a>
