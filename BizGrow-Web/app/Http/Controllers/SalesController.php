@@ -19,12 +19,13 @@ class SalesController extends Controller
 
     public function __construct()
     {
-        $baseUrl = rtrim(env('FASTAPI_PREDICTION_URL'), '/');
-        if (strpos($baseUrl, '/predict') === false) {
-             $this->fastApiPredictUrl = env('FASTAPI_PREDICTION_URL');
-        } else {
-            $this->fastApiPredictUrl = $baseUrl;
-        }
+        // $baseUrl = rtrim(env('FASTAPI_PREDICTION_URL'), '/');
+        // if (strpos($baseUrl, '/predict') === false) {
+        //      $this->fastApiPredictUrl = env('FASTAPI_PREDICTION_URL');
+        // } else {
+        //     $this->fastApiPredictUrl = $baseUrl;
+        // }
+        $this->fastApiPredictUrl = "https://SyahrezaAdnanAlAzhar-modelProfitAndDemandBizGrow.hf.space/predict";
     }
 
     public function getSalesHistory(Request $request)
