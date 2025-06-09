@@ -19,7 +19,7 @@ class AuthController extends Controller
             'name' => 'required|max:191',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|regex:/^(?=.*[A-Z])(?=.*\d).+$/',
-            'npwp' => 'required|size:16',
+            'npwp' => 'required|size:20',
             'file_surat_izin' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ], [
             'name.required' => 'Nama harus diisi.',
@@ -31,7 +31,7 @@ class AuthController extends Controller
             'file_surat_izin.mimes' => 'File harus berupa PDF, JPG, JPEG, atau PNG.',
             'file_surat_izin.max' => 'File maksimal 2MB.',
             'npwp.required' => 'NPWP harus diisi.',
-            'npwp.size' => 'NPWP harus 16 karakter.',
+            'npwp.size' => 'NPWP harus 15 karakter.',
             'file_surat_izin.required' => 'File surat izin harus diunggah.',
             'file_surat_izin.file' => 'File harus berupa file.',
         ]);
