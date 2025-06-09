@@ -146,14 +146,14 @@
                 <div class="col-lg-4 col-md-6 mb-5">
                     <div class="card testimonial-card h-100">
                         <div class="card-body">
-                            {{-- <p class="fst-italic mb-4">"Sejak pakai BizGrow, stok barang jadi lebih terkontrol dan prediksi penjualan sangat membantu kami mengurangi kerugian. Fiturnya lengkap dan mudah digunakan!"</p> --}}
+                            <p class="fst-italic mb-4">"Sejak pakai BizGrow, stok barang jadi lebih terkontrol dan prediksi penjualan sangat membantu kami mengurangi kerugian. Fiturnya lengkap dan mudah digunakan!"</p>
                         </div>
                         <div class="card-footer bg-transparent border-0">
                             <div class="d-flex align-items-center">
                                 {{-- <img src="{{ asset('images/user1.jpg') }}" alt="User Testimonial" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;"> --}}
                                 <div>
-                                    {{-- <h6 class="fw-bold mb-0">Ibu Anisa Putri</h6> --}}
-                                    {{-- <small class="text-muted">Pemilik "Berkah Jaya"</small> --}}
+                                    <h6 class="fw-bold mb-0">Anonymous</h6>
+                                    <small class="text-muted">Pemilik Toko Kelontong</small>
                                 </div>
                             </div>
                         </div>
@@ -162,14 +162,14 @@
                 <div class="col-lg-4 col-md-6 mb-5">
                     <div class="card testimonial-card h-100">
                         <div class="card-body">
-                            {{-- <p class="fst-italic mb-4">"Aplikasi BizGrow benar-benar mengubah cara saya mengelola usaha. Laporan keuangannya sangat detail dan membantu pengambilan keputusan. Sangat direkomendasikan!"</p> --}}
+                            <p class="fst-italic mb-4">"Aplikasi BizGrow benar-benar mengubah cara saya mengelola usaha. Laporan keuangannya sangat detail dan membantu pengambilan keputusan. Sangat direkomendasikan!"</p>
                         </div>
                          <div class="card-footer bg-transparent border-0">
                             <div class="d-flex align-items-center">
                                 {{-- <img src="{{ asset('images/user2.jpg') }}" alt="User Testimonial" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;"> --}}
                                 <div>
-                                    {{-- <h6 class="fw-bold mb-0">Bapak Rudi Hartono</h6> --}}
-                                    {{-- <small class="text-muted">Owner "Maju Sejahtera Snack"</small> --}}
+                                    <h6 class="fw-bold mb-0">Anonymous</h6>
+                                    <small class="text-muted">Pemilik UMKM</small>
                                 </div>
                             </div>
                         </div>
@@ -178,13 +178,14 @@
                 <div class="col-lg-4 col-md-6 mb-5">
                      <div class="card testimonial-card h-100">
                         <div class="card-body">
-                            {{-- <p class="fst-italic mb-4">"[Tulis testimoni ketiga di sini. Fokus pada manfaat spesifik yang dirasakan pengguna. Misalnya tentang efisiensi waktu atau peningkatan omzet.]"</p> --}}
+                            <p class="fst-italic mb-4">"Sejak menggunakan Bizgrow saya merasa efisiensi waktu dan peningkatan omzet."</p>
                         </div>
                          <div class="card-footer bg-transparent border-0">
                             <div class="d-flex align-items-center">
                                 {{-- <img src="{{ asset('images/user3.jpg') }}" alt="User Testimonial" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;"> <div> --}}
-                                    {{-- <h6 class="fw-bold mb-0">[Nama Pengguna Ketiga]</h6> --}}
-                                    {{-- <small class="text-muted">[Nama Usaha Pengguna Ketiga]</small> --}}
+                                <div>
+                                    <h6 class="fw-bold mb-0">Anonymous</h6>
+                                    <small class="text-muted">Pemilik Warung</small>
                                 </div>
                             </div>
                         </div>
