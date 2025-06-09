@@ -87,7 +87,7 @@
                     </ul>
                 </div>
                 <div class="col-md-4">
-                    <h6 class="text-uppercase fw-bold mb-3">Alamat Kantor (Contoh)</h6>
+                    <h6 class="text-uppercase fw-bold mb-3">Alamat Kantor</h6>
                     <p class="small text-muted">
                         Jl. Jalan<br>
                         Kota Bandung, Indonesia<br>
