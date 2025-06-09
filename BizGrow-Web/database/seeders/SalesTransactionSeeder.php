@@ -17,7 +17,8 @@ class SalesTransactionSeeder extends Seeder
      */
     public function run(): void
     {
-        $filePath = database_path('data/sales_transactions.csv');
+        // $filePath = database_path('data/sales_transactions.csv');
+        $filePath = database_path('data/data_penjualan_ayamskb.csv');
         $excludedProductIds = [];
 
         // --- LANGKAH 1: Identifikasi produk dari CSV untuk dikecualikan ---

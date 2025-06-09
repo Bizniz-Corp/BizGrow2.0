@@ -133,10 +133,9 @@ $(document).ready(function () {
 
     function initOrUpdateProfitChart(sourceData, isFilterAction = false, isNewDataSource = false) {
         if (isNewDataSource) {
-            currentChartData = [...sourceData]; // Update data master
+            currentChartData = [...sourceData]; 
             console.log("Master chart data UPDATED. Count:", currentChartData.length);
-            populateYearDropdowns(); // Update dropdown tahun berdasarkan data baru
-            // Reset bulan ke default jika data master berubah, kecuali jika ini juga aksi filter
+            populateYearDropdowns(); 
             if (!isFilterAction) {
                 filterStartMonth.val(1);
                 filterEndMonth.val(12);
@@ -144,40 +143,32 @@ $(document).ready(function () {
             chartFilterControls.show();
         }
 
-        let dataToRender = [...currentChartData]; // Mulai dengan data master
+        let dataToRender = [...currentChartData];
 
-        // Terapkan filter jika ini adalah aksi filter atau jika filter sudah pernah diterapkan
-        // dan ini bukan pembaruan sumber data yang seharusnya mereset filter.
-        // Untuk kesederhanaan: selalu terapkan filter jika ada nilai di dropdown,
-        // kecuali jika isNewDataSource dan BUKAN isFilterAction (artinya reset filter)
-        
         const startYearVal = filterStartYear.val();
         const startMonthVal = filterStartMonth.val();
         const endYearVal = filterEndYear.val();
         const endMonthVal = filterEndMonth.val();
 
-        // Terapkan filter hanya jika semua nilai filter ada
         if (startYearVal && startMonthVal && endYearVal && endMonthVal) {
             const startYear = parseInt(startYearVal);
             const startMonth = parseInt(startMonthVal);
             const endYear = parseInt(endYearVal);
             const endMonth = parseInt(endMonthVal);
 
-            // Tanggal filter: awal bulan mulai, akhir bulan selesai
             const startDateFilter = new Date(startYear, startMonth - 1, 1);
-            const endDateFilter = new Date(endYear, endMonth, 0); // Hari ke-0 bulan berikutnya = hari terakhir bulan ini
+            const endDateFilter = new Date(endYear, endMonth, 0); 
 
             console.log("Filter Range: ", startDateFilter.toLocaleDateString(), "-", endDateFilter.toLocaleDateString());
 
             if (startDateFilter > endDateFilter) {
-                if (isFilterAction) { // Hanya tampilkan alert jika user menekan tombol filter
+                if (isFilterAction) {
                     showAlert("Rentang filter tidak valid: Tanggal akhir harus setelah atau sama dengan tanggal mulai.", "warning", 5000);
                 }
-                // Jika filter tidak valid, render semua data dari currentChartData
                 dataToRender = [...currentChartData];
             } else {
                 dataToRender = currentChartData.filter(item => {
-                    const itemDate = new Date(item.date); // Asumsi item.date YYYY-MM-DD
+                    const itemDate = new Date(item.date); 
                     return itemDate >= startDateFilter && itemDate <= endDateFilter;
                 });
             }
@@ -201,33 +192,117 @@ $(document).ready(function () {
                 const historicalData = dataToRender.filter(item => item.type && (item.type.startsWith('historical_db') || item.type.startsWith('historical_model')));
                 const predictedData = dataToRender.filter(item => item.type && (item.type.startsWith('predicted_model') || item.type.startsWith('predicted')));
 
-                historicalData.sort((a, b) => new Date(a.date) - new Date(b.date));
-                predictedData.sort((a, b) => new Date(a.date) - new Date(b.date));
+                // historicalData.sort((a, b) => new Date(a.date) - new Date(b.date));
+                // predictedData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
                 const seriesHistoricalData = historicalData.map(item => [item.date, parseFloat(item.Profit_Per_Day) || 0]);
                 const seriesPredictedData = predictedData.map(item => [item.date, parseFloat(item.Profit_Per_Day) || 0]);
+
+                let xAxisCategories = []; // Ini akan berisi tanggal YYYY-MM-DD untuk setiap titik data
+                let seriesHistoricalMapped = [];
+                let seriesPredictedMapped = [];
+
+                if (dataToRender.length > 0) {
+                    // 1. Dapatkan semua tanggal unik dari data yang akan dirender, diurutkan
+                    xAxisCategories = [...new Set(dataToRender.map(item => item.date))].sort((a,b) => new Date(a) - new Date(b));
+
+                    // 2. Petakan data historis dan prediksi ke xAxisCategories
+                    seriesHistoricalMapped = xAxisCategories.map(categoryDate => {
+                        const foundItem = historicalData.find(hd => hd.date === categoryDate);
+                        return foundItem ? parseFloat(foundItem.Profit_Per_Day) || 0 : null;
+                    });
+                    seriesPredictedMapped = xAxisCategories.map(categoryDate => {
+                        const foundItem = predictedData.find(pd => pd.date === categoryDate);
+                        return foundItem ? parseFloat(foundItem.Profit_Per_Day) || 0 : null;
+                    });
+                }
+                const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                    "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+                let lastDisplayedMonthYear_intervalTracker = {};
+                let lastDisplayedMonthYear = null;
 
                 const option = {
                     tooltip: {
                         trigger: 'axis',
                         formatter: function (params) {
-                            if (!params || params.length === 0 || !params[0].value) return '';
-                            let tooltipText = formatDateForDisplay(params[0].value[0]) + '<br/>';
+                            if (!params || params.length === 0) return '';
+                            let tooltipText = formatDateForDisplay(params[0].name) + '<br/>';
                             params.forEach(function (item) {
-                                if(item.value && item.value[1] !== undefined && item.value[1] !== null){
-                                    tooltipText += item.marker + item.seriesName + ': ' + formatCurrency(item.value[1]) + '<br/>';
+                                if (item.value !== undefined && item.value !== null) {
+                                    tooltipText += item.marker + item.seriesName + ': ' + formatCurrency(item.value) + '<br/>';
                                 }
                             });
                             return tooltipText;
                         }
                     },
                     legend: { data: ['Profit Historis', 'Profit Prediksi'], bottom: 0 },
-                    grid: { left: '3%', right: '4%', bottom: '15%', containLabel: true },
-                    xAxis: { type: 'time', boundaryGap: false, axisLabel: { show: false } },
+                    grid: { left: '3%', right: '4%', bottom: '20%', containLabel: true },
+                    xAxis: {
+                        type: 'category',
+                        data: xAxisCategories,
+                        boundaryGap: false,
+                        axisLabel: {
+                            show: true,
+                            interval: function (index, value) {
+                                const date = new Date(value);
+                                const year = date.getFullYear(); // Deklarasikan year di sini
+                                const month = date.getMonth();   // Deklarasikan month di sini
+                                const day = date.getDate();
+                                const currentMonthYearKey = `${year}-${month}`;
+
+                                // Logika untuk menampilkan label hanya sekali per bulan, idealnya di awal bulan
+                                // atau pada titik yang representatif jika awal bulan tidak ada.
+                                if (!lastDisplayedMonthYear_intervalTracker[currentMonthYearKey]) {
+                                     // Jika data point pertama, atau tanggal 1, atau awal dari data jika bulan belum dilabeli
+                                    if (index === 0 || day === 1) {
+                                        return true;
+                                    }
+                                    // Jika ini adalah data terakhir dan bulan ini belum dilabeli, tampilkan
+                                    if (index === xAxisCategories.length - 1) {
+                                        return true;
+                                    }
+                                    if (day === 1) return true;
+                                    if (index === 0) return true;
+                                    if (index === xAxisCategories.length - 1 && xAxisCategories.length > 1) { 
+                                        // Cek apakah bulan terakhir ini sudah diwakili oleh label tanggal 1
+                                        let foundLabelForLastMonth = false;
+                                        for(let i=0; i < index; i++){
+                                            const d = new Date(xAxisCategories[i]);
+                                            if(d.getFullYear() === year && d.getMonth() === month && d.getDate() === 1){
+                                                foundLabelForLastMonth = true;
+                                                break;
+                                            }
+                                        }
+                                        return !foundLabelForLastMonth;
+                                    }
+
+                                    return false; // Sembunyikan label lainnya secara default
+                                }
+                                return false; // Bulan sudah ditandai oleh interval tracker
+                            },
+                            formatter: function (value) { // value adalah tanggal YYYY-MM-DD
+                                const date = new Date(value);
+                                const year = date.getFullYear();
+                                const month = date.getMonth();
+                                const currentMonthYearKey = `${year}-${month}`;
+
+                                // `lastDisplayedMonthYear` (dari scope luar setTimeout) akan digunakan di sini
+                                // untuk memastikan teks label hanya dibuat sekali per bulan.
+                                if (lastDisplayedMonthYear !== currentMonthYearKey) {
+                                    lastDisplayedMonthYear = currentMonthYearKey;
+                                    return monthNames[month] + '\n' + year;
+                                }
+                                return '';
+                            }
+                        },
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    },
                     yAxis: { type: 'value', name: 'Profit (Rp)', axisLabel: { formatter: function (value) { return 'Rp' + (value / 1000) + 'K'; } } },
                     series: [
-                        { name: 'Profit Historis', type: 'line', smooth: true, data: seriesHistoricalData, itemStyle: { color: '#0d6efd' }, areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(13, 110, 253, 0.3)' }, { offset: 1, color: 'rgba(13, 110, 253, 0)' }]) }, connectNulls: true },
-                        { name: 'Profit Prediksi', type: 'line', smooth: true, data: seriesPredictedData, itemStyle: { color: '#198754' }, lineStyle: { width: 2, type: 'dashed' }, connectNulls: true }
+                        { name: 'Profit Historis', type: 'line', smooth: true, data: seriesHistoricalMapped, itemStyle: { color: '#0d6efd' }, areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(13, 110, 253, 0.3)' }, { offset: 1, color: 'rgba(13, 110, 253, 0)' }]) }, connectNulls: true },
+                        { name: 'Profit Prediksi', type: 'line', smooth: true, data: seriesPredictedMapped, itemStyle: { color: '#198754' }, lineStyle: { width: 2, type: 'dashed' }, connectNulls: true }
                     ]
                 };
                 
@@ -235,13 +310,11 @@ $(document).ready(function () {
                     console.warn("No data to render after filtering. Chart will be empty.");
                     option.series[0].data = [];
                     option.series[1].data = [];
-                    // Untuk memastikan sumbu tetap muncul meski data kosong, Anda bisa set min/max pada xAxis
-                    // Jika currentChartData ada, ambil min/max dari sana.
                     if (currentChartData.length > 0) {
                         const allDatesOriginal = currentChartData.map(d => d.date).sort((a,b) => new Date(a) - new Date(b));
                         option.xAxis.min = allDatesOriginal[0];
                         option.xAxis.max = allDatesOriginal[allDatesOriginal.length - 1];
-                    } else { // Fallback jika currentChartData juga kosong
+                    } else { 
                         const today = new Date();
                         const yesterday = new Date(today);
                         yesterday.setDate(today.getDate() -1);
@@ -249,7 +322,8 @@ $(document).ready(function () {
                         option.xAxis.max = today.toISOString().split('T')[0];
                     }
                 }
-
+                
+                lastDisplayedMonthYear = null;
                 profitChartInstance.setOption(option, true);
                 console.log("ECharts option set/updated.");
 
@@ -261,7 +335,7 @@ $(document).ready(function () {
 
     applyChartFilterButton.on("click", function() {
         if (currentChartData.length > 0) {
-            initOrUpdateProfitChart(currentChartData, true, false); // isFilterAction=true, isNewDataSource=false
+            initOrUpdateProfitChart(currentChartData, true, false); 
         } else {
             showAlert("Tidak ada data untuk difilter.", "info", 3000);
         }

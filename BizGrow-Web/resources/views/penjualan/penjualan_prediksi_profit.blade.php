@@ -60,7 +60,7 @@
             <div id="profitChartContainer"></div>
         </div>
 
-        <div class="table-responsive">
+        <!-- <div class="table-responsive">
             <table class="table table-primary table-striped text-center align-middle">
                 <thead>
                     <tr>
@@ -76,7 +76,7 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div> -->
 
         {{-- Loading Indicator --}}
         <div id="loadingOverlay" class="loading-overlay hidden">
@@ -84,12 +84,6 @@
                 <span class="visually-hidden">Loading...</span>
             </div>
             <span>Memproses prediksi, harap tunggu... <br>Ini mungkin memakan waktu beberapa saat.</span>
-        </div>
-
-        {{-- Area untuk Chart.js (nanti) --}}
-        <div class="mt-5" id="chartContainer" style="display: none;">
-            <h3>Grafik Prediksi Profit</h3>
-            <canvas id="profitChart"></canvas>
         </div>
     </div>
 @endsection
