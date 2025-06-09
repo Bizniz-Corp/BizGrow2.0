@@ -93,7 +93,7 @@ $(document).ready(function () {
         idleTime += 1;
         if (idleTime >= 1) {
             // 1 menit
-            autoLogout();
+            // autoLogout();
         }
     }
 

@@ -42,6 +42,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/profile/edit-password', [ProfileController::class, 'checkPassword']);
         Route::put('/profile/edit-password', [ProfileController::class, 'editPassword']);
         Route::post('/feedback-post', [FeedbackController::class, 'postFeedback']); //API untuk mengirimkan feedback (User)
+
+        // Prediksi Profit
+        Route::get('/daily-sales-summary', [SalesController::class, 'getDailySalesSummary']);
+        Route::get('/request-profit-predictions', [SalesController::class, 'getProfitPredictions']);
+
+        // Prediksi Demand
+        Route::get('/daily-product-demand-summary', [SalesController::class, 'getDailyProductDemandSummary']);
+        Route::get('/request-demand-predictions', [SalesController::class, 'getDemandPredictions']);
     });
 
     Route::middleware('role:admin')->group(function () {

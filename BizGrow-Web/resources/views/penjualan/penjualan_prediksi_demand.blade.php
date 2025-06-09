@@ -1,95 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Data Penjualan</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+@section('title', 'Prediksi Permintaan Produk')
 
-    <link href="../../assets/css/style_reza.css" rel="stylesheet">
-</head>
+@section('header', 'Prediksi Permintaan Produk Harian')
 
-<body>
-    <div class="wrapper">
-        <div class="component-sidebar"></div>
+@section('cssCustom')
+    {{ asset('css/prediksi_profit.css') }}
+@endsection
 
-        <div class="main">
-            <header class="p-3 d-flex justify-content-between align-items-center sticky-top">
-                <h3 class="h3 fw-bold">
-                    Prediksi Permintaan
-                </h3>
-                <img src="../../img/logo.png" alt="bizgrowlogo">
-            </header>
+@section('jsCustom')
+    {{ asset('js/prediksi_demand.js') }}
+@endsection
 
-            <div class="d-flex justify-content-center my-3">
-                <div class="search_select_box">
-                    <select name="" id="productSelect" data-live-search="true" style="width: 500px;">
-                        <option value="Ayam Bakar Nashvilled">Ayam Bakar Nashvilled</option>
-                        <option value="Ayam Goreng Nashvilled">Ayam Goreng Nashvilled</option>
-                        <option value="Ayam Rebus Nashvilled">Ayam Rebus Nashvilled</option>
-                        <option value="Ayam Pepes Nashvilled">Ayam Pepes Nashvilled</option>
+@section('content')
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Data Permintaan Produk Harian</h2>
+            <button class="btn btn-success" id="predictButton">
+                Prediksi Permintaan Produk
+            </button>
+        </div>
+
+        <div id="alert-container" class="mb-3"></div>
+
+        <div class="filter-controls mb-4 p-3 border rounded bg-light" id="chartFilterControls" style="display: none;">
+            <h4 class="mb-3">Filter Grafik</h4>
+            <div class="row mb-3"> {{-- Baris untuk dropdown produk --}}
+                <div class="col-md-4"> {{-- Sesuaikan lebar kolom untuk dropdown produk --}}
+                    <label for="productSelectDropdown" class="form-label">Pilih Produk:</label>
+                    <select class="form-select" id="productSelectDropdown">
+                        <option value="">Memuat produk...</option>
+                        {{-- Opsi akan diisi oleh JavaScript --}}
                     </select>
                 </div>
             </div>
-
-            <div class="row justify-content-center my-3">
-                <div class="d-flex justify-content-center">
-                    <div class="dropdown justify-content-center">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="pilihWaktuButton" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            Pilih Waktu
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="pilihWaktuButton">
-                            <a class="dropdown-item" href="#" id="optionBulan">Bulan</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" id="optionHari">Hari</a>
-                        </div>
-                    </div>
+            <div class="row g-3 align-items-end"> {{-- Baris untuk filter tanggal --}}
+                <div class="col-md-2 col-6">
+                    <label for="filterStartYear" class="form-label">Tahun Mulai:</label>
+                    <select class="form-select" id="filterStartYear"></select>
+                </div>
+                <div class="col-md-2 col-6">
+                    <label for="filterStartMonth" class="form-label">Bulan Mulai:</label>
+                    <select class="form-select" id="filterStartMonth"></select>
+                </div>
+                <div class="col-md-2 col-6 mt-3 mt-md-0">
+                    <label for="filterEndYear" class="form-label">Tahun Akhir:</label>
+                    <select class="form-select" id="filterEndYear"></select>
+                </div>
+                <div class="col-md-2 col-6 mt-3 mt-md-0">
+                    <label for="filterEndMonth" class="form-label">Bulan Akhir:</label>
+                    <select class="form-select" id="filterEndMonth"></select>
+                </div>
+                <div class="col-md-auto col-6 mt-3 mt-md-0">
+                    <button class="btn btn-primary w-100" id="applyChartFilterButton">Terapkan</button>
+                </div>
+                <div class="col-md-auto col-6 mt-3 mt-md-0">
+                    <button class="btn btn-secondary w-100" id="resetChartFilterButton">Reset</button>
                 </div>
             </div>
-            
+        </div>
 
-            <div class="d-flex justify-content-center my-3">
-                <div style="width: 50%;">
-                    <canvas id="lineChartPrediksi"></canvas>
-                </div>
-            </div>
 
-            <div>
-                <h5 class="h5 fw-bold d-flex justify-content-center">
-                    Akurasi
-                </h3>
-                <div>
-                    <div style="width: 20%; margin: 0 auto;">
-                        <canvas id="percentageChart"></canvas>
-                    </div>
-                </div>
+        <div class="mt-3" id="echartsContainerWrapper">
+            <h3 id="chartTitle">Grafik Prediksi Permintaan Produk</h3>
+            <div id="demandChartContainer"></div>
+        </div>
+
+        {{-- Loading Indicator --}}
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
-        
+            <span>Memproses prediksi, harap tunggu... <br>Ini mungkin memakan waktu beberapa saat.</span>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../../assets/js/script_reza.js"></script>
-    <script src="../../assets/js/komponen_prediksi.js"></script>
-</body>
-
-</html>
+@endsection
