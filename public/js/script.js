@@ -28,7 +28,8 @@ $(document).ready(function () {
                     document.getElementById("profilePicture");
                 profilePicture.src = user.profile_picture
                     ? user.profile_picture
-                    : "/img/default-profile.png";
+                    : /storage/profile_pict/default_avatar.jpg;
+                    // : "/img/default-profile.png";
 
                 const userName = document.getElementById("userName");
                 userName.textContent = user.name;
