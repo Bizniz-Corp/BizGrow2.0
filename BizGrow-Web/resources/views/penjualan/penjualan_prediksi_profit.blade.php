@@ -23,6 +23,38 @@
 
         <div id="alert-container" class="mb-3"></div>
 
+        <div class="filter-controls mb-4 p-3 border rounded bg-light" id="chartFilterControls" style="display: none;"> {{-- Awalnya disembunyikan --}}
+            <h4 class="mb-3">Filter Grafik</h4>
+            <div class="row g-3 align-items-end">
+                <div class="col-md-2">
+                    <label for="filterStartYear" class="form-label">Tahun Mulai:</label>
+                    <select class="form-select" id="filterStartYear"></select>
+                </div>
+                <div class="col-md-2">
+                    <label for="filterStartMonth" class="form-label">Bulan Mulai:</label>
+                    <select class="form-select" id="filterStartMonth">
+                        {{-- Opsi bulan akan diisi oleh JS --}}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="filterEndYear" class="form-label">Tahun Akhir:</label>
+                    <select class="form-select" id="filterEndYear"></select>
+                </div>
+                <div class="col-md-2">
+                    <label for="filterEndMonth" class="form-label">Bulan Akhir:</label>
+                    <select class="form-select" id="filterEndMonth">
+                        {{-- Opsi bulan akan diisi oleh JS --}}
+                    </select>
+                </div>
+                <div class="col-md-auto">
+                    <button class="btn btn-primary w-100" id="applyChartFilterButton">Terapkan Filter</button>
+                </div>
+                <div class="col-md-auto">
+                    <button class="btn btn-secondary w-100" id="resetChartFilterButton">Reset Filter</button>
+                </div>
+            </div>
+        </div>
+
         <div class="mt-5" id="echartsContainerWrapper">
             <h3>Grafik Prediksi Profit</h3>
             <div id="profitChartContainer"></div>

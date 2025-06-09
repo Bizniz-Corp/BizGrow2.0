@@ -37,6 +37,19 @@
     /* Jarak dari tabel */
 }
 
+.filter-controls {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.filter-controls .form-select,
+.filter-controls .btn {
+    min-width: 120px;
+    /* Agar dropdown tidak terlalu sempit */
+}
+
 /* Style untuk badge status */
 .badge.bg-historical-db {
     background-color: #6c757d !important;
