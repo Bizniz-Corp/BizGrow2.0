@@ -70,16 +70,33 @@ $(document).ready(function() {
             contentType: false,
             success: function(response) {
                 if (response.success) {
-                    alert('Profil berhasil diperbarui.');
-                    window.location.href = '/profil';
+                    // Show success modal instead of alert
+                    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                    successModal.show();
+                    
+                    // Add event listener to redirect after clicking OK
+                    document.getElementById('successModalButton').addEventListener('click', function() {
+                        window.location.href = '/profil';
+                    });
                 } else {
-                    alert('Gagal memperbarui profil: ' + response.message);
+                    // Show error modal with specific message
+                    document.getElementById('errorMessage').textContent = 'Gagal memperbarui profil: ' + response.message;
+                    const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                    errorModal.show();
                 }
             },
             error: function(error) {
                 console.error('Error:', error);
-                alert('Terjadi kesalahan saat memperbarui profil.');
+                // Show generic error modal
+                document.getElementById('errorMessage').textContent = 'Terjadi kesalahan saat memperbarui profil.';
+                const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                errorModal.show();
             }
         });
+    });
+    
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
     });
 });
