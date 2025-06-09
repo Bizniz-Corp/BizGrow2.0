@@ -264,6 +264,8 @@ $(document).ready(function () {
                 let lastDisplayedMonthYear = null;
                 const currentProductNameDisplay = selectedProductKey ? selectedProductKey.substring("Product_".length).replace(/_/g, ' ') : "";
 
+                let formatter_lastLabeledMonthYear = null;
+
 
                 const option = {
                     tooltip: {
@@ -287,24 +289,29 @@ $(document).ready(function () {
                     xAxis: {
                         type: 'category', data: xAxisCategories, boundaryGap: false,
                         axisLabel: {
-                            show: true,
-                            // --- Sederhanakan formatter label xAxis untuk sekarang ---
-                            formatter: (function() {
-                                let labeledMonths = {};
-                                return function(value) {
-                                    const date = new Date(value);
-                                    const year = date.getFullYear();
-                                    const month = date.getMonth();
-                                    const monthYearKey = `${year}-${month}`;
-                                    if (!labeledMonths[monthYearKey]) {
-                                        labeledMonths[monthYearKey] = true;
-                                        return monthNames[month] + '\n' + year;
-                                    }
-                                    return '';
-                                };
-                            })()
+                            show: true, // Pastikan ini true
+                            // interval: 'auto', // Biarkan ECharts memilih tick, atau bisa juga 0 jika data tidak terlalu padat
+                                             // Jika 'auto', formatter di bawah akan menyaring duplikasi bulan
+                            formatter: function (value, index) { // value adalah tanggal YYYY-MM-DD dari xAxisCategories
+                                const date = new Date(value);
+                                const year = date.getFullYear();
+                                const month = date.getMonth(); // 0-11
+                                const currentMonthYearKey = `${year}-${month}`;
+
+                                // Hanya tampilkan label jika ini adalah bulan baru yang belum diberi label
+                                if (formatter_lastLabeledMonthYear !== currentMonthYearKey) {
+                                    formatter_lastLabeledMonthYear = currentMonthYearKey; // Update bulan terakhir yang diberi label
+                                    return monthNames[month] + '\n' + year;
+                                }
+                                return ''; // Jika bulan sama dengan yang terakhir dilabeli, jangan tampilkan lagi
+                            }
+                            // Opsional: jika label terlalu panjang atau tumpang tindih
+                            // rotate: 30,
+                            // textStyle: { fontSize: 10 }
                         },
-                        axisTick: { alignWithLabel: true }
+                        axisTick: {
+                            alignWithLabel: true // Sejajarkan tick dengan label
+                        }
                     },
                     yAxis: {
                         type: 'value',
