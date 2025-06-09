@@ -32,6 +32,9 @@ Route::prefix('penjualan')->group(function () {
 
     // Prediksi Profit
     Route::get('/prediksi-profit', [SalesController::class, 'prediksiProfitView'])->name('prediksi.profit.view');
+
+    // Prediksi Demand
+    Route::get('/prediksi-demand', [SalesController::class, 'prediksiDemandView'])->name('prediksi.demand.view');
 });
 
 Route::prefix('stok')->group(function () {

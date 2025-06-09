@@ -46,6 +46,10 @@ Route::middleware('auth:sanctum')->group(function () {
         // Prediksi Profit
         Route::get('/daily-sales-summary', [SalesController::class, 'getDailySalesSummary']);
         Route::get('/request-profit-predictions', [SalesController::class, 'getProfitPredictions']);
+
+        // Prediksi Demand
+        Route::get('/daily-product-demand-summary', [SalesController::class, 'getDailyProductDemandSummary']);
+        Route::get('/request-demand-predictions', [SalesController::class, 'getDemandPredictions']);
     });
 
     Route::middleware('role:admin')->group(function () {
