@@ -44,8 +44,9 @@ class ProductSeeder extends Seeder
 
         // Ambil semua data UMKM
         $umkmList = Umkaem::all();
+        $umkmListExceptLast = $umkmList->slice(0, $umkmList->count() - 1);
 
-        foreach ($umkmList as $umkm) {
+        foreach ($umkmListExceptLast as $umkm) {
             // Pilih nama produk secara acak tanpa duplikasi
             $availableProducts = $productNames; // Salin semua nama produk
             $numberOfProducts = rand(5, 8); // Setiap UMKM memiliki 5 hingga 8 produk
@@ -69,16 +70,16 @@ class ProductSeeder extends Seeder
         }
 
         $products = [
-            ['product_name' => 'Margherita Pizza', 'product_quantity' => 1, 'price' => 20000, 'umkm_id' => 5],
-            ['product_name' => 'Caprese Salad', 'product_quantity' => 1, 'price' => 16000, 'umkm_id' => 5],
-            ['product_name' => 'Tiramisu', 'product_quantity' => 1, 'price' => 13000, 'umkm_id' => 5],
-            ['product_name' => 'Gelato', 'product_quantity' => 1, 'price' => 9000, 'umkm_id' => 5],
-            ['product_name' => 'Spaghetti Carbonara', 'product_quantity' => 1, 'price' => 24000, 'umkm_id' => 5],
-            ['product_name' => 'Fettuccine Alfredo', 'product_quantity' => 1, 'price' => 26000, 'umkm_id' => 5],
-            ['product_name' => 'Panna Cotta', 'product_quantity' => 1, 'price' => 11000, 'umkm_id' => 5],
-            ['product_name' => 'Minestrone Soup', 'product_quantity' => 1, 'price' => 14000, 'umkm_id' => 5],
-            ['product_name' => 'Lasagna', 'product_quantity' => 1, 'price' => 23000, 'umkm_id' => 5],
-            ['product_name' => 'Bruschetta', 'product_quantity' => 1, 'price' => 10000, 'umkm_id' => 5],
+            ['product_name' => 'Margherita Pizza', 'product_quantity' => 1, 'price' => 20000, 'umkm_id' => 8],
+            ['product_name' => 'Caprese Salad', 'product_quantity' => 1, 'price' => 16000, 'umkm_id' => 8],
+            ['product_name' => 'Tiramisu', 'product_quantity' => 1, 'price' => 13000, 'umkm_id' => 8],
+            ['product_name' => 'Gelato', 'product_quantity' => 1, 'price' => 9000, 'umkm_id' => 8],
+            ['product_name' => 'Spaghetti Carbonara', 'product_quantity' => 1, 'price' => 24000, 'umkm_id' => 8],
+            ['product_name' => 'Fettuccine Alfredo', 'product_quantity' => 1, 'price' => 26000, 'umkm_id' => 8],
+            ['product_name' => 'Panna Cotta', 'product_quantity' => 1, 'price' => 11000, 'umkm_id' => 8],
+            ['product_name' => 'Minestrone Soup', 'product_quantity' => 1, 'price' => 14000, 'umkm_id' => 8],
+            ['product_name' => 'Lasagna', 'product_quantity' => 1, 'price' => 23000, 'umkm_id' => 8],
+            ['product_name' => 'Bruschetta', 'product_quantity' => 1, 'price' => 10000, 'umkm_id' => 8],
         ];
 
         DB::table('products')->insert($products);

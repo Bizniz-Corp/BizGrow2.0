@@ -29,6 +29,9 @@ Route::prefix('penjualan')->group(function () {
     Route::get('/demand', [SalesController::class, 'demand'])->name('penjualan.demand');
     Route::get('/profit', [SalesController::class, 'profit'])->name('penjualan.profit');
     Route::get('/input-manual', [SalesController::class, 'inputPenjualanManualView'])->name('penjualan.storeManual');
+
+    // Prediksi Profit
+    Route::get('/prediksi-profit', [SalesController::class, 'prediksiProfitView'])->name('prediksi.profit.view');
 });
 
 Route::prefix('stok')->group(function () {
