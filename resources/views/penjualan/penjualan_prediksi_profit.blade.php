@@ -2,7 +2,7 @@
 
 @section('title', 'Prediksi Profit Penjualan')
 
-@section('header', 'Prediksi Profit Penjualan Harian')
+@section('header', 'Prediksi Profit Penjualan')
 
 @section('cssCustom')
     {{ asset('css/prediksi_profit.css') }}
@@ -15,7 +15,7 @@
 @section('content')
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>Data Profit Harian</h2>
+            <h2>Data Profit</h2>
             <button class="btn btn-success" id="predictButton">
                 Prediksi Profit
             </button>
