@@ -10,9 +10,9 @@
         <p class="lead mb-4">
             Maaf, halaman yang Anda cari tidak ditemukan atau sudah dipindahkan.
         </p>
-        <a href="{{ route('landing') }}" class="btn btn-primary">
+        <a href="{{ url()->previous() }}" class="btn btn-primary">
             <i class="bi bi-house-door me-2"></i>
-            Kembali ke Beranda
+            Kembali
         </a>
     </div>
 </div>
