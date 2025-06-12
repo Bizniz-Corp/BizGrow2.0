@@ -53,8 +53,8 @@
                 <tr>
                     <th scope="col">Nama</th>
                     <th scope="col">Durasi(Menit)</th>
-                    <th scope="col">Forecasting Demand</th>
-                    <th scope="col">Buffer Stock</th>
+                    {{-- <th scope="col">Forecasting Demand</th>
+                    <th scope="col">Buffer Stock</th> --}}
                     <th scope="col">Akurasi Demand</th>
                     <th scope="col">Akurasi Stok</th>
                     <th scope="col">Status</th>
@@ -65,5 +65,23 @@
             </tbody>
         </table>
         <div id="pagination" class="d-flex justify-content-center align-items-center mt-4"></div>
+    </div>
+
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Konfirmasi Penghapusan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="deleteConfirmationMessage">Apakah Anda yakin ingin menghapus UMKM ini?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Hapus</button>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

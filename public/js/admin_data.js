@@ -60,16 +60,6 @@ $(document).ready(function () {
                 <tr>
                     <td>${item.name}</td>
                     <td>${item.durasi} Menit</td>
-                    <td>${
-                        item.forecasting_demand
-                            ? '<button class="btn btn-success btn-sm"><i class="bi bi-check-lg"></i></button>'
-                            : '<button class="btn btn-danger btn-sm"><i class="bi bi-x-lg"></i></button>'
-                    }</td>
-                    <td>${
-                        item.buffer_stock
-                            ? '<button class="btn btn-success btn-sm"><i class="bi bi-check-lg"></i></button>'
-                            : '<button class="btn btn-danger btn-sm"><i class="bi bi-x-lg"></i></button>'
-                    }</td>
                     <td>${item.demand_accuracy || "-"}</td>
                     <td>${item.stock_accuracy || "-"}</td>
                     <td>${item.status}</td>
