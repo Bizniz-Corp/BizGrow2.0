@@ -31,7 +31,7 @@
 
         <div class="features">
             <div class="feature">
-                <a href="{{ route('penjualan.demand') }}">
+                <a href="{{ route('prediksi.demand.view') }}">
                     <img src="{{ asset('images/demand.svg') }}" alt="logodemand">
                     <span>Demand</span>
                 </a>
@@ -43,7 +43,7 @@
                 </a>
             </div>
             <div class="feature">
-                <a href="{{ route('penjualan.profit') }}">
+                <a href="{{ route('prediksi.profit.view') }}">
                     <img src="{{ asset('images/Profit.svg') }}" alt="logoprofit">
                     <span>Profit</span>
                 </a>
