@@ -145,7 +145,7 @@
                     <h5 class="modal-title" id="autoLogoutModalLabel">Keluar Otomatis</h5>
                 </div>
                 <div class="modal-body">
-                    Anda telah logout otomatis karena tidak ada aktivitas selama 1 menit.
+                    Anda telah logout otomatis karena tidak ada aktivitas selama 10 menit.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="redirectToLoginButtonAutoLog">Oke</button>
