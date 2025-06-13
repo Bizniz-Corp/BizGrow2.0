@@ -106,6 +106,24 @@
         </div>
     </div>
 
+    <!-- Modal Auto Logout -->
+    <div class="modal fade" id="autoLogoutModal" tabindex="-1" role="dialog" aria-labelledby="autoLogoutModalLabel"Add commentMore actions
+        data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="autoLogoutModalLabel">Keluar Otomatis</h5>
+                </div>
+                <div class="modal-body">
+                    Anda telah logout otomatis karena tidak ada aktivitas selama 1 menit.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="redirectToLoginButtonAutoLog">Oke</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
