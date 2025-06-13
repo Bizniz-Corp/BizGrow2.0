@@ -100,11 +100,11 @@ class AuthController extends Controller
 
         if ($user->role == 'umkm') {
             $umkm = Umkaem::where('user_id', $user->id)->first();
-            // if ($umkm->is_verified == 0) {
-            //     return response()->json([
-            //         'message' => 'UMKM belum diverifikasi! Silahkan tunggu konfirmasi pada email Anda'
-            //     ], 403);
-            // }
+            if ($umkm->is_verified == 0) {
+                return response()->json([
+                    'message' => 'UMKM belum diverifikasi! Silahkan tunggu konfirmasi pada email Anda'
+                ], 403);
+            }
         }
 
         // $user->login_at = now(); // simpan waktu login

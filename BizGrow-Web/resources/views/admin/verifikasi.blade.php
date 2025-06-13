@@ -19,7 +19,7 @@
 @endsection
 
 @section('content')
-    <br/>
+    <br />
     <p class="text-center fs-3 fw-bold">Data Permintaan Verifikasi UMKM</p>
 
     <div class="filter-container m-5 d-flex align-items-center">
@@ -47,7 +47,8 @@
     </div>
 
     <!-- Modal Konfirmasi -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -66,7 +67,8 @@
     </div>
 
     <!-- Modal Pesan Penolakan -->
-    <div class="modal fade" id="rejectReasonModal" tabindex="-1" role="dialog" aria-labelledby="rejectReasonModalLabel" aria-hidden="true">
+    <div class="modal fade" id="rejectReasonModal" tabindex="-1" role="dialog" aria-labelledby="rejectReasonModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

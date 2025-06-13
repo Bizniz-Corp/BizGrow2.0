@@ -53,6 +53,7 @@ body {
     padding: 0 10px;
     max-width: 550px; /* Limit the width for better alignment */
     margin: 0 auto; /* Center the grid */
+    overflow: hidden;
 }
 .feature {
     width: 100%;

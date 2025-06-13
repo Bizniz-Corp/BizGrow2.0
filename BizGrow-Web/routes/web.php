@@ -26,8 +26,6 @@ Route::prefix('penjualan')->group(function () {
     Route::get('/input', [SalesController::class, 'inputPenjualanView'])->name('penjualan.input');
     Route::get('/input-file', [SalesController::class, 'inputPenjualanFileView'])->name('penjualan.inputFile');
     Route::get('/riwayat', [SalesController::class, 'riwayatView'])->name('penjualan.riwayat');
-    Route::get('/demand', [SalesController::class, 'demand'])->name('penjualan.demand');
-    Route::get('/profit', [SalesController::class, 'profit'])->name('penjualan.profit');
     Route::get('/input-manual', [SalesController::class, 'inputPenjualanManualView'])->name('penjualan.storeManual');
 
     // Prediksi Profit

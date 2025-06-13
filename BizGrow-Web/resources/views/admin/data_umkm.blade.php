@@ -41,7 +41,8 @@
     </div>
 
     <div class="filter-container m-5 d-flex align-items-center">
-        <input type="text" id="umkmNameInput" class="form-control me-3" style="width: 300px;" placeholder="Cari Nama Toko">
+        <input type="text" id="umkmNameInput" class="form-control me-3" style="width: 300px;"
+            placeholder="Cari Nama Toko">
         <button class="btn btn-primary" id="resetButton">
             <img src="{{ asset('images/refresh.svg') }}" alt="reset-icon"> Reset
         </button>
@@ -53,8 +54,6 @@
                 <tr>
                     <th scope="col">Nama</th>
                     <th scope="col">Durasi(Menit)</th>
-                    <th scope="col">Forecasting Demand</th>
-                    <th scope="col">Buffer Stock</th>
                     <th scope="col">Akurasi Demand</th>
                     <th scope="col">Akurasi Stok</th>
                     <th scope="col">Status</th>

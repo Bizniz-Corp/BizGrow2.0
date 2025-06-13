@@ -32,7 +32,7 @@
                         <span>Data UMKM</span>
                     </a>
                 </li>
-                
+
                 <li class="sidebar-item">
                     <a href="{{ route('admin.verifikasi') }}" class="sidebar-link">
                         <img src="{{ asset('images/admin/verify.svg') }}" alt="verif-icon">
@@ -87,7 +87,6 @@
             </div>
         </div>
     </div>
-
     <!-- Modal untuk meminta login jika token tidak ditemukan -->
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
         aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -101,6 +100,39 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="redirectToLoginButton">Oke</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Auto Logout -->
+    <div class="modal fade" id="autoLogoutModal" tabindex="-1" role="dialog" aria-labelledby="autoLogoutModalLabel"
+        data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="autoLogoutModalLabel">Keluar Otomatis</h5>
+                </div>
+                <div class="modal-body">
+                    Anda telah logout otomatis karena tidak ada aktivitas selama 1 menit.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="redirectToLoginButtonAutoLog">Oke</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Auto Logout -->
+    <div class="modal fade" id="autoLogoutModal" tabindex="-1" aria-labelledby="autoLogoutModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="autoLogoutModalLabel">Keluar Otomatis</h5>
+                </div>
+                <div class="modal-body">
+                    Anda telah logout otomatis karena tidak ada aktivitas selama 1 menit.
                 </div>
             </div>
         </div>

@@ -87,13 +87,13 @@ $(document).ready(function () {
 
     // Auto logout setelah 1 menit tidak ada aktivitas
     let idleTime = 0;
-    let idleInterval = setInterval(timerIncrement, 60000); // 1 menit
+    let idleInterval = setInterval(timerIncrement, 600000); // 1 menit
 
     function timerIncrement() {
         idleTime += 1;
         if (idleTime >= 1) {
             // 1 menit
-            // autoLogout();
+            autoLogout();
         }
     }
 
